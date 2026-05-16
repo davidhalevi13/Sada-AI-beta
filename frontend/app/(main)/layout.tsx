@@ -13,7 +13,7 @@ import { MaterialIcon } from "../components/ui/MaterialIcon"
 import { ThemeProvider, ThemeScript } from "../components/theme-provider"
 import { SWRConfig } from "swr"
 import { axiosFetcher } from "@/lib/api"
-import { clearAuthAndRedirectToLogin } from "./auth-refresh"
+import { logoutAndRedirect } from "@/lib/store/auth-store"
 import { UploadProgressTracker } from "../components/upload-progress-tracker"
 import { ToastContainer } from "../components/feedback"
 import { I18nextProvider, useTranslation } from 'react-i18next'
@@ -32,6 +32,7 @@ import { HealthGate } from '@/app/components/ui/health-gate'
 import { AuthHydrator } from '@/lib/store/auth-hydrator'
 import { useUserStore, selectIsProfileInitialized } from '@/lib/store/user-store'
 import { FullNameDialog } from './components/full-name-dialog'
+import { ServerUrlGuard } from '@/app/components/electron/server-url-setup'
 
 export default function RootLayout({
   children,
@@ -75,7 +76,7 @@ export default function RootLayout({
           rel="stylesheet"
         />
       </head>
-      <body>
+      <body style={{ backgroundColor: 'var(--olive-1, #f8f8f5)' }}>
         <I18nextProvider i18n={i18n}>
           <ThemeProvider>
             <AuthHydrator />
@@ -86,13 +87,15 @@ export default function RootLayout({
                 {t('common.rotateLandscape')}
               </Text>
             </div>
-            <AuthGuard>
-              <HealthGate>
-                <AppLayout sidebar={sidebar}>
-                  {children}
-                </AppLayout>
-              </HealthGate>
-            </AuthGuard>
+            <ServerUrlGuard>
+              <AuthGuard>
+                <HealthGate>
+                  <AppLayout sidebar={sidebar}>
+                    {children}
+                  </AppLayout>
+                </HealthGate>
+              </AuthGuard>
+            </ServerUrlGuard>
             {/* ToastContainer must live outside HealthGate so toasts render
                 during the blocking health-check loading screen too. */}
             <ToastContainer />
@@ -164,7 +167,7 @@ function AppLayout({
         fetcher: axiosFetcher,
         onError: (error) => {
           if (error?.type === 'AUTHENTICATION_ERROR') {
-            clearAuthAndRedirectToLogin(router)
+            logoutAndRedirect()
           }
         },
       }}

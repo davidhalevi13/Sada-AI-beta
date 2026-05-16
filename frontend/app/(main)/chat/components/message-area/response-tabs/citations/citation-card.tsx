@@ -4,6 +4,8 @@ import React from 'react';
 import { Flex, Box, Text, Badge, Button } from '@radix-ui/themes';
 import { ChatStarIcon } from '@/app/components/ui/chat-star-icon';
 import { ConnectorIcon } from '@/app/components/ui/ConnectorIcon';
+import { isLocalFsConnectorType } from '@/app/(main)/workspace/connectors/utils/local-fs-helpers';
+import { openRecordSource } from '@/chat/utils/open-record-source';
 import { getConnectorConfig, formatSyncLabel } from './utils';
 import { FileIcon } from '@/app/components/ui/file-icon';
 import { useIsMobile } from '@/lib/hooks/use-is-mobile';
@@ -53,18 +55,26 @@ export function ReferenceCard({
 
   // Determine if this is a collection (UPLOAD) or external connector source
   const isCollectionSource = citation.origin === 'UPLOAD';
+  const isLocalFsSource = isLocalFsConnectorType(citation.connector ?? '');
   const openInLabel = isCollectionSource ? 'Open in Collections' : `Open in ${config.label}`;
 
+  // Chat attachments are stored with connector === "ATTACHMENTS". They live in
+  // the user's chat session only and have no Collections page to navigate to,
+  // so the "Open in Collections" button should not be shown for them.
+  const isAttachment = citation.connector?.toUpperCase() === 'ATTACHMENTS';
+  const canOpenSource =
+    !isAttachment &&
+    (isCollectionSource ||
+      isLocalFsSource ||
+      (!citation.hideWeburl && !!citation.webUrl));
+
   // ── handlers ──────────────────────────────────────────────────────────
-  const handleOpenInSource = () => {
+  const handleOpenInSource = async () => {
     if (isCollectionSource) {
       // Navigate to collections page
       callbacks?.onOpenInCollection?.(citation);
     } else {
-      // Open external connector URL
-      if (citation.webUrl && !citation.hideWeburl) {
-        window.open(citation.webUrl, '_blank', 'noopener,noreferrer');
-      }
+      await openRecordSource(citation);
     }
   };
 
@@ -128,8 +138,8 @@ export function ReferenceCard({
             {/* Action buttons in header — desktop only; on mobile they move to the footer */}
             {!isMobile && (
               <>
-                {/* "Open in {Source}" outline button */}
-                {!citation.hideWeburl &&
+                {/* "Open in {Source}" outline button. Local FS uses a native desktop reveal when available. */}
+                {canOpenSource &&
                   (<Button
                     size="1"
                     variant="outline"
@@ -278,8 +288,8 @@ export function ReferenceCard({
           {/* Right: action buttons — mobile only (desktop has them in the header) */}
           {isMobile && (
             <Flex align="center" gap="1" style={{ flexShrink: 0 }}>
-              {/* "Open in {Source}" outline button */}
-              {!citation.hideWeburl && (<Button
+              {/* "Open in {Source}" outline button. Local FS uses a native desktop reveal when available. */}
+              {canOpenSource && (<Button
                 size="1"
                 variant="outline"
                 color="gray"

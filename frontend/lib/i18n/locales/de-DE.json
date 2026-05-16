@@ -288,6 +288,20 @@
     "unsavedChanges": "Sie haben nicht gespeicherte Änderungen",
     "tryAgain": "Bitte versuchen Sie es erneut"
   },
+  "electron": {
+    "serverUrlSetup": {
+      "title": "Mit PipesHub-Server verbinden",
+      "subtitleFirstRun": "Geben Sie die URL Ihres PipesHub-Servers ein, um zu beginnen.",
+      "subtitleExisting": "Bestätigen oder aktualisieren Sie Ihre PipesHub-Server-URL.",
+      "label": "Server-URL",
+      "submit": "Verbinden",
+      "errors": {
+        "empty": "Bitte geben Sie eine Server-URL ein.",
+        "invalid": "Bitte geben Sie eine gültige URL ein (z. B. http://localhost:3000).",
+        "protocol": "Die Server-URL muss http:// oder https:// verwenden."
+      }
+    }
+  },
   "common": {
     "yes": "Ja",
     "no": "Nein",
@@ -375,7 +389,8 @@
     "notion": "Notion",
     "confluence": "Confluence",
     "github": "GitHub",
-    "gitlab": "GitLab"
+    "gitlab": "GitLab",
+    "localFs": "Lokales FS"
   },
   "itemType": {
     "knowledgeBase": "Wissensbasis",
@@ -486,6 +501,8 @@
     "viewAgentTooltipServiceAccount": "Nur Ansicht: Dieser Organisations-Service-Agent ist gesperrt. Sie können ihn einsehen, aber nichts kann hier bearbeitet oder umkonfiguriert werden.",
     "askInContext": "In \"{{title}}\" fragen",
     "askAnythingInContext": "Beliebiges in \"{{title}}\" fragen",
+    "expandTable": "Tabelle erweitern",
+    "fullTableView": "Vollständige Tabellenansicht",
     "toasts": {
       "stopStreamTitle": "Demnächst verfügbar",
       "stopStreamDescription": "Das Stoppen der Generierung wird nicht unterstützt",
@@ -1606,7 +1623,9 @@
         "statEmpty": "Leer",
         "statEmptySub": "Kein extrahierbarer Inhalt",
         "recordsByType": "Datensätze nach Typ",
-        "noRecordTypes": "Keine Datensatztypen verfügbar"
+        "noRecordTypes": "Keine Datensatztypen verfügbar",
+        "localWatcherLabel": "LOKALER WATCHER",
+        "localWatcherStatus": "{{state}} · {{pending}} ausstehend · {{failed}} fehlgeschlagen"
       },
       "settingsTab": {
         "instanceName": "Instanzname",
@@ -1634,7 +1653,14 @@
       },
       "schemaForm": {
         "tagsPlaceholder": "Tippen und Enter drücken, um Tags hinzuzufügen",
-        "removeTagAriaLabel": "{{tag}} entfernen"
+        "removeTagAriaLabel": "{{tag}} entfernen",
+        "chooseFolder": "Ordner auswählen",
+        "folderPickerUnavailableTitle": "Ordnerauswahl nicht verfügbar",
+        "folderPickerUnavailableDescription": "Starten Sie die Desktop-App neu oder aktualisieren Sie auf die neueste Version."
+      },
+      "personal": {
+        "desktopRequiredTitle": "Desktop-App erforderlich",
+        "desktopRequiredDescription": "Der lokale Dateisystem-Konnektor ist nur in der PipesHub-Desktop-App verfügbar. Bitte verwenden Sie die Desktop-App, um diesen Konnektor einzurichten."
       },
       "syncStatus": {
         "paused": "Synchronisierung pausiert",
@@ -1956,7 +1982,12 @@
     }
   },
   "filePreview": {
-    "fileInformation": "Dateiinformationen"
+    "fileInformation": "Dateiinformationen",
+    "citationLabel": "Zitat {{index}}",
+    "page": "Seite {{number}}",
+    "paragraph": "Absatz {{number}}",
+    "showMore": "Mehr anzeigen",
+    "showLess": "Weniger anzeigen"
   },
   "agentBuilder": {
     "goBack": "Zurück",
@@ -2030,7 +2061,13 @@
     "optional": "Optional",
     "connectChatInput": "Chat-Eingabe verbinden",
     "toChatOutput": "Zur Chat-Ausgabe",
-    "agentConfigTitle": "Agentenkonfiguration",
+    "agentConfigTitle": "Agent-Eingabeaufforderungen konfigurieren",
+    "agentConfigSubtitle": "Definieren Sie das Verhalten des Agenten und die anfängliche Begrüßungsnachricht für Benutzer.",
+    "useAsDefault": "Als Standard verwenden",
+    "editSection": "Abschnitt bearbeiten",
+    "showLess": "Weniger anzeigen",
+    "showAll": "Alle anzeigen ({{count}} Zeilen)",
+    "lineCount": "{{count}} Zeilen",
     "instructionsLabel": "Anweisungen",
     "startingMessageLabel": "Startnachricht",
     "moreItems": "+{{count}} weitere",
@@ -2300,7 +2337,7 @@
       "permissions": "Berechtigungen",
       "noPermissions": "Keine Berechtigungen zugewiesen",
       "indexingStatus": "Indexierungsstatus",
-      "connector": "Herkunft",
+      "connector": "Quelle",
       "folder": "Ordner",
       "connectorId": "Konnektor-ID",
       "notAvailable": "k. A.",

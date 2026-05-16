@@ -45,6 +45,8 @@ import { SIDEBAR_CONVERSATIONS_PAGE_SIZE } from './constants';
 
 // Space reserved below content views to clear the absolutely-positioned chat input.
 const CHAT_INPUT_OFFSET = { mobile: 120, desktop: 128 };
+// Space reserved when input is hidden — just enough to clear the footer links.
+const FOOTER_ONLY_OFFSET = { mobile: 48, desktop: 48 };
 // Extra breathing room above the chat input for the search results list.
 const SEARCH_RESULTS_EXTRA_OFFSET = { mobile: 0, desktop: 70 };
 
@@ -810,13 +812,20 @@ function ChatContent() {
       if (pending.settings.agentStrategy) store.setAgentStrategy(pending.settings.agentStrategy);
     }
 
-    // 3. Auto-send the message through the runtime
+    // 3. Auto-send the message through the runtime. Attachments arrive
+    // pre-uploaded (the widget triggered the upload at attach-time), so we
+    // forward the refs verbatim — same shape as a regular send from the
+    // main composer.
     threadRuntime.append({
       role: 'user',
       content: [{ type: 'text', text: pending.message }],
       metadata: {
         custom: {
           collections: collections.length > 0 ? collections : undefined,
+          attachments:
+            pending.attachments && pending.attachments.length > 0
+              ? pending.attachments
+              : undefined,
         },
       },
       startRun: true,
@@ -917,6 +926,10 @@ function ChatContent() {
     };
   }, [conversationId, chatShareAdapter, showConversationShare]);
 
+  // Hide chat input when viewing a shared conversation the user does not own.
+  // `null` means "not yet known" (loading) — keep input visible to avoid flash.
+  const showChatInput = activeSlotIsOwner !== false;
+
   // Show new chat view when no active slot, or slot is new with no messages
   const showNewChatView = !activeSlotId || (
     hasActiveSlot &&
@@ -1003,7 +1016,9 @@ function ChatContent() {
           flex: 1,
           width: '100%',
           overflow: 'hidden',
-          marginBottom: `${(isMobile ? CHAT_INPUT_OFFSET.mobile : CHAT_INPUT_OFFSET.desktop) + (isMobile ? SEARCH_RESULTS_EXTRA_OFFSET.mobile : SEARCH_RESULTS_EXTRA_OFFSET.desktop)}px`,
+          marginBottom: showChatInput
+            ? `${(isMobile ? CHAT_INPUT_OFFSET.mobile : CHAT_INPUT_OFFSET.desktop) + (isMobile ? SEARCH_RESULTS_EXTRA_OFFSET.mobile : SEARCH_RESULTS_EXTRA_OFFSET.desktop)}px`
+            : `${isMobile ? FOOTER_ONLY_OFFSET.mobile : FOOTER_ONLY_OFFSET.desktop}px`,
         }}>
           <SearchResultsView />
         </Flex>
@@ -1055,7 +1070,7 @@ function ChatContent() {
           </Box>
 
           {/* Centered chat input — new-chat landing (assistant or agent); moves to bottom after first send. */}
-          {isInputCentered && (
+          {isInputCentered && showChatInput && (
             <Box
               style={{
                 width: '100%',
@@ -1096,7 +1111,9 @@ function ChatContent() {
             zIndex: 10,
             width: '100%',
             overflow: 'hidden',
-            marginBottom: `${isMobile ? CHAT_INPUT_OFFSET.mobile : CHAT_INPUT_OFFSET.desktop}px`,
+            marginBottom: showChatInput
+              ? `${isMobile ? CHAT_INPUT_OFFSET.mobile : CHAT_INPUT_OFFSET.desktop}px`
+              : `${isMobile ? FOOTER_ONLY_OFFSET.mobile : FOOTER_ONLY_OFFSET.desktop}px`,
             paddingTop: isMobile ? (historyAndShareAgentId ? '76px' : '60px') : historyAndShareAgentId ? '56px' : '40px',
           }}
         >
@@ -1116,7 +1133,7 @@ function ChatContent() {
           zIndex: 20,
         }}
       >
-        {!isInputCentered && <ChatInputWrapper />}
+        {!isInputCentered && showChatInput && <ChatInputWrapper />}
         <ChatFooterLinks />
       </Box>
 
@@ -1143,6 +1160,7 @@ function ChatContent() {
           citations={previewFile.citations}
           initialCitationId={previewFile.initialCitationId}
           hideFileDetails={previewFile.hideFileDetails}
+          showDownload={previewFile.showDownload}
           defaultTab="preview"
           onToggleFullscreen={() => setPreviewMode('fullscreen')}
           onOpenChange={(open) => {
@@ -1173,6 +1191,7 @@ function ChatContent() {
           citations={previewFile.citations}
           initialCitationId={previewFile.initialCitationId}
           hideFileDetails={previewFile.hideFileDetails}
+          showDownload={previewFile.showDownload}
           defaultTab="preview"
           onExitFullscreen={() => setPreviewMode('sidebar')}
           onClose={() => clearPreview()}

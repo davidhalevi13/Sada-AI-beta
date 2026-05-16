@@ -62,6 +62,12 @@ export interface ChatPreviewFile {
    * don't correspond to a KB record (e.g. chat-generated artifacts).
    */
   hideFileDetails?: boolean;
+  /**
+   * Show a "Download" button in the preview header. Enabled for previews
+   * (e.g. chat attachments / artifacts) where the user is expected to be
+   * able to save the file locally.
+   */
+  showDownload?: boolean;
 }
 
 /**
@@ -1034,9 +1040,14 @@ export const useChatStore = create<ChatState>((set, get) => ({
     settings: { ...state.settings, mode },
   })),
 
-  setQueryMode: (queryMode) => set((state) => ({
-    settings: { ...state.settings, queryMode },
-  })),
+  setQueryMode: (queryMode) =>
+    set((state) => ({
+      settings: {
+        ...state.settings,
+        queryMode,
+        ...(queryMode === 'web-search' ? { filters: { apps: [], kb: [] } } : {}),
+      },
+    })),
 
   setAgentStrategy: (agentStrategy) => set((state) => ({
     settings: { ...state.settings, agentStrategy },

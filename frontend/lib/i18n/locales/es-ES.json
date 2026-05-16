@@ -287,6 +287,20 @@
     "unsavedChanges": "Tienes cambios sin guardar",
     "tryAgain": "Por favor, inténtalo de nuevo"
   },
+  "electron": {
+    "serverUrlSetup": {
+      "title": "Conectar al servidor PipesHub",
+      "subtitleFirstRun": "Introduce la URL de tu servidor PipesHub para comenzar.",
+      "subtitleExisting": "Confirma o actualiza la URL de tu servidor PipesHub.",
+      "label": "URL del servidor",
+      "submit": "Conectar",
+      "errors": {
+        "empty": "Introduce una URL del servidor.",
+        "invalid": "Introduce una URL válida (p. ej. http://localhost:3000).",
+        "protocol": "La URL del servidor debe usar http:// o https://."
+      }
+    }
+  },
   "common": {
     "yes": "Sí",
     "no": "No",
@@ -374,7 +388,8 @@
     "notion": "Notion",
     "confluence": "Confluence",
     "github": "GitHub",
-    "gitlab": "GitLab"
+    "gitlab": "GitLab",
+    "localFs": "FS local"
   },
   "itemType": {
     "knowledgeBase": "base de conocimiento",
@@ -485,6 +500,8 @@
     "viewAgentTooltipServiceAccount": "Solo lectura: este agente de servicio de la organización está bloqueado. Puede explorarlo, pero nada se puede editar ni reconfigurar aquí.",
     "askInContext": "Preguntar en \"{{title}}\"",
     "askAnythingInContext": "Pregunta lo que quieras en \"{{title}}\"",
+    "expandTable": "Expandir tabla",
+    "fullTableView": "Vista completa de la tabla",
     "toasts": {
       "stopStreamTitle": "Próximamente",
       "stopStreamDescription": "La detención de la generación no es compatible",
@@ -1603,7 +1620,9 @@
         "statEmpty": "Empty",
         "statEmptySub": "No extractable content",
         "recordsByType": "Records by Type",
-        "noRecordTypes": "No record types available"
+        "noRecordTypes": "No record types available",
+        "localWatcherLabel": "VIGILANTE LOCAL",
+        "localWatcherStatus": "{{state}} · {{pending}} pendientes · {{failed}} fallidos"
       },
       "settingsTab": {
         "instanceName": "Nombre de la instancia",
@@ -1631,7 +1650,14 @@
       },
       "schemaForm": {
         "tagsPlaceholder": "Escriba y pulse Intro para añadir etiquetas",
-        "removeTagAriaLabel": "Quitar {{tag}}"
+        "removeTagAriaLabel": "Quitar {{tag}}",
+        "chooseFolder": "Elegir carpeta",
+        "folderPickerUnavailableTitle": "Selector de carpetas no disponible",
+        "folderPickerUnavailableDescription": "Reinicie la aplicación de escritorio o actualícela a la última versión."
+      },
+      "personal": {
+        "desktopRequiredTitle": "Se requiere la aplicación de escritorio",
+        "desktopRequiredDescription": "El conector del sistema de archivos local solo está disponible en la aplicación de escritorio de PipesHub. Utilice la aplicación de escritorio para configurar este conector."
       },
       "syncStatus": {
         "paused": "Sync Paused",
@@ -1953,7 +1979,12 @@
     }
   },
   "filePreview": {
-    "fileInformation": "Información del archivo"
+    "fileInformation": "Información del archivo",
+    "citationLabel": "Cita {{index}}",
+    "page": "Página {{number}}",
+    "paragraph": "Párrafo {{number}}",
+    "showMore": "Ver más",
+    "showLess": "Ver menos"
   },
   "agentBuilder": {
     "goBack": "Volver",
@@ -2027,7 +2058,13 @@
     "optional": "Opcional",
     "connectChatInput": "Conectar entrada de chat",
     "toChatOutput": "A la salida de chat",
-    "agentConfigTitle": "Configuración del agente",
+    "agentConfigTitle": "Configurar indicaciones del agente",
+    "agentConfigSubtitle": "Define el comportamiento del agente y el mensaje de bienvenida inicial para los usuarios.",
+    "useAsDefault": "Usar como predeterminado",
+    "editSection": "Editar sección",
+    "showLess": "Mostrar menos",
+    "showAll": "Mostrar todo ({{count}} líneas)",
+    "lineCount": "{{count}} líneas",
     "instructionsLabel": "Instrucciones",
     "startingMessageLabel": "Mensaje inicial",
     "moreItems": "+{{count}} más",
@@ -2296,7 +2333,7 @@
       "permissions": "Permisos",
       "noPermissions": "Sin permisos asignados",
       "indexingStatus": "Estado de indexación",
-      "connector": "Origen",
+      "connector": "Fuente",
       "folder": "Carpeta",
       "connectorId": "ID del conector",
       "notAvailable": "N/D",

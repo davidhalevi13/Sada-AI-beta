@@ -288,6 +288,20 @@
     "unsavedChanges": "You have unsaved changes",
     "tryAgain": "Please try again"
   },
+  "electron": {
+    "serverUrlSetup": {
+      "title": "Connect to PipesHub Server",
+      "subtitleFirstRun": "Enter the URL of your PipesHub server to get started.",
+      "subtitleExisting": "Confirm or update your PipesHub server URL.",
+      "label": "Server URL",
+      "submit": "Connect",
+      "errors": {
+        "empty": "Please enter a server URL.",
+        "invalid": "Please enter a valid URL (e.g. http://localhost:3000).",
+        "protocol": "Server URL must use http:// or https://."
+      }
+    }
+  },
   "common": {
     "yes": "Yes",
     "no": "No",
@@ -375,7 +389,8 @@
     "notion": "Notion",
     "confluence": "Confluence",
     "github": "GitHub",
-    "gitlab": "GitLab"
+    "gitlab": "GitLab",
+    "localFs": "Local FS"
   },
   "itemType": {
     "knowledgeBase": "knowledge base",
@@ -486,6 +501,8 @@
     "viewAgentTooltipServiceAccount": "View-only: this organization service agent is locked. You can look around, but nothing here can be edited or reconfigured.",
     "askInContext": "Ask in \"{{title}}\"",
     "askAnythingInContext": "Ask anything in \"{{title}}\"",
+    "expandTable": "Expand table",
+    "fullTableView": "Full table view",
     "toasts": {
       "stopStreamTitle": "Coming Soon",
       "stopStreamDescription": "Stop Generation is not supported",
@@ -1591,7 +1608,9 @@
         "statEmpty": "Empty",
         "statEmptySub": "No extractable content",
         "recordsByType": "Records by Type",
-        "noRecordTypes": "No record types available"
+        "noRecordTypes": "No record types available",
+        "localWatcherLabel": "LOCAL WATCHER",
+        "localWatcherStatus": "{{state}} · {{pending}} pending · {{failed}} failed"
       },
       "settingsTab": {
         "instanceName": "Instance Name",
@@ -1619,7 +1638,14 @@
       },
       "schemaForm": {
         "tagsPlaceholder": "Type and press Enter to add tags",
-        "removeTagAriaLabel": "Remove {{tag}}"
+        "removeTagAriaLabel": "Remove {{tag}}",
+        "chooseFolder": "Choose folder",
+        "folderPickerUnavailableTitle": "Folder picker unavailable",
+        "folderPickerUnavailableDescription": "Restart the desktop app or update to the latest build."
+      },
+      "personal": {
+        "desktopRequiredTitle": "Desktop app required",
+        "desktopRequiredDescription": "Local filesystem connector is only available in the PipesHub desktop app. Please use the desktop app to set up this connector."
       },
       "syncStatus": {
         "paused": "Sync Paused",
@@ -1941,7 +1967,12 @@
     }
   },
   "filePreview": {
-    "fileInformation": "File Information"
+    "fileInformation": "File Information",
+    "citationLabel": "Citation {{index}}",
+    "page": "Page {{number}}",
+    "paragraph": "Paragraph {{number}}",
+    "showMore": "Show more",
+    "showLess": "Show less"
   },
   "agentBuilder": {
     "goBack": "Go back",
@@ -2015,7 +2046,13 @@
     "optional": "Optional",
     "connectChatInput": "Connect chat input",
     "toChatOutput": "To chat output",
-    "agentConfigTitle": "Agent configuration",
+    "agentConfigTitle": "Configure Agent Prompts",
+    "agentConfigSubtitle": "Define the agent's behaviour and initial greeting message for users.",
+    "useAsDefault": "Use as default",
+    "editSection": "Edit section",
+    "showLess": "Show less",
+    "showAll": "Show all ({{count}} lines)",
+    "lineCount": "{{count}} lines",
     "instructionsLabel": "Instructions",
     "startingMessageLabel": "Starting message",
     "moreItems": "+{{count}} more",
@@ -2284,7 +2321,7 @@
       "permissions": "Permissions",
       "noPermissions": "No permissions assigned",
       "indexingStatus": "Indexing status",
-      "connector": "Origin",
+      "connector": "Source",
       "folder": "Folder",
       "connectorId": "Connector ID",
       "notAvailable": "N/A",

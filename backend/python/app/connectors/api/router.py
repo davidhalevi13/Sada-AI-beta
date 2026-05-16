@@ -11,7 +11,7 @@ import tempfile
 import time
 from collections.abc import AsyncGenerator
 from pathlib import Path
-from typing import Any
+from typing import Annotated, Any
 from urllib.parse import parse_qs, urlencode, urlparse
 
 import jwt
@@ -62,6 +62,17 @@ from app.connectors.core.factory.connector_factory import ConnectorFactory
 from app.connectors.core.registry.auth_builder import AuthType
 from app.connectors.core.registry.connector_builder import ConnectorScope
 from app.connectors.core.registry.connector_registry import ConnectorRegistry
+from app.connectors.sources.local_fs.connector import LocalFsConnector
+from app.connectors.sources.local_fs.file_events import (
+    _normalize_connector_type_value,
+    _parse_local_fs_file_event_batch_request,
+    _parse_local_fs_uploaded_file_event_batch_request,
+    _update_connector_status,
+)
+from app.connectors.sources.local_fs.models import (
+    LocalFsFileEventBatchStats,
+    LocalFsFileEventSubmissionResponse,
+)
 from app.connectors.services.kafka_service import KafkaService
 from app.containers.connector import ConnectorAppContainer
 from app.core.signed_url import SignedUrlHandler
@@ -80,7 +91,6 @@ logger = create_logger("connector_service")
 router = APIRouter()
 
 OAUTH_INSTANCE_NAME = "oauthInstanceName"
-
 
 def get_mime_type_from_record(record: Record) -> str:
     """
@@ -843,6 +853,7 @@ async def stream_record(
             if not org:
                 raise HTTPException(status_code=HttpStatusCode.NOT_FOUND.value, detail="Organization not found")
 
+
         # Permission check: Verify user has access to this record
         # This handles both KB-level and direct record permissions
 
@@ -853,8 +864,7 @@ async def stream_record(
                 status_code=HttpStatusCode.FORBIDDEN.value,
                 detail="You do not have permission to access this record"
             )
-
-        if record.record_type == RecordType.ARTIFACT:
+        if record.record_type == RecordType.ARTIFACT or record.connector_name == Connectors.ATTACHMENTS:
             return await _stream_artifact_from_storage(
                 record, org_id, config_service, convert_to=convertTo
             )
@@ -1856,6 +1866,207 @@ async def get_connector_registry(
 
 
 
+# Bounded concurrency for the cross-org config_service fan-out below.
+# Each connector requires one config_service.get_config call; we batch
+# them so we don't open hundreds of simultaneous KV-store requests
+# (which would spike memory + risk rate limits) while still cutting
+# wall-clock vs. a serial loop on large deployments.
+_INTERNAL_ALL_SCHEDULED_BATCH_SIZE = 50
+
+
+async def _fetch_connector_sync_block(
+    connector_id: str,
+    config_service: Any,
+    logger: Any,
+) -> dict[str, Any] | None:
+    """
+    Fetch one connector's persisted config and return its `sync` block,
+    or None if the config is missing / malformed / fails to load. Errors
+    are swallowed (with a warning) so a single broken connector cannot
+    abort the cross-org enumeration.
+    """
+    config_path = _get_config_path_for_instance(connector_id)
+    try:
+        config = await config_service.get_config(config_path)
+    except Exception as cfg_err:
+        logger.warning(
+            "Failed to read config for connector %s (path=%s): %s",
+            connector_id,
+            config_path,
+            cfg_err,
+        )
+        return None
+    if not isinstance(config, dict):
+        logger.debug(
+            "Connector %s has no config at path=%s (got %s)",
+            connector_id,
+            config_path,
+            type(config).__name__,
+        )
+        return None
+    sync = config.get("sync") or {}
+    if not isinstance(sync, dict):
+        logger.debug(
+            "Connector %s sync block is not a dict: %s",
+            connector_id,
+            type(sync).__name__,
+        )
+        return None
+    logger.debug("Connector %s sync block: %s", connector_id, sync)
+    return sync
+
+
+@router.get(
+    "/api/v1/connectors/internal/all-scheduled",
+    dependencies=[Depends(require_scopes(OAuthScopes.CONNECTOR_READ))],
+)
+async def get_all_scheduled_connector_instances_internal(
+    request: Request,
+    page: int = Query(1, ge=1, description="1-based page number"),
+    limit: int = Query(50, ge=1, le=200, description="Maximum candidates to process per call"),
+) -> dict[str, Any]:
+    """
+    Internal cross-org enumeration of connector instances configured for
+    SCHEDULED sync. Used by the nodejs scheduled-jobs backfill migration
+    to retroactively create BullMQ jobs for connectors saved before the
+    nodejs API took ownership of scheduling.
+
+    Pagination: the caller steps through pages starting at page=1. Each
+    page returns up to `limit` active connector candidates filtered to
+    those with `selectedStrategy = SCHEDULED`, plus a `hasMore` flag so
+    the caller knows when to stop. Database-level LIMIT/OFFSET is used so
+    memory stays proportional to `limit` regardless of total connector count.
+
+    Auth: relies on the global JWT middleware. Caller must mint a scoped
+    service token (FETCH_CONFIG-equivalent) since this endpoint reads
+    across all organizations and is not user-scoped.
+
+    Response shape per page:
+        {
+            "success": true,
+            "items": [
+                {
+                    "connectorId": <_key>,
+                    "type": <connector type, e.g. 'Confluence'>,
+                    "orgId": <org _key>,
+                    "ownerUserId": <createdBy>,
+                    "isActive": bool,
+                    "sync": <full sync block from config_service>
+                },
+                ...
+            ],
+            "hasMore": bool
+        }
+    """
+    container = request.app.container
+    logger = container.logger()
+    graph_provider = request.app.state.graph_provider
+    config_service = container.config_service()
+
+    try:
+        organisation = await graph_provider.get_all_orgs()
+        if not organisation:
+            logger.error("No organisations found")
+            raise HTTPException(
+                status_code=HttpStatusCode.NOT_FOUND.value,
+                detail="No organisations found",
+            )
+        organisation_id = organisation[0].get("_key") or organisation[0].get("id")
+
+        # Convert 1-based page to 0-based DB offset.
+        skip = (page - 1) * limit
+
+        # Fetch exactly one page of active connectors from the database so that
+        # memory consumption stays proportional to `limit` regardless of how
+        # many connectors exist in total.  An extra document is requested to
+        # determine whether a subsequent page exists without a separate COUNT
+        # query.
+        probe_limit = limit + 1
+        page_docs = await graph_provider.get_documents_paginated(
+            CollectionNames.APPS.value,
+            skip=skip,
+            limit=probe_limit,
+            filters={"isActive": True},
+        )
+        has_more = len(page_docs) == probe_limit
+        page_docs = page_docs[:limit]
+
+        candidates: list[dict[str, Any]] = []
+        for doc in page_docs:
+            connector_id = doc.get("_key") or doc.get("id")
+            connector_type = doc.get("type")
+            if not connector_id or not connector_type:
+                continue
+            candidates.append({
+                "connectorId": connector_id,
+                "connectorType": connector_type,
+                "orgId": organisation_id,
+                "createdBy": doc.get("createdBy"),
+            })
+
+        # Fan out config_service calls for the current page only, in bounded
+        # batches to avoid opening hundreds of simultaneous KV-store requests.
+        items: list[dict[str, Any]] = []
+        config_batch_size = _INTERNAL_ALL_SCHEDULED_BATCH_SIZE
+        for batch_start in range(0, len(candidates), config_batch_size):
+            batch = candidates[batch_start:batch_start + config_batch_size]
+            sync_blocks = await asyncio.gather(
+                *(
+                    _fetch_connector_sync_block(
+                        c["connectorId"], config_service, logger,
+                    )
+                    for c in batch
+                ),
+            )
+            for candidate, sync in zip(batch, sync_blocks):
+                cid = candidate["connectorId"]
+                if sync is None:
+                    logger.debug(
+                        "Skip connector %s: no config found at expected path", cid
+                    )
+                    continue
+                strategy = str(sync.get("selectedStrategy", "")).upper()
+                if strategy != "SCHEDULED":
+                    logger.debug(
+                        "Skip connector %s: selectedStrategy=%r (not SCHEDULED)",
+                        cid,
+                        strategy or "(empty)",
+                    )
+                    continue
+                items.append({
+                    "connectorId": candidate["connectorId"],
+                    "type": candidate["connectorType"],
+                    "orgId": candidate["orgId"],
+                    "ownerUserId": candidate["createdBy"],
+                    "isActive": True,
+                    "sync": sync,
+                })
+
+        logger.info(
+            "Internal all-scheduled page: page=%d limit=%d page_candidates=%d "
+            "scheduled_in_page=%d has_more=%s",
+            page,
+            limit,
+            len(candidates),
+            len(items),
+            has_more,
+        )
+        logger.debug("Items: %s", items)
+        return {
+            "success": True,
+            "items": items,
+            "hasMore": has_more,
+        }
+    except HTTPException:
+        raise
+    except Exception as e:
+        logger.error("Error enumerating scheduled connector instances: %s", str(e))
+        raise HTTPException(
+            status_code=HttpStatusCode.INTERNAL_SERVER_ERROR.value,
+            detail=f"Error enumerating scheduled connectors: {str(e)}",
+        ) from e
+
+
 @router.get("/api/v1/connectors/", dependencies=[Depends(require_scopes(OAuthScopes.CONNECTOR_READ))])
 async def get_connector_instances(
     request: Request,
@@ -2839,6 +3050,224 @@ async def get_connector_instance_config(
             status_code=HttpStatusCode.INTERNAL_SERVER_ERROR.value,
             detail=f"Failed to get connector configuration: {str(e)}"
         ) from e
+
+
+@router.post(
+    "/api/v1/connectors/{connector_id}/file-events/upload",
+    dependencies=[Depends(require_scopes(OAuthScopes.CONNECTOR_SYNC))],
+    response_model=LocalFsFileEventSubmissionResponse,
+)
+async def submit_connector_file_event_uploads(
+    connector_id: str,
+    request: Request,
+    graph_provider: IGraphDBProvider = Depends(get_graph_provider),
+) -> LocalFsFileEventSubmissionResponse:
+    """
+    Submit Local FS file events with uploaded file bytes.
+
+    Request format:
+    - Content-Type: multipart/form-data
+    - Required `manifest` part containing JSON for `LocalFsFileEventBatchRequest`
+    - Optional file parts keyed by each event's `contentField`
+
+    Response:
+    - `LocalFsFileEventSubmissionResponse` with submission metadata and stats.
+
+    Raises:
+    - 401: user is not authenticated
+    - 404: connector instance not found / not accessible
+    - 400: connector is not Local FS
+    - 422/413: invalid manifest or oversized payload
+    - 500: connector processing failed
+    """
+    container = request.app.container
+    logger = container.logger()
+    connector_registry = request.app.state.connector_registry
+    user_id = request.state.user.get("userId")
+    org_id = request.state.user.get("orgId")
+    is_admin = request.headers.get("X-Is-Admin", "false").lower() == "true"
+    payload, files_by_field = await _parse_local_fs_uploaded_file_event_batch_request(request)
+
+    if not user_id or not org_id:
+        raise HTTPException(
+            status_code=HttpStatusCode.UNAUTHORIZED.value,
+            detail="User not authenticated",
+        )
+
+    instance = await connector_registry.get_connector_instance(
+        connector_id=connector_id,
+        user_id=user_id,
+        org_id=org_id,
+        is_admin=is_admin,
+    )
+    if not instance:
+        raise HTTPException(
+            status_code=HttpStatusCode.NOT_FOUND.value,
+            detail=f"Connector instance {connector_id} not found or access denied",
+        )
+
+    connector_type = str(instance.get("type", ""))
+    _ct_norm = _normalize_connector_type_value(connector_type)
+    if _ct_norm != "localfs":
+        raise HTTPException(
+            status_code=HttpStatusCode.BAD_REQUEST.value,
+            detail="File event replay is only supported for Local FS connectors",
+        )
+
+    await _update_connector_status(graph_provider, connector_id, AppStatus.SYNCING.value)
+    try:
+        connector = await _ensure_connector_initialized(
+            container,
+            connector_id,
+            connector_type,
+            connector_registry,
+            graph_provider,
+            user_id,
+            org_id,
+            is_admin=is_admin,
+            logger=logger,
+        )
+        if not isinstance(connector, LocalFsConnector):
+            raise HTTPException(
+                status_code=HttpStatusCode.BAD_REQUEST.value,
+                detail="Initialized connector is not a Local FS connector",
+            )
+
+        try:
+            stats = await connector.apply_uploaded_file_event_batch(
+                payload.events,
+                files_by_field,
+                reset_before_apply=payload.resetBeforeApply,
+            )
+        except HTTPException:
+            raise
+        except Exception as exc:
+            logger.exception(
+                "Local FS uploaded file-event batch failed: connector=%s batch=%s",
+                connector_id,
+                payload.batchId,
+            )
+            raise HTTPException(
+                status_code=HttpStatusCode.INTERNAL_SERVER_ERROR.value,
+                detail=f"Local FS file-event batch failed: {exc}",
+            ) from exc
+        return LocalFsFileEventSubmissionResponse(
+            success=True,
+            connectorId=connector_id,
+            batchId=payload.batchId,
+            stats=stats,
+        )
+    finally:
+        with contextlib.suppress(Exception):
+            await _update_connector_status(graph_provider, connector_id, AppStatus.IDLE.value)
+
+
+@router.post(
+    "/api/v1/connectors/{connector_id}/file-events",
+    dependencies=[Depends(require_scopes(OAuthScopes.CONNECTOR_SYNC))],
+    response_model=LocalFsFileEventSubmissionResponse,
+)
+async def submit_connector_file_events(
+    connector_id: str,
+    request: Request,
+    graph_provider: IGraphDBProvider = Depends(get_graph_provider),
+) -> LocalFsFileEventSubmissionResponse:
+    """
+    Submit Local FS file events as JSON metadata only.
+
+    Request format:
+    - Content-Type: application/json
+    - Body must match `LocalFsFileEventBatchRequest` (directly or wrapped payload)
+
+    Response:
+    - `LocalFsFileEventSubmissionResponse` with submission metadata and stats.
+
+    Raises:
+    - 401: user is not authenticated
+    - 404: connector instance not found / not accessible
+    - 400: connector is not Local FS
+    - 422/413: invalid batch payload or oversized event batch
+    - 500: connector processing failed
+    """
+    container = request.app.container
+    logger = container.logger()
+    connector_registry = request.app.state.connector_registry
+    user_id = request.state.user.get("userId")
+    org_id = request.state.user.get("orgId")
+    is_admin = request.headers.get("X-Is-Admin", "false").lower() == "true"
+    payload = await _parse_local_fs_file_event_batch_request(request)
+
+    if not user_id or not org_id:
+        raise HTTPException(
+            status_code=HttpStatusCode.UNAUTHORIZED.value,
+            detail="User not authenticated",
+        )
+
+    instance = await connector_registry.get_connector_instance(
+        connector_id=connector_id,
+        user_id=user_id,
+        org_id=org_id,
+        is_admin=is_admin,
+    )
+    if not instance:
+        raise HTTPException(
+            status_code=HttpStatusCode.NOT_FOUND.value,
+            detail=f"Connector instance {connector_id} not found or access denied",
+        )
+
+    connector_type = str(instance.get("type", ""))
+    _ct_norm = _normalize_connector_type_value(connector_type)
+    if _ct_norm != "localfs":
+        raise HTTPException(
+            status_code=HttpStatusCode.BAD_REQUEST.value,
+            detail="File event replay is only supported for Local FS connectors",
+        )
+
+    await _update_connector_status(graph_provider, connector_id, AppStatus.SYNCING.value)
+    try:
+        connector = await _ensure_connector_initialized(
+            container,
+            connector_id,
+            connector_type,
+            connector_registry,
+            graph_provider,
+            user_id,
+            org_id,
+            is_admin=is_admin,
+            logger=logger,
+        )
+        if not isinstance(connector, LocalFsConnector):
+            raise HTTPException(
+                status_code=HttpStatusCode.BAD_REQUEST.value,
+                detail="Initialized connector is not a Local FS connector",
+            )
+
+        try:
+            stats = await connector.apply_file_event_batch(
+                payload.events,
+                reset_before_apply=payload.resetBeforeApply,
+            )
+        except HTTPException:
+            raise
+        except Exception as exc:
+            logger.exception(
+                "Local FS file-event batch failed: connector=%s batch=%s",
+                connector_id,
+                payload.batchId,
+            )
+            raise HTTPException(
+                status_code=HttpStatusCode.INTERNAL_SERVER_ERROR.value,
+                detail=f"Local FS file-event batch failed: {exc}",
+            ) from exc
+        return LocalFsFileEventSubmissionResponse(
+            success=True,
+            connectorId=connector_id,
+            batchId=payload.batchId,
+            stats=stats,
+        )
+    finally:
+        with contextlib.suppress(Exception):
+            await _update_connector_status(graph_provider, connector_id, AppStatus.IDLE.value)
 
 
 @router.put("/api/v1/connectors/{connector_id}/config/auth", dependencies=[Depends(require_scopes(OAuthScopes.CONNECTOR_WRITE)), Depends(require_connector_not_locked)])
@@ -4905,6 +5334,27 @@ async def get_filter_field_options(
     limit: int = Query(20, ge=1, le=100, description="Items per page"),
     search: str | None = Query(None, description="Search text to filter options"),
     cursor: str | None = Query(None, description="Cursor for cursor-based pagination (API-specific)"),
+    context_group_path: Annotated[
+        list[str] | None,
+        Query(
+            alias="contextGroupPath",
+            description=(
+                "Repeat for each GitLab group namespace path. When set, project_ids "
+                "options are limited to repositories under these groups (GitLab only)."
+            ),
+        ),
+    ] = None,
+    exclude_context_group_path: Annotated[
+        list[str] | None,
+        Query(
+            alias="excludeContextGroupPath",
+            description=(
+                "Repeat for each GitLab group namespace path to exclude. When set, "
+                "project_ids options omit repositories under these groups (GitLab only). "
+                "Mutually exclusive with `contextGroupPath`."
+            ),
+        ),
+    ] = None,
     graph_provider: IGraphDBProvider = Depends(get_graph_provider)
 ) -> dict[str, Any]:
     """
@@ -5015,14 +5465,38 @@ async def get_filter_field_options(
                     detail=f"Connector instance {connector_id} ({connector_type}) does not support filter options via this endpoint."
                 )
 
-        # Call get_filter_options method on initialized connector
-        response = await connector.get_filter_options(
-            filter_key=filter_key,
-            page=page,
-            limit=limit,
-            search=search,
-            cursor=cursor
-        )
+        # Optional request context for dependent filter options (e.g. GitLab project list scoped by group)
+        scope_paths = [p for p in (context_group_path or []) if p and str(p).strip()]
+        exclude_paths = [
+            p for p in (exclude_context_group_path or []) if p and str(p).strip()
+        ]
+        if scope_paths:
+            setattr(connector, "_request_filter_context_group_paths", scope_paths)
+        if exclude_paths:
+            setattr(
+                connector,
+                "_request_filter_context_exclude_group_paths",
+                exclude_paths,
+            )
+        try:
+            # Call get_filter_options method on initialized connector
+            response = await connector.get_filter_options(
+                filter_key=filter_key,
+                page=page,
+                limit=limit,
+                search=search,
+                cursor=cursor,
+            )
+        finally:
+            if scope_paths:
+                with contextlib.suppress(AttributeError):
+                    delattr(connector, "_request_filter_context_group_paths")
+            if exclude_paths:
+                with contextlib.suppress(AttributeError):
+                    delattr(
+                        connector,
+                        "_request_filter_context_exclude_group_paths",
+                    )
 
         # Return response as dictionary for JSON serialization
         return response.to_dict()
