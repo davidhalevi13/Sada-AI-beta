@@ -290,7 +290,7 @@ function TableRow({
       }
       switch (item.indexingStatus) {
         case 'COMPLETED':
-          return <MaterialIcon name={getIndexStatusIcon(item.indexingStatus)} size={16} color="var(--emerald-11)" />;
+          return <MaterialIcon name={getIndexStatusIcon(item.indexingStatus)} size={16} color="var(--green-11)" />;
         case 'IN_PROGRESS':
           return <LapTimerIcon size={20} color="var(--amber-9)" />;
         case 'FAILED':
@@ -321,7 +321,7 @@ function TableRow({
     // For KnowledgeBaseItem, use status
     switch (item.status) {
       case 'indexed':
-        return <MaterialIcon name="check_circle" size={16} color="var(--emerald-11)" />;
+        return <MaterialIcon name="check_circle" size={16} color="var(--green-11)" />;
       case 'processing':
         return <MaterialIcon name="sync" size={16} color="var(--amber-9)" />;
       case 'pending':

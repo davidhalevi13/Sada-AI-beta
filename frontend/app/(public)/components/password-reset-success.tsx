@@ -16,10 +16,11 @@ export default function PasswordResetSuccess() {
     <Box style={{ width: '100%', maxWidth: '440px' }}>
       <Box style={{ marginBottom: '24px' }}>
         <Image
-          src="/login-page-assets/pipeshub/white-square.svg"
-          alt="Pipeshub"
+          src="/logo/sada-ai-logo-3D.png"
+          alt="Sada AI"
           width={48}
           height={48}
+          style={{ objectFit: 'contain', borderRadius: '8px' }}
         />
       </Box>
 
@@ -36,7 +37,7 @@ export default function PasswordResetSuccess() {
           Your password has been changed!
         </Text>
         <Text style={{ color: 'var(--gray-11)', fontSize: '14px', lineHeight: '20px' }}>
-          Your password has been successfully updated. You can now sign in to your Pipeshub
+          Your password has been successfully updated. You can now sign in to your Sada AI
           workspace with your new password.
         </Text>
       </Flex>

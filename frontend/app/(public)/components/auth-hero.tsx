@@ -130,11 +130,11 @@ export default function AuthHero({ splitLayout }: AuthHeroProps) {
         >
           {/* Pipeshub logo mark */}
           <Image
-            src="/login-page-assets/pipeshub/white-square.svg"
+            src="/logo/sada-ai-logo-3D.png"
             alt=""
             width={33}
             height={33}
-            style={{ flexShrink: 0, opacity: 0.9 }}
+            style={{ flexShrink: 0, opacity: 0.9, objectFit: 'contain', borderRadius: '6px' }}
           />
 
           {/* Search text */}
@@ -197,7 +197,7 @@ export default function AuthHero({ splitLayout }: AuthHeroProps) {
               backgroundColor: 'rgba(31, 31, 31, 0.8)',
               backdropFilter: 'blur(4px)',
               WebkitBackdropFilter: 'blur(4px)',
-              border: '0.82px solid #0fff5d',
+              border: '0.82px solid #F72585',
               boxShadow:
                 '0px 20px 26px -7px rgba(0,0,0,0.9), 0px 7px 13px -3px rgba(0,0,0,0.04), 0px 1px 1px 0px rgba(0,0,0,0.02), 0px 0px 0px 1px rgba(255,255,255,0.14)',
               flexShrink: 0,
@@ -217,13 +217,28 @@ export default function AuthHero({ splitLayout }: AuthHeroProps) {
           zIndex: 1,
         }}
       >
-        <Image
-          src="/login-page-assets/pipeshub/white-horizontal.svg"
-          alt="Pipeshub"
-          width={170}
-          height={45}
-          style={{ opacity: 0.95 }}
-        />
+        <Flex align="center" gap="2">
+          <Image
+            src="/logo/sada-ai-logo-3D.png"
+            alt=""
+            width={45}
+            height={45}
+            style={{ objectFit: 'contain', borderRadius: '8px', flexShrink: 0 }}
+          />
+          <Text
+            style={{
+              color: 'white',
+              fontFamily: 'ClashGrotesk, sans-serif',
+              fontSize: '30px',
+              fontWeight: 500,
+              lineHeight: '45px',
+              letterSpacing: '0.02em',
+              opacity: 0.95,
+            }}
+          >
+            Sada AI
+          </Text>
+        </Flex>
       </Box>
     </Box>
   );

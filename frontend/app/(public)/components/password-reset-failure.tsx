@@ -26,10 +26,11 @@ export default function PasswordResetFailure({
     <Box style={{ width: '100%', maxWidth: '440px' }}>
       <Box style={{ marginBottom: '24px' }}>
         <Image
-          src="/login-page-assets/pipeshub/white-square.svg"
-          alt="Pipeshub"
+          src="/logo/sada-ai-logo-3D.png"
+          alt="Sada AI"
           width={48}
           height={48}
+          style={{ objectFit: 'contain', borderRadius: '8px' }}
         />
       </Box>
 

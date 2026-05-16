@@ -9,9 +9,9 @@ import { Flex, Text } from '@radix-ui/themes';
 function LogoFallback(props: { style?: React.CSSProperties }) {
   return (
     <img
-      src="/logo/pipes-hub.svg"
+      src="/logo/sada-ai-logo-3D.png"
       alt=""
-      style={{ width: 48, height: 48, ...props.style }}
+      style={{ width: 48, height: 48, objectFit: 'contain', ...props.style }}
     />
   );
 }

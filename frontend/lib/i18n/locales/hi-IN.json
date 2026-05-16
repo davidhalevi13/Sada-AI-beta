@@ -129,14 +129,14 @@
     "nav": {
       "prev": "पिछला",
       "next": "अगला",
-      "enterPipeshub": "Pipeshub में प्रवेश करें",
+      "enterPipeshub": "Sada AI में प्रवेश करें",
       "finishing": "समाप्त हो रहा है…",
       "saveLlmFirst": "जारी रखने के लिए पहले AI मॉडल चरण सहेजें"
     },
     "save": "सहेजें",
     "saving": "सहेजा जा रहा है…",
     "footer": {
-      "copyright": "© 2026 Pipeshub LLC",
+      "copyright": "© 2026 Sada AI",
       "privacyPolicy": "गोपनीयता नीति",
       "website": "वेबसाइट",
       "visitDocs": "देखें",
@@ -629,11 +629,11 @@
     "deleteAgent": "एजेंट हटाएं",
     "deleteAgentConfirm": "इस एजेंट को हटाएं?",
     "deleteAgentDescription": "नाम वाला एजेंट",
-    "deleteAgentWarning": "Pipeshub से स्थायी रूप से हटा दिया जाएगा। इसका उपयोग करने वाली चैट अपेक्षित रूप से काम नहीं कर सकतीं।",
+    "deleteAgentWarning": "Sada AI से स्थायी रूप से हटा दिया जाएगा। इसका उपयोग करने वाली चैट अपेक्षित रूप से काम नहीं कर सकतीं।",
     "deleteChat": "हटाएं",
     "deleteChatConfirm": "क्या आप सुनिश्चित हैं?",
     "deleteChatDescription": "शीर्षक वाली चैट",
-    "deleteChatWarning": "Pipeshub से स्थायी रूप से हटा दी जाएगी। साझा पहुंच वाले सभी उपयोगकर्ता अपनी पहुंच खो देंगे।",
+    "deleteChatWarning": "Sada AI से स्थायी रूप से हटा दी जाएगी। साझा पहुंच वाले सभी उपयोगकर्ता अपनी पहुंच खो देंगे।",
     "editAgent": "एजेंट संपादित करें",
     "failedToArchive": "चैट संग्रहित करने में विफल",
     "failedToDelete": "चैट हटाने में विफल",
@@ -894,11 +894,11 @@
     },
     "oauth2": {
       "title": "OAuth 2.0",
-      "subtitle": "उन OAuth 2.0 अनुप्रयोगों को प्रबंधित करें जो Pipeshub के माध्यम से आपके संगठन तक पहुँच सकते हैं",
+      "subtitle": "उन OAuth 2.0 अनुप्रयोगों को प्रबंधित करें जो Sada AI के माध्यम से आपके संगठन तक पहुँच सकते हैं",
       "searchPlaceholder": "नाम या विवरण से अनुप्रयोग खोजें...",
       "newApplication": "नया OAuth अनुप्रयोग",
       "emptyTitle": "कोई OAuth 2.0 अनुप्रयोग नहीं",
-      "emptyDescription": "तृतीय-पक्ष एकीकरण को Pipeshub के माध्यम से आपके संगठन तक पहुँचने देने के लिए OAuth 2.0 ऐप बनाएँ।",
+      "emptyDescription": "तृतीय-पक्ष एकीकरण को Sada AI के माध्यम से आपके संगठन तक पहुँचने देने के लिए OAuth 2.0 ऐप बनाएँ।",
       "loading": "अनुप्रयोग लोड हो रहे हैं...",
       "errorGeneric": "OAuth अनुप्रयोग लोड नहीं हो सके",
       "retry": "पुनः प्रयास करें",
@@ -1023,7 +1023,7 @@
         "returnToAppsButton": "OAuth 2.0 ऐप्स पर लौटें",
         "showSecretAria": "क्लाइंट सीक्रेट दिखाएँ",
         "hideSecretAria": "क्लाइंट सीक्रेट छिपाएँ",
-        "clientCredentialsWarning": "क्लाइंट क्रेडेंशियल टोकन हमेशा Pipeshub तक उस उपयोगकर्ता की पहचान से पहुँचते हैं जिसने यह एप्लिकेशन बनाया था — न कि टोकन एंडपॉइंट को कॉल करने वाले की। उपयोगकर्ता फिर भी ऑथराइज़ेशन कोड फ़्लो से इस एप्लिकेशन को अपने लिए अधिकृत कर सकते हैं।",
+        "clientCredentialsWarning": "क्लाइंट क्रेडेंशियल टोकन हमेशा Sada AI तक उस उपयोगकर्ता की पहचान से पहुँचते हैं जिसने यह एप्लिकेशन बनाया था — न कि टोकन एंडपॉइंट को कॉल करने वाले की। उपयोगकर्ता फिर भी ऑथराइज़ेशन कोड फ़्लो से इस एप्लिकेशन को अपने लिए अधिकृत कर सकते हैं।",
         "successTitle": "अनुप्रयोग बनाया गया",
         "successDescription": "आपका OAuth अनुप्रयोग सफलतापूर्वक बनाया गया।",
         "errorCreateTitle": "अनुप्रयोग नहीं बनाया जा सका",
@@ -1317,7 +1317,7 @@
       "selectPrompt": "पूर्वावलोकन के लिए एक संग्रहीत चैट चुनें",
       "restore": "पुनर्स्थापित करें",
       "permanentlyDelete": "स्थायी रूप से हटाएँ",
-      "deleteConfirmMessage": "यह चैट Pipeshub से स्थायी रूप से हटा दी जाएगी। कोई भी साझा पहुँच खो जाएगी।",
+      "deleteConfirmMessage": "यह चैट Sada AI से स्थायी रूप से हटा दी जाएगी। कोई भी साझा पहुँच खो जाएगी।",
       "restoreSuccess": "चैट पुनर्स्थापित की गई",
       "restoreError": "चैट पुनर्स्थापित नहीं हो सकी",
       "deleteSuccess": "सफलतापूर्वक हटाया गया",
@@ -1356,7 +1356,7 @@
       "postalCodePlaceholder": "eg: 94107",
       "dataCollection": "Data Collection Settings",
       "enableDataCollection": "Enable",
-      "dataCollectionDescription": "PipesHub collects and processes personal information for a variety of business purposes.",
+      "dataCollectionDescription": "Sada AI collects and processes personal information for a variety of business purposes.",
       "dataCollectionReason1": "To provide customer service and support for our products",
       "dataCollectionReason2": "To send marketing communications",
       "dataCollectionReason3": "To manage your subscription to newsletters or other updates",
@@ -1512,7 +1512,7 @@
       },
       "successDialog": {
         "title": "Instance is configured and ready to sync!",
-        "description": "You can start syncing your {{name}} data with Pipeshub now,",
+        "description": "You can start syncing your {{name}} data with Sada AI now,",
         "descriptionSuffix": "or choose to do it later from settings.",
         "later": "I'll do it later",
         "startSync": "Start Syncing Now"
@@ -1889,7 +1889,7 @@
         "title": "Roles & Permissions",
         "role": "Role",
         "groups": "Groups",
-        "roleDescription": "Your role on Pipeshub app",
+        "roleDescription": "Your role on Sada AI app",
         "groupsDescription": "User groups you belong to",
         "noGroups": "No user groups found"
       },
@@ -2352,12 +2352,12 @@
   },
   "auth": {
     "titleSection": {
-      "defaultTitle": "Pipeshub में आपका स्वागत है",
+      "defaultTitle": "Sada AI में आपका स्वागत है",
       "defaultSubtitle": "आपके संगठन का ज्ञान, अंततः खोजयोग्य और जुड़ा हुआ।"
     },
     "signUp": {
       "title": "शुरू करें",
-      "subtitle": "Pipeshub में आपका स्वागत है -- चलिए शुरू करते हैं!",
+      "subtitle": "Sada AI में आपका स्वागत है -- चलिए शुरू करते हैं!",
       "firstNameLabel": "पहला नाम*",
       "lastNameLabel": "अंतिम नाम*",
       "orgNameLabel": "संगठन का नाम*",
@@ -2389,10 +2389,10 @@
         "emailAlreadyExists": "इस ईमेल से पहले से एक खाता मौजूद है।"
       },
       "confirmDialog": {
-        "title": "PipesHub अनुमतियाँ कैसे असाइन करता है",
-        "description": "PipesHub आपकी पहचान प्लेटफ़ॉर्म और सभी कनेक्टेड ऐप्स में करने के लिए आपके ईमेल का उपयोग करता है।",
+        "title": "Sada AI अनुमतियाँ कैसे असाइन करता है",
+        "description": "Sada AI आपकी पहचान प्लेटफ़ॉर्म और सभी कनेक्टेड ऐप्स में करने के लिए आपके ईमेल का उपयोग करता है।",
         "permissionsTitle": "अनुमतियाँ आपके नेटिव ऐप्स को दर्शाती हैं",
-        "permissionsBody": "PipesHub में आपकी पहुंच वही है जो प्रत्येक कनेक्टेड ऐप में है — न कम, न ज़्यादा। यदि Google Drive में कोई दस्तावेज़ प्रतिबंधित है, तो यहाँ भी रहेगा।",
+        "permissionsBody": "Sada AI में आपकी पहुंच वही है जो प्रत्येक कनेक्टेड ऐप में है — न कम, न ज़्यादा। यदि Google Drive में कोई दस्तावेज़ प्रतिबंधित है, तो यहाँ भी रहेगा।",
         "emailNotePre": "सुनिश्चित करें कि जिस ईमेल से आपने पंजीकरण किया —",
         "emailNotePost": "— वही आपके संगठन के ऐप्स में उपयोग की जाती है, ताकि आपकी अनुमतियाँ सही तरीके से पहचानी जा सकें।",
         "cancelButton": "रद्द करें",

@@ -25,8 +25,8 @@ const VARIANT_CONFIG: Record<ToastVariant, VariantConfig> = {
   },
   success: {
     icon: 'check',
-    iconColor: 'var(--accent-11)',
-    iconBgColor: 'var(--accent-a2)',
+    iconColor: 'var(--green-11)',
+    iconBgColor: 'var(--green-a3)',
   },
   error: {
     icon: 'error_outline',

@@ -153,7 +153,7 @@ export function ConnectorOAuthCallbackClient() {
                 maxWidth: 432,
               }}
             >
-              Securely exchanging the authorization code with PipesHub.
+              Securely exchanging the authorization code with Sada AI.
             </Text>
           </Flex>
         </Flex>

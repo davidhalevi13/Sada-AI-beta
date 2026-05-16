@@ -129,14 +129,14 @@
     "nav": {
       "prev": "Zurück",
       "next": "Weiter",
-      "enterPipeshub": "Pipeshub betreten",
+      "enterPipeshub": "Sada AI betreten",
       "finishing": "Abschließen…",
       "saveLlmFirst": "Speichern Sie zuerst den KI-Modell-Schritt, um fortzufahren"
     },
     "save": "Speichern",
     "saving": "Wird gespeichert…",
     "footer": {
-      "copyright": "© 2026 Pipeshub LLC",
+      "copyright": "© 2026 Sada AI",
       "privacyPolicy": "Datenschutzrichtlinie",
       "website": "Website",
       "visitDocs": "Besuchen Sie die",
@@ -629,11 +629,11 @@
     "deleteAgent": "Agent löschen",
     "deleteAgentConfirm": "Diesen Agent löschen?",
     "deleteAgentDescription": "Der Agent mit dem Namen",
-    "deleteAgentWarning": "wird dauerhaft aus Pipeshub entfernt. Chats, die ihn verwenden, funktionieren möglicherweise nicht mehr wie erwartet.",
+    "deleteAgentWarning": "wird dauerhaft aus Sada AI entfernt. Chats, die ihn verwenden, funktionieren möglicherweise nicht mehr wie erwartet.",
     "deleteChat": "Löschen",
     "deleteChatConfirm": "Sind Sie sicher?",
     "deleteChatDescription": "Der Chat mit dem Titel",
-    "deleteChatWarning": "wird dauerhaft aus Pipeshub entfernt. Alle Benutzer mit geteiltem Zugriff verlieren ihren Zugang.",
+    "deleteChatWarning": "wird dauerhaft aus Sada AI entfernt. Alle Benutzer mit geteiltem Zugriff verlieren ihren Zugang.",
     "editAgent": "Agent bearbeiten",
     "failedToArchive": "Chat konnte nicht archiviert werden",
     "failedToDelete": "Chat konnte nicht gelöscht werden",
@@ -891,11 +891,11 @@
     },
     "oauth2": {
       "title": "OAuth 2.0",
-      "subtitle": "Verwalten Sie OAuth-2.0-Anwendungen, die über Pipeshub auf Ihre Organisation zugreifen können",
+      "subtitle": "Verwalten Sie OAuth-2.0-Anwendungen, die über Sada AI auf Ihre Organisation zugreifen können",
       "searchPlaceholder": "Anwendungen nach Name oder Beschreibung suchen...",
       "newApplication": "Neue OAuth-Anwendung",
       "emptyTitle": "Keine OAuth-2.0-Anwendungen",
-      "emptyDescription": "Erstellen Sie eine OAuth-2.0-App, damit Drittanbieter-Integrationen über Pipeshub auf Ihre Organisation zugreifen können.",
+      "emptyDescription": "Erstellen Sie eine OAuth-2.0-App, damit Drittanbieter-Integrationen über Sada AI auf Ihre Organisation zugreifen können.",
       "loading": "Anwendungen werden geladen...",
       "errorGeneric": "OAuth-Anwendungen konnten nicht geladen werden",
       "retry": "Erneut versuchen",
@@ -1020,7 +1020,7 @@
         "returnToAppsButton": "Zurück zu OAuth-2.0-Apps",
         "showSecretAria": "Client-Geheimnis anzeigen",
         "hideSecretAria": "Client-Geheimnis ausblenden",
-        "clientCredentialsWarning": "Mit Client-Credentials-Token erfolgt der Zugriff auf Pipeshub immer als der Benutzer, der diese Anwendung erstellt hat — nicht als der Aufrufer des Token-Endpunkts. Nutzer können diese App weiterhin über den Authorization-Code-Flow für sich selbst autorisieren.",
+        "clientCredentialsWarning": "Mit Client-Credentials-Token erfolgt der Zugriff auf Sada AI immer als der Benutzer, der diese Anwendung erstellt hat — nicht als der Aufrufer des Token-Endpunkts. Nutzer können diese App weiterhin über den Authorization-Code-Flow für sich selbst autorisieren.",
         "successTitle": "Anwendung erstellt",
         "successDescription": "Ihre OAuth-Anwendung wurde erfolgreich erstellt.",
         "errorCreateTitle": "Anwendung konnte nicht erstellt werden",
@@ -1319,7 +1319,7 @@
       "selectPrompt": "Wählen Sie einen archivierten Chat zur Vorschau",
       "restore": "Wiederherstellen",
       "permanentlyDelete": "Endgültig löschen",
-      "deleteConfirmMessage": "Dieser Chat wird dauerhaft aus Pipeshub gelöscht. Gemeinsamer Zugriff geht verloren.",
+      "deleteConfirmMessage": "Dieser Chat wird dauerhaft aus Sada AI gelöscht. Gemeinsamer Zugriff geht verloren.",
       "restoreSuccess": "Chat wiederhergestellt",
       "restoreError": "Chat konnte nicht wiederhergestellt werden",
       "deleteSuccess": "Erfolgreich gelöscht",
@@ -1358,7 +1358,7 @@
       "postalCodePlaceholder": "z. B. 80331",
       "dataCollection": "Einstellungen zur Datenerhebung",
       "enableDataCollection": "Aktivieren",
-      "dataCollectionDescription": "PipesHub erhebt und verarbeitet personenbezogene Daten für verschiedene geschäftliche Zwecke.",
+      "dataCollectionDescription": "Sada AI erhebt und verarbeitet personenbezogene Daten für verschiedene geschäftliche Zwecke.",
       "dataCollectionReason1": "Zur Bereitstellung von Kundenservice und Support für unsere Produkte",
       "dataCollectionReason2": "Zum Versand von Marketingmitteilungen",
       "dataCollectionReason3": "Zur Verwaltung Ihres Abonnements für Newsletter oder andere Updates",
@@ -1514,7 +1514,7 @@
       },
       "successDialog": {
         "title": "Instanz ist konfiguriert und bereit für die Synchronisierung!",
-        "description": "Sie können Ihre {{name}}-Daten jetzt mit Pipeshub synchronisieren,",
+        "description": "Sie können Ihre {{name}}-Daten jetzt mit Sada AI synchronisieren,",
         "descriptionSuffix": "oder dies später in den Einstellungen tun.",
         "later": "Ich mache das später",
         "startSync": "Jetzt Synchronisierung starten"
@@ -1891,7 +1891,7 @@
         "title": "Rollen & Berechtigungen",
         "role": "Rolle",
         "groups": "Gruppen",
-        "roleDescription": "Ihre Rolle in der Pipeshub-App",
+        "roleDescription": "Ihre Rolle in der Sada AI-App",
         "groupsDescription": "Benutzergruppen, denen Sie angehören",
         "noGroups": "Keine Benutzergruppen gefunden"
       },
@@ -2355,12 +2355,12 @@
   },
   "auth": {
     "titleSection": {
-      "defaultTitle": "Willkommen bei Pipeshub",
+      "defaultTitle": "Willkommen bei Sada AI",
       "defaultSubtitle": "Das Wissen Ihrer Organisation – endlich durchsuchbar und vernetzt."
     },
     "signUp": {
       "title": "Loslegen",
-      "subtitle": "Willkommen bei Pipeshub – legen wir los!",
+      "subtitle": "Willkommen bei Sada AI – legen wir los!",
       "firstNameLabel": "Vorname*",
       "lastNameLabel": "Nachname*",
       "orgNameLabel": "Organisationsname*",
@@ -2392,10 +2392,10 @@
         "emailAlreadyExists": "Ein Konto mit dieser E-Mail-Adresse existiert bereits."
       },
       "confirmDialog": {
-        "title": "Wie PipesHub Berechtigungen zuweist",
-        "description": "PipesHub verwendet Ihre E-Mail, um Sie auf der gesamten Plattform und in allen verbundenen Apps zu identifizieren.",
+        "title": "Wie Sada AI Berechtigungen zuweist",
+        "description": "Sada AI verwendet Ihre E-Mail, um Sie auf der gesamten Plattform und in allen verbundenen Apps zu identifizieren.",
         "permissionsTitle": "Berechtigungen spiegeln Ihre nativen Apps wider",
-        "permissionsBody": "Der Zugriff, den Sie in PipesHub haben, ist derselbe wie in jeder verbundenen App – nicht mehr und nicht weniger. Wenn ein Dokument in Google Drive eingeschränkt ist, bleibt es auch hier eingeschränkt.",
+        "permissionsBody": "Der Zugriff, den Sie in Sada AI haben, ist derselbe wie in jeder verbundenen App – nicht mehr und nicht weniger. Wenn ein Dokument in Google Drive eingeschränkt ist, bleibt es auch hier eingeschränkt.",
         "emailNotePre": "Stellen Sie sicher, dass die E-Mail, mit der Sie sich registriert haben —",
         "emailNotePost": "— dieselbe ist, die in den Apps Ihrer Organisation verwendet wird, damit Ihre Berechtigungen korrekt erkannt werden.",
         "cancelButton": "Abbrechen",

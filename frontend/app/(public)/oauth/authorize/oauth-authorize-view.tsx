@@ -636,14 +636,14 @@ export function OAuthAuthorizeView() {
             <LoadingButton
               type="button"
               variant="solid"
-              color="green"
+              color="violet"
               size="2"
               loading={submitting}
               loadingLabel={t('oauthConsent.submitting')}
               style={{
                 flex: 1,
                 minHeight: 32,
-                backgroundColor: '#047857',
+                backgroundColor: '#7B2CFF',
               }}
               onClick={() => handleConsent('granted')}
             >

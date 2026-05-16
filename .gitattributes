@@ -1,0 +1,5 @@
+# Keep Linux-executed files usable when the repo is checked out on Windows.
+Dockerfile text eol=lf
+**/Dockerfile text eol=lf
+**/Dockerfile.* text eol=lf
+*.sh text eol=lf

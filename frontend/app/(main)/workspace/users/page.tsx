@@ -54,7 +54,7 @@ const ROLE_OPTIONS = [
 ];
 
 const STATUS_OPTIONS = [
-  { value: 'Active', label: 'Active', icon: 'check_circle', iconColor: 'var(--accent-11)' },
+  { value: 'Active', label: 'Active', icon: 'check_circle', iconColor: 'var(--green-11)' },
   { value: 'Pending', label: 'Pending', icon: 'schedule', iconColor: 'var(--amber-11)' },
   { value: 'Blocked', label: 'Blocked', icon: 'block', iconColor: 'var(--red-11)' },
 ];
@@ -1147,7 +1147,7 @@ function UsersPageContent() {
         title={t('workspace.users.actions.removeUserTitle')}
         message={t('workspace.users.actions.removeUserMessage', {
           email: removeTarget?.email || removeTarget?.name || '',
-          workspace: 'Pipeshub',
+          workspace: 'Sada AI',
         })}
         confirmLabel={t('workspace.users.actions.removeButton')}
         cancelLabel={t('workspace.users.actions.cancelButton')}
