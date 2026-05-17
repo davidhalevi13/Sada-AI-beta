@@ -36,12 +36,11 @@ import { createChatShareAdapter } from './share-adapter';
 import { ChatSearch } from './components/search';
 import { isCommandKey } from '@/lib/utils/platform';
 import { LottieLoader } from '@/app/components/ui/lottie-loader';
-import { useGitHubStars } from '@/app/components/workspace-menu/hooks/use-github-stars';
-import { EXTERNAL_LINKS } from '@/lib/constants/external-links';
-import { MaterialIcon } from '@/app/components/ui/MaterialIcon';
 import { useUserStore } from '@/lib/store/user-store';
 import { ServiceGate } from '@/app/components/ui/service-gate';
 import { SIDEBAR_CONVERSATIONS_PAGE_SIZE } from './constants';
+import { hasGitHubReference } from './utils/github-filter';
+import styles from './chat-polish.module.css';
 
 // Space reserved below content views to clear the absolutely-positioned chat input.
 const CHAT_INPUT_OFFSET = { mobile: 120, desktop: 128 };
@@ -60,8 +59,6 @@ const footerLinkStyle: React.CSSProperties = {
 };
 
 function ChatFooterLinks() {
-  const stars = useGitHubStars();
-
   return (
     <Flex
       align="center"
@@ -69,42 +66,6 @@ function ChatFooterLinks() {
       gap="3"
       style={{ marginTop: 'var(--space-1)', paddingBottom: 0 }}
     >
-      <a
-        href={EXTERNAL_LINKS.github}
-        target="_blank"
-        rel="noopener noreferrer"
-        style={footerLinkStyle}
-        onMouseEnter={(e) => { e.currentTarget.style.opacity = '1'; }}
-        onMouseLeave={(e) => { e.currentTarget.style.opacity = '0.7'; }}
-      >
-        <img
-          src="/icons/logos/github-logo.svg"
-          width={14}
-          height={14}
-          alt=""
-          style={{ flexShrink: 0 }}
-        />
-        <span style={{ fontSize: 12, color: 'var(--olive-9)', whiteSpace: 'nowrap' }}>
-          GitHub
-        </span>
-        {stars && (
-          <>
-            <Text style={{ color: 'var(--olive-6)', fontSize: 12 }}>·</Text>
-            <span style={{ fontSize: 12, fontWeight: 500, color: 'var(--slate-10)', whiteSpace: 'nowrap' }}>
-              {stars}
-              <MaterialIcon
-                name="star"
-                size={11}
-                color="var(--slate-10)"
-                style={{ marginLeft: 1, verticalAlign: 'middle' }}
-              />
-            </span>
-          </>
-        )}
-      </a>
-
-      <Text style={{ color: 'var(--olive-6)', fontSize: 12 }}>·</Text>
-
       <a
         href="https://docs.pipeshub.com/introduction"
         target="_blank"
@@ -854,11 +815,16 @@ function ChatContent() {
   }, [profile]);
 
   const defaultSuggestionsMap = t('chat.defaultSuggestions', { returnObjects: true }) as Record<string, { text: string; icons: ChatSuggestion['icons'] }>;
-  const defaultSuggestions: ChatSuggestion[] = Object.entries(defaultSuggestionsMap).map(([id, item]) => ({
-    id,
-    text: item.text,
-    icons: item.icons,
-  }));
+  const defaultSuggestions: ChatSuggestion[] = Object.entries(defaultSuggestionsMap)
+    .filter(([, item]) => (
+      !hasGitHubReference(item.text) &&
+      !item.icons.some((icon) => hasGitHubReference(icon))
+    ))
+    .map(([id, item]) => ({
+      id,
+      text: item.text,
+      icons: item.icons,
+    }));
 
   // Share state
   const [isShareSidebarOpen, setIsShareSidebarOpen] = useState(false);
@@ -962,12 +928,12 @@ function ChatContent() {
     <Flex
       direction="column"
       align="center"
+      className={styles.chatPage}
       style={{
         height: '100%',
         width: '100%',
         position: 'relative',
         overflow: 'hidden',
-        background: 'linear-gradient(to bottom, var(--olive-2), var(--olive-1))',
       }}
     >
 

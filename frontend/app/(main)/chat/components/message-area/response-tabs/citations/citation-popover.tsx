@@ -6,7 +6,8 @@ import { Flex, Box, Text, Badge, Button } from '@radix-ui/themes';
 import { ConnectorIcon } from '@/app/components/ui/ConnectorIcon';
 import { isLocalFsConnectorType } from '@/app/(main)/workspace/connectors/utils/local-fs-helpers';
 import { openRecordSource } from '@/chat/utils/open-record-source';
-import { getConnectorConfig } from './utils';
+import { getConnectorConfig, getDisplayConnector } from './utils';
+import { stripGitHubUrlsFromText } from '@/chat/utils/github-filter';
 import { FileIcon } from '@/app/components/ui/file-icon';
 import type { CitationData } from './types';
 
@@ -24,7 +25,8 @@ function CitationPopoverContentInner({
   onPreview,
   onOpenInCollection,
 }: CitationPopoverContentProps) {
-  const config = getConnectorConfig(citation.connector);
+  const displayConnector = getDisplayConnector(citation.connector);
+  const config = getConnectorConfig(displayConnector);
 
   // Determine if this is a collection (UPLOAD) or external connector source
   const isCollectionSource = citation.origin === 'UPLOAD';
@@ -57,7 +59,7 @@ function CitationPopoverContentInner({
       {/* ── Header: source + action buttons ── */}
       <Flex align="center" justify="between">
         <Flex align="center" gap="2">
-          <ConnectorIcon type={citation.connector} size={20} />
+          <ConnectorIcon type={displayConnector} size={20} />
           <Text
             size="1"
             style={{
@@ -150,7 +152,7 @@ function CitationPopoverContentInner({
                 overflow: 'hidden',
               }}
             >
-              {citation.content}
+              {stripGitHubUrlsFromText(citation.content)}
             </Text>
           </Box>
         )}

@@ -16,6 +16,7 @@ import { emptyCitationMaps, useCitationActions, isCitationPopoverKeyStillValid }
 import { useInlineCitationPopoverStore } from './response-tabs/citations/citation-popover-store';
 import { InlineCitationPopoverHost } from './response-tabs/citations/inline-citation-popover-host';
 import { LottieLoader } from '@/app/components/ui/lottie-loader';
+import styles from '../../chat-polish.module.css';
 
 // Stable empty references to avoid re-renders from selector fallbacks.
 // `?? []` or `?? null` in a selector body creates a new ref every call,
@@ -973,6 +974,7 @@ export function MessageList() {
     <Box
       ref={scrollContainerRef}
       onScroll={handleScroll}
+      className={styles.messageScroll}
       style={{
         flex: 1,
         overflowY: 'auto',
@@ -986,16 +988,16 @@ export function MessageList() {
     >
       <Box
         style={{
-          maxWidth: '50rem',
+          maxWidth: '56rem',
           width: '100%',
           margin: '0 auto',
-          paddingTop: 'var(--space-4)',
+          paddingTop: 'var(--space-5)',
           paddingBottom: isMobile ? 'var(--space-7)' : '100px', /* was: 40px (mobile), delta: 0px */
           paddingLeft: isMobile ? 'var(--space-4)' : undefined,
           paddingRight: isMobile ? 'var(--space-4)' : undefined,
         }}
       >
-        <Flex direction="column" gap="6">
+        <Flex direction="column" gap="7">
           {isLoadingConversation && (
             <Flex align="center" justify="center" style={{ padding: 'var(--space-6)' }}>
               <LottieLoader variant="loader" size={48} showLabel />
@@ -1008,6 +1010,7 @@ export function MessageList() {
               <div
                 key={pair.key}
                 ref={(el) => setMessageRef(pair.key, el)}
+                className={styles.messagePair}
               >
                 <ChatResponse
                   question={pair.question}

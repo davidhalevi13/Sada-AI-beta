@@ -29,6 +29,7 @@ import { ToolsetsApi } from '@/app/(main)/toolsets/api';
 import type { BuilderSidebarToolset } from '@/app/(main)/toolsets/api';
 import { CollectionsTab } from './connectors-collections/collections-tab';
 import type { CollectionScopeSelection } from './connectors-collections/collections-tab';
+import { hasGitHubReference } from '@/chat/utils/github-filter';
 
 type ExpansionViewMode = 'inline' | 'overlay';
 
@@ -254,6 +255,14 @@ function buildUniversalToolGroups(toolsets: BuilderSidebarToolset[]): Array<{
   const groups: ReturnType<typeof buildUniversalToolGroups> = [];
   for (let i = 0; i < toolsets.length; i++) {
     const ts = toolsets[i]!;
+    if (
+      hasGitHubReference(ts.toolsetType) ||
+      hasGitHubReference(ts.name) ||
+      hasGitHubReference(ts.displayName) ||
+      hasGitHubReference(ts.instanceName)
+    ) {
+      continue;
+    }
     const rawInstanceId = typeof ts.instanceId === 'string' ? ts.instanceId.trim() : '';
 
     // Always assign a unique discriminator per entry in the list.
@@ -265,6 +274,7 @@ function buildUniversalToolGroups(toolsets: BuilderSidebarToolset[]): Array<{
 
     const rawFullNames = (ts.tools || [])
       .map((t) => (typeof t.fullName === 'string' ? t.fullName.trim() : ''))
+      .filter((fullName) => !hasGitHubReference(fullName))
       .filter(Boolean);
     if (rawFullNames.length === 0) continue;
 
@@ -542,6 +552,11 @@ export function UniversalAgentResourcesPanel({
 
   const filteredToolGroups = useMemo(() => {
     return toolGroups
+      .filter((g) => (
+        !hasGitHubReference(g.label) &&
+        !hasGitHubReference(g.toolsetSlug) &&
+        !g.fullNames.some((key) => hasGitHubReference(key))
+      ))
       .map((g) => ({
         ...g,
         fullNames: g.fullNames.filter((key) => {

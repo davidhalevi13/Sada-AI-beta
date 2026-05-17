@@ -16,6 +16,7 @@ import { toast } from '@/lib/store/toast-store';
 import { useChatSpeechSynthesis } from '@/lib/hooks/use-chat-speech-synthesis';
 import { ChatApi, type FeedbackPayload } from '../../api';
 import { useChatStore } from '../../store';
+import { isGitHubUrl, stripGitHubUrlsFromText } from '@/chat/utils/github-filter';
 
 // ========================================
 // Types & Constants
@@ -76,7 +77,7 @@ function resolveMarkdownCitations(text: string, citationMaps?: CitationMaps): st
     const citationId = citationMaps.citationsOrder[chunkIndex];
     const citation = citationId ? citationMaps.citations[citationId] : undefined;
     if (!citation) return '';
-    if (citation.webUrl && !citation.hideWeburl) {
+    if (citation.webUrl && !citation.hideWeburl && !isGitHubUrl(citation.webUrl)) {
       const name = citation.recordName.replace(/\.[^/.]+$/, '');
       return `[${name}](${citation.webUrl})`;
     }
@@ -297,11 +298,11 @@ export function MessageActions({
 
   const handleCopyMarkdown = useCallback(() => {
     const resolved = resolveMarkdownCitations(content, citationMaps);
-    copyToClipboard(resolved, t('chat.copiedAsMarkdown'));
+    copyToClipboard(stripGitHubUrlsFromText(resolved), t('chat.copiedAsMarkdown'));
   }, [content, citationMaps, copyToClipboard, t]);
 
   const handleCopyText = useCallback(() => {
-    const plainText = stripMarkdownAndCitations(content);
+    const plainText = stripGitHubUrlsFromText(stripMarkdownAndCitations(content));
     copyToClipboard(plainText, t('chat.copiedAsText'));
   }, [content, copyToClipboard, t]);
 

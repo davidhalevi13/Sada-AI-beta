@@ -10,6 +10,8 @@ import { SidebarItem } from './sidebar-item';
 import { AgentSidebarItemMenu } from './agent-sidebar-item-menu';
 import { getAgentSidebarRowMenuAccess } from './agent-sidebar-row-access';
 import { DeleteAgentDialog } from './dialogs';
+import { MaterialIcon } from '@/app/components/ui/MaterialIcon';
+import { ICON_SIZE_DEFAULT } from '@/app/components/sidebar';
 
 export interface AgentSidebarListRowProps {
   agent: AgentListRecord;
@@ -83,7 +85,15 @@ export function AgentSidebarListRow({
   return (
     <>
       <SidebarItem
-        icon={icon}
+        icon={
+          icon ?? (
+            <MaterialIcon
+              name="smart_toy"
+              size={ICON_SIZE_DEFAULT}
+              color={isActive ? 'var(--accent-11)' : 'var(--slate-10)'}
+            />
+          )
+        }
         label={label}
         isActive={isActive}
         href={href}

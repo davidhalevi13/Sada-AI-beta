@@ -15,6 +15,7 @@ import { SidebarItem } from './sidebar-item';
 import { ChatItemMenu } from './chat-item-menu';
 import { DeleteChatDialog, ArchiveChatDialog } from './dialogs';
 import { Spinner } from '@/app/components/ui/spinner';
+import { MaterialIcon } from '@/app/components/ui/MaterialIcon';
 
 /** Duration must match `typing-reveal` animation duration in globals.css */
 const TYPING_ANIMATION_DURATION_MS = 400;
@@ -259,6 +260,13 @@ export function ChatSectionElement({ conversation, isActive, onClick, agentId }:
   return (
     <>
       <SidebarItem
+        icon={
+          <MaterialIcon
+            name={agentId ? 'smart_toy' : 'chat_bubble'}
+            size={ICON_SIZE_DEFAULT}
+            color={isActive ? 'var(--accent-11)' : 'var(--slate-10)'}
+          />
+        }
         label={
           isConversationStreaming ? (
             <StreamingTitleLabel title={conversation.title} />
@@ -352,6 +360,13 @@ export function GeneratingTitleItem({ slotId }: { slotId: string }) {
         isActive={isActive}
         href={href}
         onClick={handleClick}
+        icon={
+          <MaterialIcon
+            name="auto_awesome"
+            size={ICON_SIZE_DEFAULT}
+            color="var(--accent-11)"
+          />
+        }
         label={<StreamingTitleLabel title={pendingTitle} />}
         textColor="var(--slate-12)"
         fontWeight={500}
@@ -364,6 +379,13 @@ export function GeneratingTitleItem({ slotId }: { slotId: string }) {
       isActive={isActive}
       href={href}
       onClick={handleClick}
+      icon={
+        <MaterialIcon
+          name="auto_awesome"
+          size={ICON_SIZE_DEFAULT}
+          color="var(--accent-11)"
+        />
+      }
       label={
         <span className="generating-shimmer">
           <span className="generating-shimmer-base">{t('chat.generatingTitle')}</span>

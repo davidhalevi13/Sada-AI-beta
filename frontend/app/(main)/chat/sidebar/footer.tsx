@@ -57,10 +57,12 @@ export function ChatSidebarFooter() {
           width: '100%',
           height: 40,
           padding: 'var(--space-2)',
-          background: 'var(--olive-2)',
-          border: '1px solid var(--olive-3)',
-          borderRadius: 'var(--radius-1)',
+          background: 'linear-gradient(135deg, rgba(139, 92, 246, 0.16), rgba(37, 99, 235, 0.08))',
+          border: '1px solid rgba(196, 181, 253, 0.22)',
+          borderRadius: 14,
           cursor: 'pointer',
+          boxShadow: '0 12px 28px rgba(0, 0, 0, 0.18)',
+          transition: 'border-color 150ms ease, box-shadow 150ms ease',
         }}
       >
         {/* Org avatar — logo if available, else initial */}
@@ -78,7 +80,7 @@ export function ChatSidebarFooter() {
           style={{
             flex: 1,
             textAlign: 'left',
-            color: 'var(--emerald-12)',
+            color: 'var(--slate-12)',
             overflow: 'hidden',
             textOverflow: 'ellipsis',
             whiteSpace: 'nowrap',
@@ -90,7 +92,7 @@ export function ChatSidebarFooter() {
         <MaterialIcon
           name={isMenuOpen ? 'keyboard_arrow_down' : 'keyboard_arrow_up'}
           size={ICON_SIZE_DEFAULT}
-          color="var(--slate-11)"
+          color="var(--accent-11)"
           style={{ userSelect: 'none' }}
         />
       </Flex>

@@ -3,6 +3,7 @@
 import { KnowledgeBaseApi } from '@/knowledge-base/api';
 import type { RecordDetailsResponse } from '@/knowledge-base/types';
 import { isLocalFsConnectorType } from '@/app/(main)/workspace/connectors/utils/local-fs-helpers';
+import { isGitHubUrl } from './github-filter';
 
 interface ElectronLocalFsOpenPayload {
   connectorId: string;
@@ -52,7 +53,7 @@ function getElectronApi(): ElectronApi | undefined {
 
 function getDefaultFallbackUrl(input: OpenRecordSourceInput): string {
   const webUrl = input.webUrl?.trim();
-  if (webUrl && !input.hideWeburl) return webUrl;
+  if (webUrl && !input.hideWeburl && !isGitHubUrl(webUrl)) return webUrl;
   return `/record/${encodeURIComponent(input.recordId)}/`;
 }
 
@@ -86,7 +87,7 @@ export async function openRecordSource(
   const fallbackUrl = getDefaultFallbackUrl(input);
 
   if (!isLocalFsConnectorType(input.connector ?? '')) {
-    if (input.webUrl && !input.hideWeburl) {
+    if (input.webUrl && !input.hideWeburl && !isGitHubUrl(input.webUrl)) {
       openFallbackUrl(input.webUrl, deps, electronApi);
       return { opened: 'web', url: input.webUrl };
     }

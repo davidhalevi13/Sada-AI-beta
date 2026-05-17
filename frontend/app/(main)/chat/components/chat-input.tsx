@@ -41,6 +41,7 @@ import type {
   AttachmentRef,
 } from '@/chat/types';
 import { CHAT_ATTACHMENT_MAX_BYTES, CHAT_ATTACHMENT_MAX_FILES } from '@/chat/types';
+import styles from '../chat-polish.module.css';
 
 type ChatInputVariant = 'full' | 'widget';
 
@@ -79,6 +80,12 @@ interface ChatInputProps {
 
 // Only PDF and images are supported by the chat attachment upload endpoint.
 const SUPPORTED_FILE_TYPES = ['PDF', 'PNG', 'JPEG', 'JPG'];
+const CHAT_PRIMARY_GRADIENT = 'linear-gradient(135deg, #8b5cf6 0%, #6366f1 52%, #2563eb 100%)';
+const CHAT_STOP_GRADIENT = 'linear-gradient(135deg, #ef4444 0%, #a855f7 100%)';
+const CHAT_COMPOSER_IDLE_BACKGROUND =
+  'linear-gradient(180deg, rgba(17, 20, 38, 0.82), rgba(10, 12, 24, 0.78))';
+const CHAT_COMPOSER_ACTIVE_BACKGROUND =
+  'linear-gradient(180deg, rgba(24, 28, 54, 0.94), rgba(14, 16, 31, 0.92))';
 const ACCEPTED_MIME_TYPES = {
   'application/pdf': 'PDF',
   'image/png': 'PNG',
@@ -134,6 +141,7 @@ function SpeechInputButton({
         disabled={isDisabled}
         onClick={onToggle}
         aria-label={ariaLabel}
+        className={styles.composerIconButton}
         style={{
           margin: 0,
           cursor: !isSupported ? 'not-allowed' : isRegenerateMode ? 'default' : 'pointer',
@@ -447,14 +455,9 @@ export function ChatInput({
     [isAgentChat, agentKnowledgeScope, agentKnowledgeDefaults, setAgentKnowledgeScope, settings.filters, setFilters]
   );
 
-  // Toolbar icon color follows the active query mode so it stays consistent with ModeSwitcher.
-  const activeIconColor = isSearchMode
-    ? 'var(--mode-search-icon)'
-    : modeColors.icon;
-
-  const activeToggleColor = isSearchMode
-    ? 'var(--mode-search-toggle)'
-    : modeColors.toggle;
+  // Keep composer controls visually consistent with the chat-only purple shell.
+  const activeIconColor = 'var(--accent-11)';
+  const activeToggleColor = 'var(--accent-10)';
 
   // ── Message action command handlers ──────────────────────────────
   // Both handlers are registered on the global command bus (useCommandStore) so
@@ -969,6 +972,21 @@ export function ChatInput({
     (hasContent || activeMessageAction !== null) &&
     !isUniversalAgentLoading &&
     !hasUploadingAttachments;
+  const composerIsActive = Boolean(isInputFocused || message.trim() || isEditMode || isListening);
+  const hasComposerChrome =
+    (selectedCollections.length > 0 &&
+      !isAgentChat &&
+      !isCollectionsPanelOpen &&
+      !modeChromeOpen) ||
+    uploadedFiles.length > 0 ||
+    isActionMode;
+  const composerBorderRadius = hasComposerChrome ? '0 0 28px 28px' : '28px';
+  const composerBorderColor = composerIsActive
+    ? 'rgba(196, 181, 253, 0.68)'
+    : 'rgba(196, 181, 253, 0.18)';
+  const composerBoxShadow = composerIsActive
+    ? '0 0 0 1px rgba(139, 92, 246, 0.16), 0 0 34px rgba(139, 92, 246, 0.28), 0 18px 52px rgba(0, 0, 0, 0.32)'
+    : '0 18px 48px rgba(0, 0, 0, 0.24), inset 0 1px 0 rgba(255, 255, 255, 0.06)';
 
   // Display value combines committed text with interim speech so users see real-time feedback
   const displayValue = interimTranscript
@@ -1046,12 +1064,13 @@ export function ChatInput({
       <Flex
         direction="column"
         gap="4"
+        className={styles.widgetComposer}
         style={{
-          background:'var(--effects-translucent)',
-          border: '1px solid var(--olive-3)',
+          background: CHAT_COMPOSER_IDLE_BACKGROUND,
+          border: '1px solid rgba(196, 181, 253, 0.24)',
           backdropFilter: 'blur(25px)',
-          borderRadius: 'var(--radius-1)',
-          padding: 'var(--space-1)',
+          borderRadius: '999px',
+          padding: 'var(--space-2)',
         }}
       >
         {/* Single row: mode-switcher + input + send */}
@@ -1084,6 +1103,7 @@ export function ChatInput({
             onKeyDown={handleKeyDown}
             onFocus={handleExpand}
             placeholder={resolvedWidgetPlaceholder}
+            className={styles.widgetInput}
             style={{
               flex: 1,
               border: 'none',
@@ -1105,9 +1125,10 @@ export function ChatInput({
               variant="solid"
               size="2"
               onClick={handleStopStream}
+              className={styles.stopButton}
               style={{
                 margin: 0,
-                backgroundColor: activeToggleColor,
+                background: CHAT_STOP_GRADIENT,
               }}
             >
               <MaterialIcon name="stop" size={ICON_SIZES.PRIMARY} color="white" />
@@ -1118,9 +1139,10 @@ export function ChatInput({
               size="2"
               onClick={handleSubmit}
               disabled={!canSubmit}
+              className={styles.sendButton}
               style={{
                 margin: 0,
-                backgroundColor: canSubmit ? activeToggleColor : 'var(--slate-a3)',
+                background: canSubmit ? CHAT_PRIMARY_GRADIENT : 'rgba(148, 163, 184, 0.18)',
               }}
             >
               <MaterialIcon
@@ -1140,6 +1162,7 @@ export function ChatInput({
     <Flex
       ref={containerRef}
       direction="column"
+      className={styles.composerFrame}
       onAnimationEnd={() => setIsAnimatingIn(false)}
       onPaste={handlePaste}
       style={{
@@ -1155,12 +1178,12 @@ export function ChatInput({
         <Flex
           align="center"
           style={{
-            backgroundColor: 'var(--slate-1)',
-            borderTop: '1px solid var(--slate-5)',
-            borderLeft: '1px solid var(--slate-5)',
-            borderRight: '1px solid var(--slate-5)',
-            borderTopLeftRadius: 'var(--radius-1)',
-            borderTopRightRadius: 'var(--radius-1)',
+            background: 'rgba(14, 16, 31, 0.9)',
+            borderTop: '1px solid rgba(196, 181, 253, 0.18)',
+            borderLeft: '1px solid rgba(196, 181, 253, 0.18)',
+            borderRight: '1px solid rgba(196, 181, 253, 0.18)',
+            borderTopLeftRadius: '22px',
+            borderTopRightRadius: '22px',
             padding: 'var(--space-2) var(--space-3)',
           }}
         >
@@ -1177,21 +1200,21 @@ export function ChatInput({
         <Flex
           align="center"
           style={{
-            backgroundColor: 'var(--slate-1)',
+            background: 'rgba(14, 16, 31, 0.9)',
             borderTop:
               showSelectedCollectionsRow
                 ? 'none'
-                : '1px solid var(--slate-5)',
-            borderLeft: '1px solid var(--slate-5)',
-            borderRight: '1px solid var(--slate-5)',
+                : '1px solid rgba(196, 181, 253, 0.18)',
+            borderLeft: '1px solid rgba(196, 181, 253, 0.18)',
+            borderRight: '1px solid rgba(196, 181, 253, 0.18)',
             borderTopLeftRadius:
               showSelectedCollectionsRow
                 ? '0'
-                : 'var(--radius-1)',
+                : '22px',
             borderTopRightRadius:
               showSelectedCollectionsRow
                 ? '0'
-                : 'var(--radius-1)',
+                : '22px',
             padding: 'var(--space-3) var(--space-4)',
             gap: 'var(--space-1)',
           }}
@@ -1405,12 +1428,12 @@ export function ChatInput({
       {isActionMode && activeMessageAction && (
         <Flex
           style={{
-            background: 'var(--olive-1)',
-            borderTop: '1px solid var(--olive-5)',
-            borderLeft: '1px solid var(--olive-5)',
-            borderRight: '1px solid var(--olive-5)',
-            borderTopLeftRadius: 'var(--radius-2)',
-            borderTopRightRadius: 'var(--radius-2)',
+            background: 'rgba(14, 16, 31, 0.94)',
+            borderTop: '1px solid rgba(196, 181, 253, 0.24)',
+            borderLeft: '1px solid rgba(196, 181, 253, 0.24)',
+            borderRight: '1px solid rgba(196, 181, 253, 0.24)',
+            borderTopLeftRadius: '22px',
+            borderTopRightRadius: '22px',
             padding: 'var(--space-3) var(--space-4)',
           }}
         >
@@ -1424,27 +1447,18 @@ export function ChatInput({
 
       {/* Main Chat Input */}
       <Flex
-      direction="column"
-      gap="2"
-      style={{
-        backdropFilter: 'blur(25px)',
-        background: (isInputFocused || message.trim() || isListening) ? 'var(--olive-2)' : 'var(--effects-translucent)',
-        transition: 'background 0.15s ease',
-        border: (!isStreaming && (isInputFocused || message.trim() || isEditMode || isListening)) ? '1px solid var(--accent-11)' : '1px solid var(--slate-3)',
-        // Flatten top corners whenever there is an element directly above (collections bar,
-        // uploaded files preview, or the action pill bar) to avoid a double-radius gap.
-        borderRadius:
-          (selectedCollections.length > 0 &&
-            !isAgentChat &&
-            !isCollectionsPanelOpen &&
-            !modeChromeOpen) ||
-          uploadedFiles.length > 0 ||
-          isActionMode
-            ? '0 0 var(--radius-2) var(--radius-2)'
-            : 'var(--radius-2)',
-        padding: isMobile ? 'var(--space-3) var(--space-4)' : 'var(--space-2) var(--space-4)',
-      }}
-    >
+        direction="column"
+        gap="2"
+        className={styles.composerShell}
+        style={{
+          backdropFilter: 'blur(25px)',
+          background: composerIsActive ? CHAT_COMPOSER_ACTIVE_BACKGROUND : CHAT_COMPOSER_IDLE_BACKGROUND,
+          border: `1px solid ${composerBorderColor}`,
+          boxShadow: composerBoxShadow,
+          borderRadius: composerBorderRadius,
+          padding: isMobile ? 'var(--space-3) var(--space-4)' : 'var(--space-2) var(--space-4)',
+        }}
+      >
       {/* Hidden file input - always rendered so add button can access it */}
       <input
         ref={fileInputRef}
@@ -1588,13 +1602,14 @@ export function ChatInput({
           onBlur={() => setIsInputFocused(false)}
           placeholder={resolvedPlaceholder}
           rows={1}
+          className={styles.composerInput}
           style={{
             width: '100%',
             backgroundColor: 'transparent',
             outline: 'none',
             border: 'none',
-            fontSize: 'var(--font-size-2)',
-            color: 'var(--slate-11)',
+            fontSize: 'var(--font-size-3)',
+            color: 'var(--slate-12)',
             resize: 'none',
             minHeight: '24px',
             maxHeight: '120px',
@@ -1623,12 +1638,13 @@ export function ChatInput({
           placeholder={isListening ? t('chat.listening') : resolvedPlaceholder}
           disabled={isRegenerateMode}
           rows={1}
+          className={styles.composerInput}
           style={{
             width: '100%',
             backgroundColor: 'transparent',
             outline: 'none',
             border: 'none',
-            fontSize: 'var(--font-size-2)',
+            fontSize: 'var(--font-size-3)',
             color: isRegenerateMode ? 'var(--slate-a8)' : 'var(--slate-12)',
             resize: 'none',
             minHeight: isMobile ? '36px' : '44px',
@@ -1713,6 +1729,7 @@ export function ChatInput({
                 color="gray"
                 size="2"
                 onClick={() => setIsMobileOptionsOpen(true)}
+                className={styles.composerIconButton}
                 style={{ margin: 0, cursor: 'pointer' }}
               >
                 <MaterialIcon name="more_horiz" size={ICON_SIZES.PRIMARY} color={activeIconColor} />
@@ -1763,6 +1780,7 @@ export function ChatInput({
                       color="gray"
                       size="2"
                       disabled={isRegenerateMode}
+                      className={styles.composerIconButton}
                       onClick={() => {
                         setIsCollectionsPanelOpen((prev) => {
                           if (prev) setExpansionViewMode('inline');
@@ -1787,6 +1805,7 @@ export function ChatInput({
                       color="gray"
                       size="2"
                       disabled={isRegenerateMode}
+                      className={styles.composerIconButton}
                       onClick={() => {
                         setIsAgentResourcesPanelOpen((prev) => {
                           if (prev) setExpansionViewMode('inline');
@@ -1813,6 +1832,7 @@ export function ChatInput({
                       size="2"
                       disabled={isRegenerateMode}
                       onClick={toggleUploadArea}
+                      className={styles.composerIconButton}
                       style={{ margin: 0, cursor: isRegenerateMode ? 'default' : 'pointer', '--accent-a3': modeColors.bg } as React.CSSProperties}
                     >
                       <MaterialIcon name="attach_file" size={ICON_SIZES.PRIMARY} color={isRegenerateMode ? 'var(--slate-5)' : activeIconColor} />
@@ -1824,6 +1844,7 @@ export function ChatInput({
                   <Flex
                     align="center"
                     gap="2"
+                    className={styles.modelButton}
                     onClick={() => {
                       const next = !isModelPanelOpen;
                       dismissExpansionPanels();
@@ -1887,9 +1908,10 @@ export function ChatInput({
               variant="solid"
               size="2"
               onClick={handleStopStream}
+              className={styles.stopButton}
               style={{
                 margin: 0,
-                backgroundColor: activeToggleColor,
+                background: CHAT_STOP_GRADIENT,
               }}
             >
               <MaterialIcon
@@ -1904,9 +1926,10 @@ export function ChatInput({
               size="2"
               onClick={handleSubmit}
               disabled={!canSubmit}
+              className={styles.sendButton}
               style={{
                 margin: 0,
-                backgroundColor: canSubmit ? activeToggleColor : 'var(--slate-a3)',
+                background: canSubmit ? CHAT_PRIMARY_GRADIENT : 'rgba(148, 163, 184, 0.18)',
               }}
             >
               <MaterialIcon

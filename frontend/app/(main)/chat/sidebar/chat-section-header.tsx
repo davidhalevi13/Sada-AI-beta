@@ -26,16 +26,18 @@ export function ChatSectionHeader({ title, onAdd, addAriaLabel, onTitleClick }: 
       style={{
         height: ELEMENT_HEIGHT,
         padding: '0 var(--space-3)',
+        marginTop: 'var(--space-1)',
       }}
     >
       <span
         onClick={onTitleClick}
         style={{
-          fontSize: 12,
-          fontWeight: 500,
+          fontSize: 11,
+          fontWeight: 700,
           lineHeight: 'var(--line-height-1)',
-          letterSpacing: '0.04px',
-          color: 'var(--slate-11)',
+          letterSpacing: '0.08em',
+          textTransform: 'uppercase',
+          color: 'var(--slate-10)',
           cursor: onTitleClick ? 'pointer' : 'default',
         }}
       >
@@ -48,8 +50,13 @@ export function ChatSectionHeader({ title, onAdd, addAriaLabel, onTitleClick }: 
           color="gray"
           onClick={onAdd}
           aria-label={addAriaLabel ?? 'Add'}
+          style={{
+            margin: 0,
+            borderRadius: '999px',
+            background: 'rgba(139, 92, 246, 0.08)',
+          }}
         >
-          <MaterialIcon name="add" size={ICON_SIZE_DEFAULT} color="var(--slate-11)" />
+          <MaterialIcon name="add" size={ICON_SIZE_DEFAULT} color="var(--accent-11)" />
         </IconButton>
       )}
     </Flex>

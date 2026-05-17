@@ -83,14 +83,16 @@ export function TimeGroup({
         style={{
           height: ELEMENT_HEIGHT,
           padding: '0 var(--space-3)',
+          marginTop: 'var(--space-1)',
         }}
       >
         <span
           style={{
-            fontSize: 12,
-            fontWeight: 400,
+            fontSize: 11,
+            fontWeight: 600,
             lineHeight: 'var(--line-height-1)',
-            letterSpacing: '0.04px',
+            letterSpacing: '0.08em',
+            textTransform: 'uppercase',
             color: 'var(--slate-10)',
           }}
         >

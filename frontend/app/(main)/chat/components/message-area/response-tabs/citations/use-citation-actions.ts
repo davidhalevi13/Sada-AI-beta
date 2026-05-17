@@ -12,6 +12,7 @@ import {
   isLegacyWordDocFile,
   resolvePreviewMimeAfterStream,
 } from '@/app/components/file-preview/utils';
+import { isGitHubUrl } from '@/chat/utils/github-filter';
 
 /**
  * Hook that provides citation interaction callbacks:
@@ -37,7 +38,7 @@ export function useCitationActions(): CitationCallbacks {
 
       if (origin === 'CONNECTOR') {
         // External source — open in the original app (OneDrive, Slack, etc.)
-        if (citation.webUrl) {
+        if (citation.webUrl && !isGitHubUrl(citation.webUrl)) {
           window.open(citation.webUrl, '_blank', 'noopener,noreferrer');
         } else {
           console.warn('Citation has CONNECTOR origin but no webUrl:', citation.recordId);
@@ -55,7 +56,7 @@ export function useCitationActions(): CitationCallbacks {
           // Re-check if it's actually a connector record
           if (origin === 'CONNECTOR') {
             const webUrl = recordDetails.record.webUrl;
-            if (webUrl) {
+            if (webUrl && !isGitHubUrl(webUrl)) {
               window.open(webUrl, '_blank', 'noopener,noreferrer');
             }
             return;

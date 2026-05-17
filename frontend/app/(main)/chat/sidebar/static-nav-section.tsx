@@ -37,15 +37,15 @@ const MAIN_NAV_ITEMS: NavItem[] = [
 const KbdBadge = ({ children }: { children: React.ReactNode }) => (
   <span
     style={{
-      background: 'var(--slate-1)',
-      border: '1px solid var(--slate-3)',
+      background: 'rgba(255, 255, 255, 0.06)',
+      border: '1px solid rgba(196, 181, 253, 0.18)',
       padding: KBD_BADGE_PADDING,
-      borderRadius: 'var(--radius-2)',
-      fontSize: 12,
+      borderRadius: 8,
+      fontSize: 11,
       lineHeight: 'var(--line-height-1)',
-      letterSpacing: '0.04px',
-      color: 'var(--slate-12)',
-      fontWeight: 400,
+      letterSpacing: 0,
+      color: 'var(--slate-11)',
+      fontWeight: 600,
     }}
   >
     {children}
@@ -83,16 +83,18 @@ export function StaticNavSection() {
         }
         label={t('chat.newChat')}
         onClick={handleNewChat}
-        textColor="var(--accent-a11)"
-        fontWeight={500}
+        textColor="var(--slate-12)"
+        fontWeight={700}
+        rightSlot={<KbdBadge>{modKey} +N</KbdBadge>}
+        forceHighlight
       />
       {/* Search Chats — opens command palette (⌘+K) */}
-        <SidebarItem
-          icon={<MaterialIcon name={'search'} size={ICON_SIZE_DEFAULT} />}
-          label={t('nav.searchChats')}
-          onClick={handleOpenSearch}
-          rightSlot={<KbdBadge>{modKey} +K</KbdBadge>}
-        />
+      <SidebarItem
+        icon={<MaterialIcon name="search" size={ICON_SIZE_DEFAULT} />}
+        label={t('nav.searchChats')}
+        onClick={handleOpenSearch}
+        rightSlot={<KbdBadge>{modKey} +K</KbdBadge>}
+      />
 
       {/* Navigation items — hidden on mobile */}
       {!isMobile &&

@@ -5,6 +5,7 @@ import ReactMarkdown from 'react-markdown';
 import remarkGfm from 'remark-gfm';
 import { Box, Text, Heading } from '@radix-ui/themes';
 import { InlineCitationBadge, InlineCitationGroup } from './response-tabs/citations';
+import { isGitHubUrl, stripGitHubUrlsFromText } from '@/chat/utils/github-filter';
 import type {
   CitationMaps,
   CitationCallbacks,
@@ -182,6 +183,8 @@ export function AnswerContent({
   citationMaps,
   citationCallbacks,
 }: AnswerContentProps) {
+  const displayContent = useMemo(() => stripGitHubUrlsFromText(content), [content]);
+
   // Keep refs to the latest citationMaps/citationCallbacks so the `components`
   // object below can be fully stable (empty useMemo deps). Without this,
   // `components` recreates on every streaming chunk that brings new citation
@@ -219,7 +222,7 @@ export function AnswerContent({
       </Heading>
     ),
     p: ({ children }: { children?: React.ReactNode }) => (
-      <Text size="2" as="p" style={{ marginBottom: 'var(--space-3)', lineHeight: 1.6, color: 'var(--slate-12)' }}>
+      <Text size="3" as="p" style={{ marginBottom: 'var(--space-3)', lineHeight: 1.68, color: 'var(--slate-12)' }}>
         {processChildren(children, citationMapsRef.current, citationCallbacksRef.current)}
       </Text>
     ),
@@ -246,7 +249,7 @@ export function AnswerContent({
       </ol>
     ),
     li: ({ children }: { children?: React.ReactNode }) => (
-      <li style={{ marginBottom: 'var(--space-4)', lineHeight: 'var(--line-height-2)', color: 'var(--gray-12)', fontSize: '14px' }}>
+      <li style={{ marginBottom: 'var(--space-4)', lineHeight: 1.65, color: 'var(--gray-12)', fontSize: '15px' }}>
         {processChildren(children, citationMapsRef.current, citationCallbacksRef.current)}
       </li>
     ),
@@ -411,20 +414,28 @@ export function AnswerContent({
         {children}
       </blockquote>
     ),
-    a: ({ href, children }: { href?: string; children?: React.ReactNode }) => (
-      <a
-        href={href}
-        target="_blank"
-        rel="noopener noreferrer"
-        style={{
-          color: 'var(--accent-11)',
-          textDecoration: 'underline',
-          fontSize: 'var(--font-size-2)',
-        }}
-      >
-        {processChildren(children, citationMapsRef.current, citationCallbacksRef.current)}
-      </a>
-    ),
+    a: ({ href, children }: { href?: string; children?: React.ReactNode }) => {
+      const label = processChildren(children, citationMapsRef.current, citationCallbacksRef.current);
+
+      if (isGitHubUrl(href)) {
+        return <>{label}</>;
+      }
+
+      return (
+        <a
+          href={href}
+          target="_blank"
+          rel="noopener noreferrer"
+          style={{
+            color: 'var(--accent-11)',
+            textDecoration: 'underline',
+            fontSize: 'var(--font-size-3)',
+          }}
+        >
+          {label}
+        </a>
+      );
+    },
     table: ({ children }: { children?: React.ReactNode }) => (
       <TableFullscreenWrapper>
         <Box
@@ -517,7 +528,7 @@ export function AnswerContent({
 
   return (
     <Box>
-      <ReactMarkdown remarkPlugins={[remarkGfm]} components={components}>{content}</ReactMarkdown>
+      <ReactMarkdown remarkPlugins={[remarkGfm]} components={components}>{displayContent}</ReactMarkdown>
     </Box>
   );
 }

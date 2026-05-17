@@ -175,8 +175,9 @@ export const AgentScopedChatSidebar = React.memo(function AgentScopedChatSidebar
           }
           label={t('chat.newChat')}
           onClick={handleNewAgentChat}
-          textColor="var(--accent-8)"
-          fontWeight={500}
+          textColor="var(--slate-12)"
+          fontWeight={700}
+          forceHighlight
         />
 
         <Flex direction="column" gap="4" style={{ flex: 1, minHeight: 0, overflow: 'hidden' }}>

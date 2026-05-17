@@ -33,8 +33,8 @@ interface SidebarItemProps {
  * All clickable sidebar elements (nav links, chat items, action buttons)
  * share this component for consistent sizing, spacing, and hover treatment.
  *
- * Hover / active: olive-3 background + olive-4 border
- * Default: transparent background, transparent border
+ * Hover / active styling is driven by CSS variables so the chat sidebar can
+ * theme this shared row without changing behavior for other consumers.
  */
 export function SidebarItem({
   icon,
@@ -70,13 +70,27 @@ export function SidebarItem({
     padding: '0 var(--space-3)',
     boxSizing: 'border-box',
     flexShrink: 0,
-    borderRadius: 'var(--radius-1)',
-    backgroundColor: highlighted ? 'var(--olive-3)' : 'transparent',
-    border: highlighted ? '1px solid var(--olive-4)' : '1px solid transparent',
+    borderRadius: 'var(--chat-sidebar-item-radius, var(--radius-1))',
+    background: isActive
+      ? 'var(--chat-sidebar-item-bg-active, var(--olive-3))'
+      : highlighted
+        ? 'var(--chat-sidebar-item-bg-hover, var(--olive-3))'
+        : 'transparent',
+    border: isActive
+      ? '1px solid var(--chat-sidebar-item-border-active, var(--olive-4))'
+      : highlighted
+        ? '1px solid var(--chat-sidebar-item-border-hover, var(--olive-4))'
+        : '1px solid transparent',
+    boxShadow: isActive
+      ? 'var(--chat-sidebar-item-shadow-active, none)'
+      : highlighted
+        ? 'var(--chat-sidebar-item-shadow-hover, none)'
+        : 'none',
     cursor: (onClick || href) ? 'pointer' : 'default',
     userSelect: 'none',
     textDecoration: 'none',
     color: 'inherit',
+    transition: 'background 150ms ease, border-color 150ms ease, box-shadow 150ms ease, color 150ms ease',
   };
 
   const labelContent = typeof label === 'string' ? (
@@ -91,6 +105,7 @@ export function SidebarItem({
         textOverflow: 'ellipsis',
         whiteSpace: 'nowrap',
         textAlign: 'left',
+        letterSpacing: 0,
       }}
     >
       {label}
@@ -105,15 +120,32 @@ export function SidebarItem({
         color: textColor,
         overflow: 'hidden',
         textAlign: 'left',
+        letterSpacing: 0,
       }}
     >
       {label}
     </div>
   );
 
+  const iconContent = icon ? (
+    <span
+      style={{
+        width: 20,
+        minWidth: 20,
+        height: 20,
+        display: 'inline-flex',
+        alignItems: 'center',
+        justifyContent: 'center',
+        color: textColor,
+      }}
+    >
+      {icon}
+    </span>
+  ) : null;
+
   const content = (
     <>
-      {icon}
+      {iconContent}
       {labelContent}
       {rightSlot}
     </>
@@ -150,7 +182,7 @@ export function SidebarItem({
               cursor: 'pointer',
             }}
           >
-            {icon}
+            {iconContent}
             {labelContent}
           </Link>
           <span
