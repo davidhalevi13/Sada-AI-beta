@@ -40,6 +40,7 @@ import {
   collectActiveToolsetTypeKeysFromNodes,
   type ToolsetTypeKeyFlowNode,
 } from './sidebar-toolset-utils';
+import styles from './agent-builder-neon.module.css';
 
 /** Palette width: comfortable for labels; chrome matches `SecondaryPanel` / chat sidebars. */
 const AGENT_BUILDER_SIDEBAR_WIDTH = 332;
@@ -747,7 +748,11 @@ export function AgentBuilder({ agentKey }: { agentKey: string | null }) {
 
   return (
     <ReactFlowProvider>
-      <Flex direction="column" style={{ height: '100%', minHeight: 0, overflow: 'hidden' }}>
+      <Flex
+        className={styles.agentBuilderPage}
+        direction="column"
+        style={{ height: '100%', minHeight: 0, overflow: 'hidden' }}
+      >
         <AgentBuilderHeader
           agentName={agentName}
           onAgentNameChange={setAgentName}
@@ -776,8 +781,9 @@ export function AgentBuilder({ agentKey }: { agentKey: string | null }) {
             py="3"
             style={{
               flexShrink: 0,
-              borderBottom: '1px solid var(--olive-3)',
-              background: 'var(--olive-1)',
+              borderBottom: '1px solid var(--agent-neon-border)',
+              background: 'rgba(7, 9, 18, 0.74)',
+              backdropFilter: 'blur(18px)',
             }}
           >
             {loadedAgent && !canPersist ? (
@@ -884,9 +890,11 @@ export function AgentBuilder({ agentKey }: { agentKey: string | null }) {
           gap="3"
           wrap="wrap"
           style={{
-            borderTop: '1px solid var(--olive-3)',
+            borderTop: '1px solid var(--agent-neon-border)',
             flexShrink: 0,
-            background: 'var(--olive-1)',
+            background: 'rgba(7, 9, 18, 0.78)',
+            backdropFilter: 'blur(18px)',
+            boxShadow: '0 -18px 48px rgba(0, 0, 0, 0.24)',
             fontFamily: 'Manrope, sans-serif',
           }}
         >
@@ -895,7 +903,7 @@ export function AgentBuilder({ agentKey }: { agentKey: string | null }) {
               <MaterialIcon
                 name={sidebarOpen ? 'arrow_back' : 'arrow_forward'}
                 size={18}
-                color="var(--slate-11)"
+                color="var(--sada-text-muted)"
               />
               {sidebarOpen ? t('agentBuilder.hidePalette') : t('agentBuilder.showPalette')}
             </Flex>

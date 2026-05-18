@@ -48,8 +48,8 @@ export function TableSkeleton({
           align="center"
           style={{
             height: rowHeight,
-            borderBottom: '1px solid var(--olive-3)',
-            backgroundColor: 'var(--olive-1)',
+            borderBottom: '1px solid rgba(172, 149, 255, 0.12)',
+            background: 'transparent',
           }}
         >
           {hasCheckbox && (
@@ -63,7 +63,7 @@ export function TableSkeleton({
                   width: 16,
                   height: 16,
                   borderRadius: 3,
-                  backgroundColor: 'var(--olive-4)',
+                  background: 'linear-gradient(90deg, rgba(139, 92, 246, 0.16), rgba(47, 123, 255, 0.12))',
                   animation: 'shimmer-pulse 1.4s ease-in-out infinite',
                   animationDelay: `${rowIndex * 80}ms`,
                 }}
@@ -89,7 +89,7 @@ export function TableSkeleton({
                     height: 12,
                     width: `${Math.round(barWidth * 100)}%`,
                     borderRadius: 4,
-                    backgroundColor: 'var(--olive-4)',
+                    background: 'linear-gradient(90deg, rgba(139, 92, 246, 0.16), rgba(47, 123, 255, 0.12))',
                     animation: 'shimmer-pulse 1.4s ease-in-out infinite',
                     animationDelay: `${(rowIndex * 4 + i) * 60}ms`,
                   }}

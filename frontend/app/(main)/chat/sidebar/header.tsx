@@ -50,19 +50,19 @@ export function ChatSidebarHeader() {
             display: 'inline-flex',
             alignItems: 'center',
             justifyContent: 'center',
-            borderRadius: 12,
-            background: 'linear-gradient(135deg, rgba(139, 92, 246, 0.28), rgba(37, 99, 235, 0.16))',
-            border: '1px solid rgba(196, 181, 253, 0.2)',
-            boxShadow: '0 12px 28px rgba(0, 0, 0, 0.22)',
+            borderRadius: 14,
+            background: 'var(--sada-gradient)',
+            border: '1px solid rgba(196, 181, 253, 0.34)',
+            boxShadow: '0 12px 28px rgba(0, 0, 0, 0.28), 0 0 24px rgba(139, 92, 246, 0.22)',
           }}
         >
-          <PipesHubIcon size={HEADER_ELEMENT_SIZE} color="var(--accent-11)" />
+          <PipesHubIcon size={HEADER_ELEMENT_SIZE} color="white" />
         </Box>
         <Text
           size="2"
           weight="bold"
           style={{
-            color: 'var(--slate-12)',
+            color: 'var(--sada-text)',
             letterSpacing: 0,
             overflow: 'hidden',
             textOverflow: 'ellipsis',

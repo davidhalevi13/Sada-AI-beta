@@ -26,10 +26,11 @@ export function SectionHeader({ title }: SectionHeaderProps) {
       <span
         style={{
           fontSize: 12,
-          fontWeight: 400,
+          fontWeight: 700,
           lineHeight: '16px',
-          letterSpacing: '0.04px',
-          color: 'var(--slate-11)',
+          letterSpacing: '0.08em',
+          textTransform: 'uppercase',
+          color: 'var(--sada-text-subtle)',
         }}
       >
         {title}

@@ -25,14 +25,16 @@ export function SidebarBackHeader({ title, onBack, backgroundColor }: SidebarBac
       style={{
         height: '100%',
         cursor: 'pointer',
-        borderRadius: 'var(--radius-2)',
+        borderRadius: 'var(--sada-radius-md)',
         padding: SECTION_HEADER_PADDING,
-        backgroundColor: backgroundColor || 'var(--olive-1)',
+        background: backgroundColor || 'linear-gradient(135deg, rgba(139, 92, 246, 0.12), rgba(47, 123, 255, 0.06))',
+        borderBottom: '1px solid var(--sada-border)',
+        color: 'var(--sada-text)',
       }}
       onClick={onBack}
     >
-      <MaterialIcon name="chevron_left" size={24} color="var(--slate-11)" />
-      <Text size="2" weight="medium" style={{ color: 'var(--slate-12)' }}>
+      <MaterialIcon name="chevron_left" size={24} color="var(--sada-purple-soft)" />
+      <Text size="2" weight="medium" style={{ color: 'var(--sada-text)' }}>
         {title}
       </Text>
     </Flex>

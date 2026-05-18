@@ -14,14 +14,27 @@ export default function AgentsPage() {
       style={{
         height: '100%',
         width: '100%',
-        backgroundColor: 'var(--olive-2)',
+        background: 'var(--sada-page-gradient)',
+        color: 'var(--sada-text)',
       }}
     >
-      <MaterialIcon name="memory" size={64} color="var(--olive-9)" />
-      <Heading size="6" style={{ marginTop: '16px', color: 'var(--olive-12)' }}>
+      <Flex
+        align="center"
+        justify="center"
+        style={{
+          width: 76,
+          height: 76,
+          borderRadius: 24,
+          background: 'var(--sada-accent-gradient)',
+          boxShadow: 'var(--sada-shadow-glow)',
+        }}
+      >
+        <MaterialIcon name="memory" size={38} color="white" />
+      </Flex>
+      <Heading size="6" style={{ marginTop: '18px', color: 'var(--sada-text)' }}>
         {t('agents.pageTitle')}
       </Heading>
-      <Text size="2" style={{ marginTop: '8px', color: 'var(--olive-11)' }}>
+      <Text size="2" style={{ marginTop: '8px', color: 'var(--sada-text-muted)' }}>
         {t('agents.comingSoon')}
       </Text>
     </Flex>

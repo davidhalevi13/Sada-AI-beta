@@ -24,7 +24,8 @@ export default function FormPanel({ children, splitLayout }: FormPanelProps) {
       style={{
         flex: splitLayout ? '0 0 43%' : 1,
         position: 'relative',
-        backgroundColor: 'var(--color-background)',
+        background:
+          'linear-gradient(145deg, rgba(139, 92, 246, 0.12), transparent 34%), linear-gradient(215deg, rgba(47, 123, 255, 0.1), transparent 36%), var(--sada-bg)',
         height: '100dvh',
         maxHeight: '100dvh',
         overflowY: 'auto',

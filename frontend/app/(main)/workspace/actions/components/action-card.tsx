@@ -51,13 +51,17 @@ export function ActionCard({
       }}
       style={{
         width: '100%',
-        backgroundColor: isHovered ? 'var(--olive-3)' : 'var(--olive-2)',
-        border: '1px solid var(--olive-3)',
-        borderRadius: 'var(--radius-1)',
-        padding: 12,
+        background: isHovered
+          ? 'linear-gradient(135deg, rgba(124, 58, 237, 0.18), rgba(37, 99, 235, 0.12)), var(--sada-surface)'
+          : 'var(--sada-surface)',
+        border: '1px solid var(--sada-border)',
+        borderRadius: 16,
+        padding: 14,
         gap: 24,
         cursor: canClickBody ? 'pointer' : 'default',
-        transition: 'background-color 150ms ease',
+        boxShadow: isHovered ? 'var(--sada-shadow-soft), var(--sada-shadow-glow)' : 'var(--sada-shadow-soft)',
+        transition: 'background 160ms ease, border-color 160ms ease, box-shadow 160ms ease, transform 160ms ease',
+        transform: isHovered ? 'translateY(-1px)' : 'translateY(0)',
       }}
     >
       <Flex direction="column" gap="3" style={{ width: '100%', flex: 1 }}>
@@ -69,8 +73,9 @@ export function ActionCard({
               width: 32,
               height: 32,
               padding: 8,
-              backgroundColor: 'var(--gray-a2)',
-              borderRadius: 'var(--radius-1)',
+              background: 'linear-gradient(135deg, rgba(124, 58, 237, 0.22), rgba(37, 99, 235, 0.16))',
+              border: '1px solid var(--sada-border)',
+              borderRadius: 12,
               flexShrink: 0,
             }}
           >
@@ -157,7 +162,7 @@ export function ActionCard({
             height: 32,
             borderRadius: 'var(--radius-2)',
             border: '1px solid var(--gray-a6)',
-            backgroundColor: 'var(--gray-a3)',
+            background: cta === 'unavailable' ? 'rgba(255, 255, 255, 0.05)' : 'var(--sada-accent-gradient)',
             color: cta === 'unavailable' ? 'var(--gray-9)' : 'var(--gray-12)',
             fontSize: 14,
             fontWeight: 500,
@@ -166,6 +171,7 @@ export function ActionCard({
             alignItems: 'center',
             justifyContent: 'center',
             gap: 6,
+            boxShadow: cta === 'unavailable' ? 'none' : 'var(--sada-shadow-glow)',
           }}
         >
           <MaterialIcon name="add" size={16} color="currentColor" />
@@ -256,7 +262,6 @@ function ToolsetInstanceSummaryBar({
             appearance: 'none',
             margin: 0,
             padding: 0,
-            border: 'none',
             outline: 'none',
             display: 'flex',
             alignItems: 'center',
@@ -264,10 +269,12 @@ function ToolsetInstanceSummaryBar({
             width: 32,
             height: 32,
             borderRadius: 'var(--radius-2)',
-            backgroundColor: isAddHovered ? 'var(--gray-a4)' : 'var(--gray-a3)',
+            background: isAddHovered ? 'var(--sada-accent-gradient)' : 'rgba(255, 255, 255, 0.07)',
+            border: '1px solid var(--sada-border)',
+            boxShadow: isAddHovered ? 'var(--sada-shadow-glow)' : 'none',
             cursor: 'pointer',
             flexShrink: 0,
-            transition: 'background-color 150ms ease',
+            transition: 'background 150ms ease, box-shadow 150ms ease, border-color 150ms ease',
           }}
         >
           <MaterialIcon name="add" size={16} color="var(--gray-11)" />

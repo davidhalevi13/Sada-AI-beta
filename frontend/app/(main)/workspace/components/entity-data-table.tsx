@@ -2,7 +2,6 @@
 
 import React, { useState } from 'react';
 import { Flex, Box, Text, Checkbox } from '@radix-ui/themes';
-import { EmptyIcon } from '@/app/components/ui/empty-icon';
 import { Spinner } from '@/app/components/ui/spinner';
 import { TableSkeleton, type TableSkeletonColumnShape } from '@/app/components/data-display';
 
@@ -91,14 +90,24 @@ export function EntityDataTable<T>({
   };
 
   return (
-    <Flex direction="column" style={{ flex: 1, overflow: 'hidden' }}>
+    <Flex
+      direction="column"
+      style={{
+        flex: 1,
+        overflow: 'hidden',
+        border: '1px solid var(--sada-border)',
+        borderRadius: 'var(--sada-radius-lg)',
+        background: 'rgba(8, 11, 24, 0.58)',
+        boxShadow: 'var(--sada-shadow-soft)',
+      }}
+    >
       {/* Table Header */}
       <Flex
         align="center"
         style={{
           height: 'var(--space-9)',
-          borderBottom: '1px solid var(--olive-6)',
-          backgroundColor: 'var(--olive-2)',
+          borderBottom: '1px solid var(--sada-border)',
+          background: 'linear-gradient(135deg, rgba(139, 92, 246, 0.12), rgba(47, 123, 255, 0.06))',
           flexShrink: 0,
         }}
       >
@@ -129,7 +138,7 @@ export function EntityDataTable<T>({
               padding: '0 8px',
             }}
           >
-            <Text size="1" weight="medium" style={{ color: 'var(--slate-9)' }}>
+            <Text size="1" weight="medium" style={{ color: 'var(--sada-text-muted)', letterSpacing: '0.04em', textTransform: 'uppercase' }}>
               {col.label}
             </Text>
           </Flex>
@@ -176,10 +185,10 @@ export function EntityDataTable<T>({
               zIndex: 2,
               padding: '6px 10px',
               borderRadius: 'var(--radius-3)',
-              backgroundColor: 'var(--olive-2)',
-              border: '1px solid var(--olive-4)',
-              boxShadow: '0 4px 12px rgba(0, 0, 0, 0.06)',
-              color: 'var(--slate-11)',
+              background: 'rgba(13, 18, 38, 0.94)',
+              border: '1px solid var(--sada-border)',
+              boxShadow: '0 10px 24px rgba(0, 0, 0, 0.24)',
+              color: 'var(--sada-text-muted)',
             }}
             aria-live="polite"
             aria-label="Refreshing"
@@ -205,15 +214,16 @@ export function EntityDataTable<T>({
               onClick={() => onRowClick?.(item)}
               style={{
                 height: '60px',
-                borderBottom: '1px solid var(--olive-3)',
-                backgroundColor: isSelected
-                  ? 'var(--accent-3)'
+                borderBottom: '1px solid rgba(172, 149, 255, 0.12)',
+                background: isSelected
+                  ? 'linear-gradient(135deg, rgba(139, 92, 246, 0.2), rgba(47, 123, 255, 0.1))'
                   : isHovered
-                    ? 'var(--olive-2)'
-                    : 'var(--olive-1)',
+                    ? 'rgba(139, 92, 246, 0.08)'
+                    : 'transparent',
                 cursor: 'pointer',
                 userSelect: 'none',
                 outline: 'none',
+                transition: 'background 150ms ease',
               }}
             >
               {/* Checkbox cell */}

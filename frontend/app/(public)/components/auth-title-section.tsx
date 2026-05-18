@@ -3,7 +3,6 @@
 import React from 'react';
 import { Box, Flex, Text } from '@radix-ui/themes';
 import { useTranslation } from 'react-i18next';
-import { PipesHubIcon } from '@/app/components/ui';
 import { LottieLoader } from '@/app/components/ui/lottie-loader';
 
 // ─── Props ────────────────────────────────────────────────────────────────────
@@ -44,7 +43,7 @@ export default function AuthTitleSection({
       <Flex direction="column" gap="1">
         <Text
           style={{
-            color: 'var(--gray-12)',
+            color: 'var(--sada-text)',
             fontSize: '24px',
             fontWeight: 500,
             letterSpacing: '-0.1px',
@@ -56,7 +55,7 @@ export default function AuthTitleSection({
         {resolvedSubtitle ? (
           <Text
             style={{
-              color: 'var(--gray-11)',
+              color: 'var(--sada-text-muted)',
               fontSize: '14px',
               fontWeight: 400,
               lineHeight: '20px',

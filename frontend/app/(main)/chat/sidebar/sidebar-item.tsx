@@ -89,8 +89,8 @@ export function SidebarItem({
     cursor: (onClick || href) ? 'pointer' : 'default',
     userSelect: 'none',
     textDecoration: 'none',
-    color: 'inherit',
-    transition: 'background 150ms ease, border-color 150ms ease, box-shadow 150ms ease, color 150ms ease',
+    color: isActive ? 'var(--sada-text)' : 'inherit',
+    transition: 'background 150ms ease, border-color 150ms ease, box-shadow 150ms ease, color 150ms ease, transform 150ms ease',
   };
 
   const labelContent = typeof label === 'string' ? (
@@ -100,7 +100,7 @@ export function SidebarItem({
         fontSize: 14,
         fontWeight,
         lineHeight: 'var(--line-height-2)',
-        color: textColor,
+        color: isActive ? 'var(--sada-text)' : textColor,
         overflow: 'hidden',
         textOverflow: 'ellipsis',
         whiteSpace: 'nowrap',
@@ -117,7 +117,7 @@ export function SidebarItem({
         fontSize: 14,
         fontWeight,
         lineHeight: 'var(--line-height-2)',
-        color: textColor,
+        color: isActive ? 'var(--sada-text)' : textColor,
         overflow: 'hidden',
         textAlign: 'left',
         letterSpacing: 0,
@@ -136,7 +136,7 @@ export function SidebarItem({
         display: 'inline-flex',
         alignItems: 'center',
         justifyContent: 'center',
-        color: textColor,
+        color: isActive ? 'var(--sada-purple-soft)' : textColor,
       }}
     >
       {icon}

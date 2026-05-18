@@ -206,7 +206,7 @@ export function KbDataTable({
   // Show loading state
   if (isLoading) {
     return (
-      <Flex align="center" justify="center" style={{ flex: 1, backgroundColor: 'var(--olive-2)' }}>
+      <Flex align="center" justify="center" style={{ flex: 1, background: 'rgba(8, 11, 24, 0.56)' }}>
         <LottieLoader variant="loader" size={32} showLabel />
       </Flex>
     );
@@ -237,7 +237,7 @@ export function KbDataTable({
     // still responding.
     if (isLoadingCollections) {
       return (
-        <Flex align="center" justify="center" style={{ flex: 1, backgroundColor: 'var(--olive-2)' }}>
+        <Flex align="center" justify="center" style={{ flex: 1, background: 'rgba(8, 11, 24, 0.56)' }}>
           <LottieLoader variant="loader" size={32} showLabel />
         </Flex>
       );
@@ -249,7 +249,7 @@ export function KbDataTable({
         justify="center"
         direction="column"
         gap="4"
-        style={{ flex: 1,  backgroundColor: 'var(--olive-2)' }}
+        style={{ flex: 1, background: 'rgba(8, 11, 24, 0.56)' }}
       >
         {/* Heading and subtitle */}
         <Flex direction="column" align="center" gap="1">
@@ -284,7 +284,15 @@ export function KbDataTable({
   }
 
   return (
-    <Flex direction="column" style={{ flex: 1, overflow: 'hidden', backgroundColor: 'var(--olive-2)' }}>
+    <Flex
+      direction="column"
+      style={{
+        flex: 1,
+        overflow: 'hidden',
+        background: 'rgba(8, 11, 24, 0.56)',
+        borderTop: '1px solid rgba(172, 149, 255, 0.12)',
+      }}
+    >
       {/* Conditional view rendering based on viewMode */}
       {items.length === 0 ? (
         <Flex

@@ -35,11 +35,11 @@ export function EntityFilterBar({ filters, renderFilter }: EntityFilterBarProps)
       style={{
         height: '40px',
         padding: '0 var(--space-4)',
-        borderBottom: '1px solid var(--olive-6)',
-        backgroundColor: 'var(--olive-2)',
+        borderBottom: '1px solid var(--sada-border)',
+        background: 'rgba(8, 11, 24, 0.54)',
       }}
     >
-      <MaterialIcon name="filter_list" size={16} color="var(--slate-9)" />
+      <MaterialIcon name="filter_list" size={16} color="var(--sada-purple-soft)" />
 
       {filters.map((filter) =>
         renderFilter ? (
@@ -70,8 +70,8 @@ function DefaultFilterChip({ filter }: { filter: FilterChipConfig }) {
         gap: 'var(--space-1)',
       }}
     >
-      <MaterialIcon name={filter.icon} size={12} color="var(--slate-11)" />
-      <Text size="1" style={{ color: 'var(--slate-11)' }}>
+      <MaterialIcon name={filter.icon} size={12} color="var(--sada-purple-soft)" />
+      <Text size="1" style={{ color: 'var(--sada-text-muted)' }}>
         {filter.label}
       </Text>
     </Badge>

@@ -107,8 +107,6 @@ function isInsideToastRegion(node: EventTarget | null | undefined): boolean {
   return node instanceof Element && Boolean(node.closest(TOAST_REGION_SELECTOR));
 }
 
-/** Above main app chrome; nested Radix modals (e.g. confirm) should use z-index > PANEL. */
-const Z_BACKDROP = 9200;
 const Z_PANEL = 9201;
 
 /** Select/Dropdown portals render on `document.body`; must stack above the drawer (`Z_PANEL`). */
@@ -248,7 +246,9 @@ export function WorkspaceRightPanel({
         style={{
           position: 'fixed',
           inset: 0,
-          backgroundColor: 'rgba(8, 10, 12, 0.45)',
+          background:
+            'linear-gradient(135deg, rgba(5, 7, 17, 0.72), rgba(10, 14, 31, 0.58))',
+          backdropFilter: 'blur(3px)',
         }}
       />
       <Box
@@ -267,14 +267,15 @@ export function WorkspaceRightPanel({
           maxHeight: 'calc(100vh - 20px)',
           padding: 0,
           margin: 0,
-          background: 'var(--effects-translucent)',
-          border: '1px solid var(--olive-3)',
-          borderRadius: 'var(--radius-2)',
+          background:
+            'linear-gradient(180deg, rgba(18, 24, 48, 0.96), rgba(8, 11, 24, 0.96))',
+          border: '1px solid var(--sada-border)',
+          borderRadius: '22px',
           backdropFilter: 'blur(25px)',
           overflow: 'hidden',
           display: 'flex',
           flexDirection: 'column',
-          boxShadow: '0 20px 48px 0 rgba(0, 0, 0, 0.25)',
+          boxShadow: 'var(--sada-glow)',
           ...style,
           pointerEvents: 'auto',
         }}
@@ -288,8 +289,8 @@ export function WorkspaceRightPanel({
           justify="between"
           style={{
             padding: 'var(--space-2) var(--space-2) var(--space-2) var(--space-4)',
-            borderBottom: '1px solid var(--olive-3)',
-            background: 'var(--effects-translucent)',
+            borderBottom: '1px solid var(--sada-border)',
+            background: 'rgba(8, 11, 24, 0.72)',
             backdropFilter: 'blur(8px)',
             flexShrink: 0,
           }}
@@ -297,11 +298,11 @@ export function WorkspaceRightPanel({
           <Flex align="center" gap="2" style={{ minWidth: 0, flex: 1 }}>
             {icon && (
               typeof icon === 'string'
-                ? <MaterialIcon name={icon} size={iconSize} color="var(--slate-12)"/>
+                ? <MaterialIcon name={icon} size={iconSize} color="var(--sada-purple-soft)"/>
                 : icon
             )}
             {titleNode ?? (
-              <Text size="2" weight="medium" style={{ color: 'var(--slate-12)' }} truncate>
+              <Text size="2" weight="medium" style={{ color: 'var(--sada-text)' }} truncate>
                 {title}
               </Text>
             )}
@@ -316,7 +317,7 @@ export function WorkspaceRightPanel({
               onClick={handleClose}
               style={{ cursor: 'pointer' }}
             >
-              <MaterialIcon name="close" size={18} color="var(--slate-11)" />
+              <MaterialIcon name="close" size={18} color="var(--sada-text-muted)" />
             </IconButton>
           </Flex>
         </Flex>
@@ -327,7 +328,7 @@ export function WorkspaceRightPanel({
             flex: 1,
             overflow: 'auto',
             padding: 'var(--space-4)',
-            background: 'var(--effects-translucent)',
+            background: 'rgba(8, 11, 24, 0.56)',
             minHeight: 0,
           }}
         >
@@ -346,8 +347,8 @@ export function WorkspaceRightPanel({
             gap="2"
             style={{
             padding: 'var(--space-2) var(--space-2) var(--space-2) var(--space-4)',
-              borderTop: '1px solid var(--olive-3)',
-              background: 'var(--effects-translucent)',
+              borderTop: '1px solid var(--sada-border)',
+              background: 'rgba(8, 11, 24, 0.72)',
               backdropFilter: 'blur(8px)',
               flexShrink: 0,
             }}

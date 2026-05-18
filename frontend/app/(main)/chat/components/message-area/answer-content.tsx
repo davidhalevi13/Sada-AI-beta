@@ -266,10 +266,12 @@ export function AnswerContent({
     code: ({ children }: { children?: React.ReactNode }) => (
       <code
         style={{
-          backgroundColor: 'var(--slate-7)',
+          background: 'rgba(139, 92, 246, 0.16)',
+          border: '1px solid rgba(172, 149, 255, 0.18)',
+          color: 'var(--sada-purple-soft)',
           fontWeight: 400,
           padding: '2px var(--space-1)', /* was: 2px 6px, delta: -2px side */
-          borderRadius: 'var(--radius-1)',
+          borderRadius: '8px',
           fontFamily: 'monospace',
           fontSize: 'var(--font-size-2)',
         }}
@@ -386,12 +388,15 @@ export function AnswerContent({
       return (
         <pre
           style={{
-            backgroundColor: 'var(--slate-3)',
+            background:
+              'linear-gradient(180deg, rgba(13, 18, 38, 0.96), rgba(8, 11, 24, 0.96))',
+            border: '1px solid var(--sada-border)',
             padding: 'var(--space-3)',
-            borderRadius: 'var(--radius-2)',
+            borderRadius: 'var(--sada-radius-md)',
             overflow: 'auto',
             marginBottom: 'var(--space-3)',
             maxHeight: '400px',
+            boxShadow: 'inset 0 1px 0 rgba(255, 255, 255, 0.04)',
           }}
         >
           {children}

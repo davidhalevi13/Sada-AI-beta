@@ -21,8 +21,8 @@ interface ThemeContextValue {
 }
 
 const ThemeContext = createContext<ThemeContextValue>({
-  appearance: 'light',
-  preference: 'system',
+  appearance: 'dark',
+  preference: 'dark',
   setPreference: () => {},
 });
 
@@ -35,18 +35,15 @@ interface ThemeProviderProps {
 }
 
 function resolveAppearance(pref: ThemePreference): Appearance {
-  if (pref === 'light' || pref === 'dark') return pref;
-  if (typeof window === 'undefined') return 'light';
-  return window.matchMedia('(prefers-color-scheme: dark)').matches
-    ? 'dark'
-    : 'light';
+  void pref;
+  return 'dark';
 }
 
 function readStoredPreference(): ThemePreference {
-  if (typeof window === 'undefined') return 'system';
+  if (typeof window === 'undefined') return 'dark';
   const stored = localStorage.getItem(THEME_STORAGE_KEY);
   if (stored === 'light' || stored === 'dark' || stored === 'system') return stored;
-  return 'system';
+  return 'dark';
 }
 
 /**
@@ -60,7 +57,7 @@ export function ThemeScript() {
   return (
     <script
       dangerouslySetInnerHTML={{
-        __html: `(function(){try{var k='pipeshub-theme-preference',p=localStorage.getItem(k)||'system',d=p==='dark'||(p==='system'&&window.matchMedia('(prefers-color-scheme:dark)').matches);document.documentElement.classList.add(d?'dark':'light');document.documentElement.style.colorScheme=d?'dark':'light'}catch(e){}})()`,
+        __html: `(function(){try{document.documentElement.classList.add('dark');document.documentElement.style.colorScheme='dark'}catch(e){}})()`,
       }}
     />
   );
@@ -68,8 +65,8 @@ export function ThemeScript() {
 
 export function ThemeProvider({ children }: ThemeProviderProps) {
   const [mounted, setMounted] = useState(false);
-  const [preference, setPreferenceState] = useState<ThemePreference>('system');
-  const [appearance, setAppearance] = useState<Appearance>('light');
+  const [preference, setPreferenceState] = useState<ThemePreference>('dark');
+  const [appearance, setAppearance] = useState<Appearance>('dark');
 
   // After mount: read localStorage (blocking), resolve, and enable the real render.
   // This avoids hydration mismatch — SSG HTML always uses the safe defaults above,
@@ -105,12 +102,12 @@ export function ThemeProvider({ children }: ThemeProviderProps) {
     if (!mounted) return;
     document.documentElement.style.setProperty(
       '--page-background',
-      appearance === 'dark' ? '#111113' : '#dcdcdc'
+      appearance === 'dark' ? '#070a17' : '#070a17'
     );
     // Keep the html class in sync when user toggles theme within the app
     document.documentElement.classList.remove('light', 'dark');
     document.documentElement.classList.add(appearance);
-    document.documentElement.style.colorScheme = appearance;
+    document.documentElement.style.colorScheme = 'dark';
   }, [mounted, appearance]);
 
   // Before mount: return null — the inline <ThemeScript> already set the

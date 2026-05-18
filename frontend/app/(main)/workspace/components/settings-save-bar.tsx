@@ -74,13 +74,14 @@ export function SettingsSaveBar({
         pointerEvents: visible ? 'auto' : 'none',
         transition: 'transform 0.3s ease, opacity 0.3s ease',
         width: 'fit-content',
-        background: 'var(--effects-translucent)',
+        background:
+          'linear-gradient(135deg, rgba(18, 24, 48, 0.94), rgba(8, 11, 24, 0.9))',
         backdropFilter: 'blur(25px)',
-        border: '1px solid var(--olive-3)',
-        borderRadius: 'var(--radius-1)',
+        border: '1px solid var(--sada-border)',
+        borderRadius: '999px',
         padding: 'var(--space-2)',
         zIndex: 20,
-        boxShadow: '0 20px 28px 0 rgba(0, 0, 0, 0.15)',
+        boxShadow: 'var(--sada-glow)',
         whiteSpace: 'nowrap',
       }}
     >
@@ -106,5 +107,4 @@ export function SettingsSaveBar({
     </Flex>
   );
 }
-
 

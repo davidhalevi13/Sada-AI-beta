@@ -1126,6 +1126,7 @@ export function ChatInput({
               size="2"
               onClick={handleStopStream}
               className={styles.stopButton}
+              aria-label={t('chat.toasts.stopStreamTitle')}
               style={{
                 margin: 0,
                 background: CHAT_STOP_GRADIENT,
@@ -1140,6 +1141,7 @@ export function ChatInput({
               onClick={handleSubmit}
               disabled={!canSubmit}
               className={styles.sendButton}
+              aria-label={t('chat.send', { defaultValue: 'Send message' })}
               style={{
                 margin: 0,
                 background: canSubmit ? CHAT_PRIMARY_GRADIENT : 'rgba(148, 163, 184, 0.18)',
@@ -1730,6 +1732,7 @@ export function ChatInput({
                 size="2"
                 onClick={() => setIsMobileOptionsOpen(true)}
                 className={styles.composerIconButton}
+                aria-label={t('chat.options', { defaultValue: 'Open chat options' })}
                 style={{ margin: 0, cursor: 'pointer' }}
               >
                 <MaterialIcon name="more_horiz" size={ICON_SIZES.PRIMARY} color={activeIconColor} />
@@ -1781,6 +1784,11 @@ export function ChatInput({
                       size="2"
                       disabled={isRegenerateMode}
                       className={styles.composerIconButton}
+                      aria-label={
+                        settings.queryMode === 'agent'
+                          ? t('chat.agentResourcesTooltip', { defaultValue: 'Connectors, collections and actions' })
+                          : t('chat.connectorsTooltip')
+                      }
                       onClick={() => {
                         setIsCollectionsPanelOpen((prev) => {
                           if (prev) setExpansionViewMode('inline');
@@ -1806,6 +1814,7 @@ export function ChatInput({
                       size="2"
                       disabled={isRegenerateMode}
                       className={styles.composerIconButton}
+                      aria-label={t('chat.agentResourcesTooltip')}
                       onClick={() => {
                         setIsAgentResourcesPanelOpen((prev) => {
                           if (prev) setExpansionViewMode('inline');
@@ -1833,6 +1842,7 @@ export function ChatInput({
                       disabled={isRegenerateMode}
                       onClick={toggleUploadArea}
                       className={styles.composerIconButton}
+                      aria-label={t('chat.attachmentTooltip', { defaultValue: 'Attach file' })}
                       style={{ margin: 0, cursor: isRegenerateMode ? 'default' : 'pointer', '--accent-a3': modeColors.bg } as React.CSSProperties}
                     >
                       <MaterialIcon name="attach_file" size={ICON_SIZES.PRIMARY} color={isRegenerateMode ? 'var(--slate-5)' : activeIconColor} />
@@ -1845,10 +1855,21 @@ export function ChatInput({
                     align="center"
                     gap="2"
                     className={styles.modelButton}
+                    role="button"
+                    tabIndex={0}
+                    aria-label={t('chat.aiModelsTooltip')}
                     onClick={() => {
                       const next = !isModelPanelOpen;
                       dismissExpansionPanels();
                       setIsModelPanelOpen(next);
+                    }}
+                    onKeyDown={(e) => {
+                      if (e.key === 'Enter' || e.key === ' ') {
+                        e.preventDefault();
+                        const next = !isModelPanelOpen;
+                        dismissExpansionPanels();
+                        setIsModelPanelOpen(next);
+                      }
                     }}
                     style={{
                       height: '32px',
@@ -1909,6 +1930,7 @@ export function ChatInput({
               size="2"
               onClick={handleStopStream}
               className={styles.stopButton}
+              aria-label={t('chat.toasts.stopStreamTitle')}
               style={{
                 margin: 0,
                 background: CHAT_STOP_GRADIENT,
@@ -1927,6 +1949,7 @@ export function ChatInput({
               onClick={handleSubmit}
               disabled={!canSubmit}
               className={styles.sendButton}
+              aria-label={t('chat.send', { defaultValue: 'Send message' })}
               style={{
                 margin: 0,
                 background: canSubmit ? CHAT_PRIMARY_GRADIENT : 'rgba(148, 163, 184, 0.18)',

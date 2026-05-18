@@ -122,9 +122,16 @@ export default function ProviderButton({
       style={{
         width: '100%',
         fontWeight: 500,
+        borderRadius: 14,
+        boxShadow: primary ? 'var(--sada-shadow-glow)' : 'none',
+        transition: 'background 160ms ease, border-color 160ms ease, box-shadow 160ms ease, transform 160ms ease',
         ...(primary
-          ? { backgroundColor: 'var(--accent-9)', color: 'white' }
-          : { color: 'var(--gray-12)', borderColor: 'var(--gray-a6)' }),
+          ? { background: 'var(--sada-accent-gradient)', color: 'white', borderColor: 'transparent' }
+          : {
+              color: 'var(--sada-text)',
+              borderColor: 'var(--sada-border-strong)',
+              background: 'rgba(255, 255, 255, 0.045)',
+            }),
       }}
       onClick={onClick}
     >

@@ -1,6 +1,7 @@
 'use client';
 
 import { useMemo } from 'react';
+import { usePathname, useSearchParams } from 'next/navigation';
 import { Flex } from '@radix-ui/themes';
 import { ChatStarIcon } from '@/app/components/ui/chat-star-icon';
 import { MaterialIcon } from '@/app/components/ui/MaterialIcon';
@@ -61,6 +62,8 @@ export function StaticNavSection() {
   const modKey = useMemo(() => getModifierSymbol(), []);
   const isMobile = useIsMobile();
   const closeMobileSidebar = useMobileSidebarStore((s) => s.close);
+  const pathname = usePathname();
+  const searchParams = useSearchParams();
 
   const handleNewChat = () => {
     if (isMobile) closeMobileSidebar();
@@ -104,6 +107,11 @@ export function StaticNavSection() {
             icon={<MaterialIcon name={item.icon} size={ICON_SIZE_DEFAULT} />}
             label={t(item.labelKey)}
             href={item.route}
+            isActive={
+              item.route.includes('all-records')
+                ? pathname.startsWith('/knowledge-base') && searchParams?.get('view') === 'all-records'
+                : pathname.startsWith('/knowledge-base') && searchParams?.get('view') !== 'all-records'
+            }
           />
         ))}
     </Flex>

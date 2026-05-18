@@ -16,11 +16,13 @@ export function SettingsSection({ title, description, rightAction, children }: S
       direction="column"
       gap="4"
       style={{
-        border: '1px solid var(--olive-3)',
-        borderRadius: 'var(--radius-1)',
+        border: '1px solid var(--sada-border)',
+        borderRadius: 'var(--sada-radius-lg)',
         padding: 'var(--space-4)',
         backdropFilter: 'blur(25px)',
-        background: 'var(--olive-2)',
+        background:
+          'linear-gradient(180deg, rgba(18, 24, 48, 0.82), rgba(8, 11, 24, 0.72))',
+        boxShadow: 'var(--sada-shadow-soft)',
       }}
     >
       {/* Section header — only rendered when title is provided */}
@@ -28,11 +30,11 @@ export function SettingsSection({ title, description, rightAction, children }: S
         <>
           <Flex align="center" justify="between">
             <Flex direction="column" gap="1">
-              <Text size="3" weight="medium" style={{ color: 'var(--gray-12)' }}>
+              <Text size="3" weight="medium" style={{ color: 'var(--sada-text)' }}>
                 {title}
               </Text>
               {description && (
-                <Text size="1" style={{ color: 'var(--slate-11)', fontWeight: 300, lineHeight: '16px' }}>
+                <Text size="1" style={{ color: 'var(--sada-text-muted)', fontWeight: 300, lineHeight: '16px' }}>
                   {description}
                 </Text>
               )}
@@ -40,7 +42,7 @@ export function SettingsSection({ title, description, rightAction, children }: S
             {rightAction}
           </Flex>
           {/* Divider */}
-          <Box style={{ height: 1, backgroundColor: 'var(--gray-5)', width: '100%' }} />
+          <Box style={{ height: 1, background: 'linear-gradient(90deg, transparent, var(--sada-border), transparent)', width: '100%' }} />
         </>
       )}
       {/* Content rows with gap */}

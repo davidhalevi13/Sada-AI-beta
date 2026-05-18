@@ -17,7 +17,7 @@ export default function WorkspaceLayout({
   children: ReactNode
 }) {
   return (
-    <Flex style={{ height: '100%', minHeight: 0, overflow: 'hidden' }}>
+    <Flex style={{ height: '100%', minHeight: 0, overflow: 'hidden', background: 'var(--sada-page-gradient)' }}>
       <WorkspaceSidebar />
       <Box
         className="no-scrollbar"
@@ -27,8 +27,7 @@ export default function WorkspaceLayout({
           height: '100%',
           overflowY: 'auto',
           overflowX: 'hidden',
-          background:
-            'linear-gradient(180deg, var(--olive-2, #181917) 0%, var(--olive-1, #111210) 100%)',
+          background: 'var(--sada-page-gradient)',
         }}
       >
         {children}
