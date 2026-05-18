@@ -27,7 +27,7 @@ import { debugLog } from '@/chat/debug-logger';
 import { useCommandStore } from '@/lib/store/command-store';
 import { usePendingChatStore } from '@/lib/store/pending-chat-store';
 import { useIsMobile } from '@/lib/hooks/use-is-mobile';
-import { Flex, Box, Text } from '@radix-ui/themes';
+import { Flex, Box, Text, Avatar, Tooltip } from '@radix-ui/themes';
 import { useTranslation } from 'react-i18next';
 import { FilePreviewSidebar, FilePreviewFullscreen } from '@/app/components/file-preview';
 import { ShareSidebar, ShareHeaderGroup } from '@/app/components/share';
@@ -40,8 +40,10 @@ import { useGitHubStars } from '@/app/components/workspace-menu/hooks/use-github
 import { EXTERNAL_LINKS } from '@/lib/constants/external-links';
 import { MaterialIcon } from '@/app/components/ui/MaterialIcon';
 import { useUserStore } from '@/lib/store/user-store';
+import { toast } from '@/lib/store/toast-store';
 import { ServiceGate } from '@/app/components/ui/service-gate';
 import { SIDEBAR_CONVERSATIONS_PAGE_SIZE } from './constants';
+import { useGraphUserEntry } from '@/lib/hooks/use-graph-user-entry';
 
 // Space reserved below content views to clear the absolutely-positioned chat input.
 const CHAT_INPUT_OFFSET = { mobile: 120, desktop: 128 };
@@ -141,6 +143,7 @@ function ChatFooterLinks() {
 function ChatContent() {
   const searchParams = useSearchParams();
   const router = useRouter();
+  const { t } = useTranslation();
   const conversationId = searchParams.get('conversationId');
   const rawAgentParam = searchParams.get('agentId');
   const agentId = rawAgentParam?.trim() ? rawAgentParam : null;
@@ -353,6 +356,10 @@ function ChatContent() {
           };
           const connectors = extractAgentKnowledgeConnectors(agent);
           const toolGroups = buildAgentChatToolGroups(agent);
+          const deprecatedToolNames = (agent?.toolsets ?? [])
+            .flatMap((ts) => ts.tools ?? [])
+            .filter((tool) => tool.deprecated === true)
+            .map((tool) => tool.name);
           store.hydrateAgentChatResources({
             toolCatalogFullNames: toolFullNames,
             toolGroups,
@@ -360,8 +367,23 @@ function ChatContent() {
             kbIds,
             knowledgeCollectionRows: collectionRows,
             knowledgeDefaults: knowledgeDefaultsForStore,
+            deprecatedToolNames,
           });
           store.setAgentContextDisplayName(agent?.name?.trim() || null);
+          store.setAgentContextCreatedBy(agent?.createdBy ?? null);
+
+          // Warn when any tool attached to this agent has been removed from
+          // server code since the agent was last saved (deprecated=true is
+          // stamped by the GET /agent/:id handler at read time).
+          if (deprecatedToolNames.length > 0) {
+            toast.error(t('chat.toasts.deprecatedTools'), {
+              action: {
+                label: t('chat.toasts.openAgentBuilder'),
+                onClick: () =>
+                  router.push(`/agents/edit?agentKey=${encodeURIComponent(agentId!)}`),
+              },
+            });
+          }
 
           // hydrateAgentChatResources always resets agentKnowledgeScope to null.
           // On page reload with an existing conversationId, loadHistory may have
@@ -403,11 +425,13 @@ function ChatContent() {
             console.error('Failed to fetch agent details:', error);
             store.hydrateAgentChatResources(null);
             store.setAgentContextDisplayName(null);
+            store.setAgentContextCreatedBy(null);
           }
         }
       } else {
         store.hydrateAgentChatResources(null);
         store.setAgentContextDisplayName(null);
+        store.setAgentContextCreatedBy(null);
       }
 
       try {
@@ -430,7 +454,7 @@ function ChatContent() {
     return () => {
       cancelled = true;
     };
-  }, [agentId]);
+  }, [agentId, router, t]);
 
   // ── URL → Store sync ──────────────────────────────────────────────
   // When URL changes (sidebar click, browser back), create/reuse a slot.
@@ -834,9 +858,13 @@ function ChatContent() {
 
   const isMobile = useIsMobile();
   const agentContextDisplayName = useChatStore((s) => s.agentContextDisplayName);
+  const agentContextCreatedBy = useChatStore((s) => s.agentContextCreatedBy);
+  const agentCreatorEntry = useGraphUserEntry(historyAndShareAgentId ? agentContextCreatedBy : null);
+  const agentCreatorAvatarUrl =
+    agentCreatorEntry?.profilePicture ??
+    (agentCreatorEntry?.mongoId ? `/api/v1/users/${agentCreatorEntry.mongoId}/dp` : undefined);
 
   // Render decisions
-  const { t } = useTranslation();
   /** Profile from GET /api/v1/users/:id — auth-store `user` is often null (not persisted with tokens). */
   const profile = useUserStore((s) => s.profile);
   const greetingName = useMemo(() => {
@@ -977,6 +1005,54 @@ function ChatContent() {
           displayName={agentContextDisplayName}
           isMobile={isMobile}
         />
+      )}
+
+      {/* Agent creator chip — shown when in an agent chat and creator is resolved */}
+      {historyAndShareAgentId && agentCreatorEntry?.fullName && (
+        <Box
+          style={{
+            position: 'absolute',
+            top: 10,
+            right: showConversationShare ? 200 : 16,
+            zIndex: 19,
+          }}
+        >
+          <Tooltip
+            content={`${t('agentBuilder.createdBy')}: ${agentCreatorEntry.fullName}`}
+          >
+            <Flex
+              align="center"
+              gap="2"
+              px="2"
+              py="1"
+              style={{
+                background: 'var(--color-panel)',
+                borderRadius: 'var(--radius-2)',
+                maxWidth: isMobile ? 140 : 220,
+                cursor: 'default',
+              }}
+            >
+              <Avatar
+                size="1"
+                fallback={agentCreatorEntry.fullName.charAt(0).toUpperCase()}
+                src={agentCreatorAvatarUrl}
+                radius="full"
+                style={{ flexShrink: 0 }}
+              />
+              <Text
+                size="2"
+                style={{
+                  color: 'var(--gray-12)',
+                  overflow: 'hidden',
+                  textOverflow: 'ellipsis',
+                  whiteSpace: 'nowrap',
+                }}
+              >
+                {agentCreatorEntry.fullName}
+              </Text>
+            </Flex>
+          </Tooltip>
+        </Box>
       )}
 
       {/* Share header group — owners only (hidden for Shared Chats / shared-with-me). */}
