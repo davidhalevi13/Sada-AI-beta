@@ -22,6 +22,7 @@ import {
   extractAgentKnowledgeCollectionRows,
 } from '@/app/(main)/agents/api';
 import { fetchModelsForContext } from '@/chat/utils/fetch-models-for-context';
+import { logNonBlockingError } from '@/chat/utils/log-non-blocking-error';
 import { buildExternalStoreConfig, loadHistoricalMessages } from '@/chat/runtime';
 import { debugLog } from '@/chat/debug-logger';
 import { useCommandStore } from '@/lib/store/command-store';
@@ -228,7 +229,7 @@ function ChatContent() {
       setPagination(owned.pagination);
       setSharedPagination(shared.pagination);
     } catch (error) {
-      console.error('Failed to fetch conversations:', error);
+      logNonBlockingError('Failed to fetch conversations:', error);
       setConversationsError(error instanceof Error ? error.message : 'Failed to fetch conversations');
     } finally {
       setIsConversationsLoading(false);
@@ -341,7 +342,7 @@ function ChatContent() {
         await fetchModelsForContext(ctxKey, { force });
       } catch (error) {
         if (!cancelled) {
-          console.error('Failed to fetch models for context', ctxKey, error);
+          logNonBlockingError('Failed to fetch models for context', ctxKey, error);
         }
       }
     };

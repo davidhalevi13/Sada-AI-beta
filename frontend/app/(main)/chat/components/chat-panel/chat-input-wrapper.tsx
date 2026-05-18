@@ -6,6 +6,7 @@ import { ChatInput } from '../chat-input';
 import { useChatStore, ctxKeyFromAgent } from '@/chat/store';
 import { useEffectiveAgentId } from '@/chat/hooks/use-effective-agent-id';
 import { fetchModelsForContext } from '@/chat/utils/fetch-models-for-context';
+import { logNonBlockingError } from '@/chat/utils/log-non-blocking-error';
 import { ChatApi } from '@/chat/api';
 import {
   buildAssistantApiFilters,
@@ -59,7 +60,7 @@ export function ChatInputWrapper() {
   useEffect(() => {
     const ctxKey = ctxKeyFromAgent(effectiveAgentId);
     fetchModelsForContext(ctxKey).catch((err) => {
-      console.error('Failed to fetch models for effective context', ctxKey, err);
+      logNonBlockingError('Failed to fetch models for effective context', ctxKey, err);
     });
   }, [effectiveAgentId]);
 
