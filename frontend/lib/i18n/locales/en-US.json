@@ -129,7 +129,7 @@
     "nav": {
       "prev": "Prev",
       "next": "Next",
-      "enterPipeshub": "Enter Sada AI",
+      "enterSadaAI": "Enter Sada AI",
       "finishing": "Finishing…",
       "saveLlmFirst": "Save the AI Model step first to continue"
     },
@@ -290,9 +290,9 @@
   },
   "electron": {
     "serverUrlSetup": {
-      "title": "Connect to PipesHub Server",
-      "subtitleFirstRun": "Enter the URL of your PipesHub server to get started.",
-      "subtitleExisting": "Confirm or update your PipesHub server URL.",
+      "title": "Connect to Sada AI Server",
+      "subtitleFirstRun": "Enter the URL of your Sada AI server to get started.",
+      "subtitleExisting": "Confirm or update your Sada AI server URL.",
       "label": "Server URL",
       "submit": "Connect",
       "errors": {
@@ -401,7 +401,7 @@
   },
   "chat": {
     "greeting": "What do you want to explore today?",
-    "heyUser": "Hey, {{name}} 👋",
+    "heyUser": "Hey, {{name}}",
     "heyUserDefaultName": "there",
     "askAnything": "Ask anything...",
     "quick": "Quick",
@@ -1662,7 +1662,7 @@
       },
       "personal": {
         "desktopRequiredTitle": "Desktop app required",
-        "desktopRequiredDescription": "Local filesystem connector is only available in the PipesHub desktop app. Please use the desktop app to set up this connector."
+        "desktopRequiredDescription": "Local filesystem connector is only available in the Sada AI desktop app. Please use the desktop app to set up this connector."
       },
       "syncStatus": {
         "paused": "Sync Paused",

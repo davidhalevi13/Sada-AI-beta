@@ -82,18 +82,18 @@ export function TimeGroup({
         align="center"
         style={{
           height: ELEMENT_HEIGHT,
-          padding: '0 var(--space-3)',
+          padding: '0 8px',
           marginTop: 'var(--space-1)',
         }}
       >
         <span
           style={{
             fontSize: 11,
-            fontWeight: 600,
+            fontWeight: 700,
             lineHeight: 'var(--line-height-1)',
-            letterSpacing: '0.08em',
+            letterSpacing: '0.1em',
             textTransform: 'uppercase',
-            color: 'var(--slate-10)',
+            color: 'rgba(202, 211, 255, 0.68)',
           }}
         >
           {t(TIME_GROUP_I18N[label])}

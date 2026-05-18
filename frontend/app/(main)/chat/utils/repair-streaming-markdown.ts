@@ -67,7 +67,7 @@ export function repairStreamingMarkdown(content: string): string {
   // ── 3. Repair the last line if it is a partial table row ─────────────────
   // A GFM table row must start AND end with `|`. During streaming the very
   // last chunk is often a cell value still being typed, e.g.:
-  //   | Organization Name | PipesHub
+  //   | Organization Name | Sada AI
   // Appending ` |` makes it a syntactically complete row so the table renders.
   const lastLine = lines[lines.length - 1];
   if (lastLine !== undefined) {

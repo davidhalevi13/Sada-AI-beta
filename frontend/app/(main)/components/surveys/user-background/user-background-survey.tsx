@@ -3,7 +3,7 @@
 import React, { useState } from 'react';
 import { Flex, Box, Text, Button, Spinner } from '@radix-ui/themes';
 import { submitUserBackgroundSurvey } from '@/app/(main)/onboarding/api';
-import { PipesHubIcon } from '@/app/components/ui';
+import { SadaAIIcon } from '@/app/components/ui';
 
 // ===============================
 // DEV FLAG — set to false to hide the survey
@@ -35,7 +35,7 @@ const ROLE_OPTIONS = [
 // Component
 // ===============================
 
-const SURVEY_DISMISSED_KEY = 'pipeshub:userBackgroundSurveyDismissed';
+const SURVEY_DISMISSED_KEY = 'sada-ai:userBackgroundSurveyDismissed';
 
 export function UserBackgroundSurvey() {
   const [isVisible, setIsVisible] = useState(() =>
@@ -98,7 +98,7 @@ export function UserBackgroundSurvey() {
         <Box style={{ padding: '20px 20px 0', flexShrink: 0 }}>
           {/* Logo mark */}
           <Flex justify="center" style={{ marginBottom: '12px' }}>
-            <PipesHubIcon size={36} color="var(--accent-8)" />
+            <SadaAIIcon size={36} color="var(--accent-8)" />
           </Flex>
 
           {/* Title */}

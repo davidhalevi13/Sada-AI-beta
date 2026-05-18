@@ -171,7 +171,7 @@ export function ConnectorPanel() {
       !isOAuthType(authTypeForConfigureGate) ||
       instanceAuthenticated);
   // Use registry connector's display name so the panel always shows the type name
-  // (e.g. "Pipeshub docs") rather than an instance name when creating a new connector.
+  // (e.g. "Sada AI docs") rather than an instance name when creating a new connector.
   const connectorTypeName = registryConnectors.find((c) => c.type === connectorType)?.name ?? connectorName;
 
   const prevPanelTabRef = useRef<PanelTab | null>(null);

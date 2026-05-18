@@ -8,7 +8,6 @@ import { resolveConnectorType } from '@/app/components/ui/ConnectorIcon';
 import type { BuilderSidebarToolset } from '@/app/(main)/toolsets/api';
 import type { RegistryToolsetRow } from '@/app/(main)/toolsets/api';
 import { primaryHttpDocumentationUrl } from '@/app/(main)/agents/agent-builder/components/toolset-agent-auth-helpers';
-import { EXTERNAL_LINKS } from '@/lib/constants/external-links';
 import { ToolsetInstanceRowCard } from './toolset-instance-row-card';
 
 export type ActionInstanceAuthTab = 'all' | 'authenticated' | 'not_authenticated';
@@ -74,6 +73,10 @@ export function ActionTypeDetailsLayout({
     scope === 'team' ? t('workspace.actions.typeDetail.scopeTeam') : t('workspace.actions.typeDetail.scopePersonal');
   const title = registryRow?.displayName || registryRow?.name || '';
   const description = registryRow?.description || '';
+  const documentationUrl = primaryHttpDocumentationUrl(registryRow?.documentationLinks);
+  const publicDocumentationUrl =
+    documentationUrl && !/docs\.pipeshub\./i.test(documentationUrl) ? documentationUrl : null;
+  const showDocumentationButton = Boolean(onOpenDocs || publicDocumentationUrl);
 
   const tabItems = instanceFilter
     ? [
@@ -209,36 +212,37 @@ export function ActionTypeDetailsLayout({
               )}
             </button>
           ) : null}
-          <button
-            type="button"
-            onClick={() => {
-              if (onOpenDocs) {
-                onOpenDocs();
-                return;
-              }
-              const url =
-                primaryHttpDocumentationUrl(registryRow?.documentationLinks) ||
-                EXTERNAL_LINKS.documentation;
-              window.open(url, '_blank', 'noopener,noreferrer');
-            }}
-            style={{
-              appearance: 'none',
-              margin: 0,
-              padding: '6px 12px',
-              border: '1px solid var(--gray-a4)',
-              borderRadius: 'var(--radius-2)',
-              backgroundColor: 'transparent',
-              cursor: 'pointer',
-              display: 'flex',
-              alignItems: 'center',
-              gap: 8,
-            }}
-          >
-            <MaterialIcon name="open_in_new" size={16} color="var(--gray-11)" />
-            <Text size="2" weight="medium" style={{ color: 'var(--gray-12)' }}>
-              {t('workspace.actions.documentation')}
-            </Text>
-          </button>
+          {showDocumentationButton ? (
+            <button
+              type="button"
+              onClick={() => {
+                if (onOpenDocs) {
+                  onOpenDocs();
+                  return;
+                }
+                if (publicDocumentationUrl) {
+                  window.open(publicDocumentationUrl, '_blank', 'noopener,noreferrer');
+                }
+              }}
+              style={{
+                appearance: 'none',
+                margin: 0,
+                padding: '6px 12px',
+                border: '1px solid var(--gray-a4)',
+                borderRadius: 'var(--radius-2)',
+                backgroundColor: 'transparent',
+                cursor: 'pointer',
+                display: 'flex',
+                alignItems: 'center',
+                gap: 8,
+              }}
+            >
+              <MaterialIcon name="open_in_new" size={16} color="var(--gray-11)" />
+              <Text size="2" weight="medium" style={{ color: 'var(--gray-12)' }}>
+                {t('workspace.actions.documentation')}
+              </Text>
+            </button>
+          ) : null}
           {onAddInstance ? (
             <Button variant="solid" size="2" onClick={onAddInstance} style={{ cursor: 'pointer' }}>
               <MaterialIcon name="add" size={16} color="white" />

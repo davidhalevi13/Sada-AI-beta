@@ -10,7 +10,7 @@ export function getConnectorInfoText(connector: Connector | null | undefined): s
 
 /**
  * Resolves the connector documentation URL for the "open documentation" action.
- * Prefers `documentationLinks` with type `pipeshub`, then the first non-empty link,
+ * Prefers Sada AI documentation links (`type: pipeshub`), then the first non-empty link,
  * then legacy `connectorInfo.documentationUrl` when `connectorInfo` is an object.
  *
  * Pass `documentationLinksOverride` when the UI has schema-fetched links that are not
@@ -27,8 +27,8 @@ export function getConnectorDocumentationUrl(
       ? documentationLinksOverride
       : ((configObj?.documentationLinks as DocumentationLink[] | undefined) ?? []);
 
-  const pipeshub = links.find((l) => l.type === 'pipeshub' && (l.url?.trim() ?? '') !== '');
-  if (pipeshub?.url) return pipeshub.url.trim();
+  const sadaDocumentation = links.find((l) => l.type === 'pipeshub' && (l.url?.trim() ?? '') !== '');
+  if (sadaDocumentation?.url) return sadaDocumentation.url.trim();
   const first = links.find((l) => (l.url?.trim() ?? '') !== '');
   if (first?.url) return first.url.trim();
 

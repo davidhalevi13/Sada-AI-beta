@@ -133,7 +133,6 @@ function Oauth2PageContent() {
         onSearchChange={setSearchQuery}
         newApplicationLabel={t('workspace.oauth2.newApplication')}
         onNewApplication={handleNewApplication}
-        docsOpenLabel={t('workspace.oauth2.docsOpenLabel')}
         breakpoint={breakpoint}
       />
 

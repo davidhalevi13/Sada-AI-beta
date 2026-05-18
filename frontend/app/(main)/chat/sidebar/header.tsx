@@ -7,7 +7,7 @@ import { UserAvatar } from '@/app/components/ui/user-avatar';
 import { useUserStore } from '@/lib/store/user-store';
 import { useIsMobile } from '@/lib/hooks/use-is-mobile';
 import { toast } from '@/lib/store/toast-store';
-import { PipesHubIcon } from '@/app/components/ui';
+import { SadaAIIcon } from '@/app/components/ui';
 
 /**
  * Sidebar header — logo and user avatar.
@@ -39,24 +39,24 @@ export function ChatSidebarHeader() {
       gap="2"
       style={{
         height: '100%',
-        padding: '10px var(--space-3)',
+        padding: '10px 12px',
       }}
     >
-      <Flex align="center" gap="2" style={{ minWidth: 0 }}>
+      <Flex align="center" gap="3" style={{ minWidth: 0 }}>
         <Box
           style={{
-            width: 34,
-            height: 34,
+            width: 38,
+            height: 38,
             display: 'inline-flex',
             alignItems: 'center',
             justifyContent: 'center',
-            borderRadius: 14,
-            background: 'var(--sada-gradient)',
-            border: '1px solid rgba(196, 181, 253, 0.34)',
-            boxShadow: '0 12px 28px rgba(0, 0, 0, 0.28), 0 0 24px rgba(139, 92, 246, 0.22)',
+            borderRadius: 0,
+            background: 'transparent',
+            border: 'none',
+            boxShadow: 'none',
           }}
         >
-          <PipesHubIcon size={HEADER_ELEMENT_SIZE} color="white" />
+          <SadaAIIcon size={HEADER_ELEMENT_SIZE} />
         </Box>
         <Text
           size="2"
@@ -64,12 +64,13 @@ export function ChatSidebarHeader() {
           style={{
             color: 'var(--sada-text)',
             letterSpacing: 0,
+            fontSize: 16,
             overflow: 'hidden',
             textOverflow: 'ellipsis',
             whiteSpace: 'nowrap',
           }}
         >
-          PipesHub
+          Sada AI
         </Text>
       </Flex>
       {isMobile ? (
@@ -96,7 +97,7 @@ export function ChatSidebarHeader() {
           style={{
             textDecoration: 'none',
             lineHeight: 0,
-            borderRadius: 12,
+            borderRadius: 14,
             boxShadow: '0 8px 20px rgba(0, 0, 0, 0.22)',
           }}
         >

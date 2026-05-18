@@ -116,7 +116,7 @@ function ServerUrlSetupScreen({ onComplete }: { onComplete: () => void }) {
           {/* eslint-disable-next-line @next/next/no-img-element */}
           <img
             src="/logo/pipes-hub.svg"
-            alt="PipesHub"
+            alt="Sada AI"
             width={56}
             height={56}
           />

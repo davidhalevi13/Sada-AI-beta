@@ -1,5 +1,6 @@
 'use client';
 
+import { useId, useState } from 'react';
 import { Flex, Text } from '@radix-ui/themes';
 import { useTranslation } from 'react-i18next';
 import { MaterialIcon } from '@/app/components/ui/MaterialIcon';
@@ -77,26 +78,33 @@ export function ChatSection({
   agentId,
 }: ChatSectionProps) {
   const { t } = useTranslation();
+  const [isCollapsed, setIsCollapsed] = useState(true);
+  const contentId = useId();
   const isTimeGrouped = !!timeGroups;
   const showGenerating = pendingConversations.length > 0;
   const isEmpty = isTimeGrouped
     ? timeGroups.length === 0 && !showGenerating
     : !conversations || conversations.length === 0;
+  const sectionStyle = isScrollable && !isCollapsed ? { flex: 1, minHeight: 0 } : undefined;
 
   return (
     <Flex
       direction="column"
-      style={isScrollable ? { flex: 1, minHeight: 0 } : undefined}
+      style={sectionStyle}
     >
       <ChatSectionHeader
         title={title}
         onAdd={onAdd}
         addAriaLabel={onAdd ? t('chat.newChat') : undefined}
         onTitleClick={hasMore ? onMore : undefined}
+        isCollapsed={isCollapsed}
+        onToggleCollapse={() => setIsCollapsed((prev) => !prev)}
+        collapseAriaLabel={title}
+        controlsId={contentId}
       />
 
-      {hasError ? (
-        <Flex direction="column" gap="2" style={{ padding: 'var(--space-2) var(--space-3)' }}>
+      {isCollapsed ? null : hasError ? (
+        <Flex id={contentId} direction="column" gap="2" style={{ padding: 'var(--space-2) var(--space-3)' }}>
           <Text size="1" style={{ color: '#ef4444' }}>
             {t('chat.failedToLoad')}
           </Text>
@@ -104,6 +112,7 @@ export function ChatSection({
         </Flex>
       ) : (
         <Flex
+          id={contentId}
           direction="column"
           className={isScrollable ? 'no-scrollbar' : undefined}
           style={{

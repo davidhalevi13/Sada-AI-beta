@@ -2,7 +2,7 @@
 
 import React, { useEffect, useCallback, useMemo } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
-import { Flex } from '@radix-ui/themes';
+import { Box, Flex } from '@radix-ui/themes';
 import { useTranslation } from 'react-i18next';
 import { MaterialIcon } from '@/app/components/ui/MaterialIcon';
 import { ChatStarIcon } from '@/app/components/ui/chat-star-icon';
@@ -19,6 +19,7 @@ import { ChatSidebarFooter } from './footer';
 import { ChatSection } from './chat-section';
 import { groupConversationsByTime, getNonEmptyGroups } from './time-group';
 import { SidebarItem } from './sidebar-item';
+import { SidebarSearchButton } from './static-nav-section';
 import { AgentMoreChatsSidebar } from './agent-more-chats-sidebar';
 import { AgentsSidebar } from './agents-sidebar';
 import { SIDEBAR_AGENT_CONVERSATIONS_PAGE_SIZE, MAX_VISIBLE_CHATS } from '../constants';
@@ -161,7 +162,7 @@ export const AgentScopedChatSidebar = React.memo(function AgentScopedChatSidebar
       mobileOpen={isMobileOpen}
       onMobileClose={closeMobile}
     >
-      <Flex direction="column" gap="6" style={{ flex: 1, minHeight: 0, overflow: 'hidden' }}>
+      <Flex direction="column" gap="2" style={{ height: '100%', minHeight: 0, overflow: 'hidden' }}>
         <SidebarItem
           icon={<MaterialIcon name="chevron_left" size={ICON_SIZE_DEFAULT} />}
           label={t('chat.backToChatHome')}
@@ -180,7 +181,7 @@ export const AgentScopedChatSidebar = React.memo(function AgentScopedChatSidebar
           forceHighlight
         />
 
-        <Flex direction="column" gap="4" style={{ flex: 1, minHeight: 0, overflow: 'hidden' }}>
+        <Flex direction="column" gap="2" style={{ flex: 1, minHeight: 0, overflow: 'hidden' }}>
           <ChatSection
             title={t('chat.yourChats')}
             timeGroups={yourTimeGroups}
@@ -198,6 +199,19 @@ export const AgentScopedChatSidebar = React.memo(function AgentScopedChatSidebar
             agentId={agentId}
           />
         </Flex>
+        <Box
+          style={{
+            flexShrink: 0,
+            marginTop: 'auto',
+            padding: '12px 2px 8px',
+            borderTop: '1px solid rgba(196, 181, 253, 0.1)',
+            background:
+              'linear-gradient(180deg, rgba(139, 92, 246, 0.04), rgba(47, 123, 255, 0.02))',
+            borderRadius: 18,
+          }}
+        >
+          <SidebarSearchButton />
+        </Box>
       </Flex>
     </SidebarBase>
   );

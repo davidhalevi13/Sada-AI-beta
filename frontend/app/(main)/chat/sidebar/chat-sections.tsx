@@ -102,11 +102,11 @@ export const ChatSections = React.memo(function ChatSections({
   }, [pendingConversations, slots, conversations]);
 
   return (
-    <Flex
-      direction="column"
-      gap="3"
-      style={{ flex: 1, minHeight: 0, overflow: 'hidden' }}
-    >
+      <Flex
+        direction="column"
+        gap="2"
+        style={{ flex: 1, minHeight: 0, overflow: 'hidden' }}
+      >
       {/* Shared Chats — flat list (no time grouping) */}
       <ChatSection
         title={t('chat.sharedChats')}

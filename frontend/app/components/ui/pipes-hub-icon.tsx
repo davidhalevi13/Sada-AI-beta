@@ -2,18 +2,18 @@
 
 import React from 'react';
 
-interface PipesHubIconProps {
+interface SadaAIIconProps {
   size?: number;
   color?: string;
   style?: React.CSSProperties;
   className?: string;
 }
 
-export function PipesHubIcon({
+export function SadaAIIcon({
   size = 80,
   style,
   className,
-}: PipesHubIconProps) {
+}: SadaAIIconProps) {
   return (
     <img
       src="/logo/sada-ai-logo-3D.png"

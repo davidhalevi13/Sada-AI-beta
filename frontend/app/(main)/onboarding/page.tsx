@@ -126,7 +126,7 @@ function OnboardingPageInner() {
   };
 
   /**
-   * Called when the user clicks "Enter Pipeshub" on the final step.
+   * Called when the user clicks "Enter Sada AI" on the final step.
    * Marks onboarding as configured and navigates to the main app.
    */
   const handleFinishOnboarding = async () => {
@@ -149,7 +149,7 @@ function OnboardingPageInner() {
       navigateTo(nextStep);
     }
     // If nextStep is null (e.g. final optional step saved), stay on the step —
-    // the user will click "Enter Pipeshub" in the footer when ready.
+    // the user will click "Enter Sada AI" in the footer when ready.
   };
 
   // ---- System config step numbering ----
@@ -166,7 +166,7 @@ function OnboardingPageInner() {
   const isLastStep = currentIndex === steps.length - 1;
   const isLoadingStep = stepFromUrl === 'loading';
 
-  // "Enter Pipeshub" is only enabled once the required LLM step is saved
+  // "Enter Sada AI" is only enabled once the required LLM step is saved
   const isLlmCompleted = completedStepIds.includes('ai-model');
 
   // Highlight Next button when the current step has been saved
@@ -356,7 +356,7 @@ function OnboardingPageInner() {
                   </Flex>
                 ) : (
                   <>
-                    {t('onboarding.nav.enterPipeshub')}
+                    {t('onboarding.nav.enterSadaAI')}
                     <span className="material-icons-outlined" style={{ fontSize: '16px' }}>
                       arrow_forward
                     </span>
@@ -418,26 +418,7 @@ function OnboardingPageInner() {
             {t('onboarding.footer.copyright')} &nbsp;·&nbsp;{' '}
             <a href="/privacy" style={{ color: 'var(--gray-9)', textDecoration: 'none' }}>
               {t('onboarding.footer.privacyPolicy')}
-            </a>{' '}
-            &nbsp;·&nbsp;{' '}
-            <a
-              href="https://pipeshub.com"
-              target="_blank"
-              rel="noreferrer"
-              style={{ color: 'var(--gray-9)', textDecoration: 'none' }}
-            >
-              {t('onboarding.footer.website')}
-            </a>{' '}
-            &nbsp;·&nbsp; {t('onboarding.footer.visitDocs')}{' '}
-            <a
-              href="https://docs.pipeshub.com"
-              target="_blank"
-              rel="noreferrer"
-              style={{ color: 'var(--accent-11)', textDecoration: 'none' }}
-            >
-              {t('onboarding.footer.docsLabel')}
-            </a>{' '}
-            {t('onboarding.footer.toLearnMore')}
+            </a>
           </Text>
         </Flex>
       )}

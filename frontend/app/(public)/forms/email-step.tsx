@@ -48,7 +48,7 @@ export default function EmailStep({ onNext, initialEmail = '' }: EmailStepProps)
       // Persist for returning-user flow – login page will read this and
       // auto-call initAuth to skip the email step on next visit.
       if (typeof window !== 'undefined') {
-        localStorage.setItem('pipeshub_last_email', trimmed);
+        localStorage.setItem('sada-ai:last-email', trimmed);
       }
       onNext(trimmed, response);
     } catch (err: unknown) {

@@ -38,10 +38,10 @@ const MAIN_NAV_ITEMS: NavItem[] = [
 const KbdBadge = ({ children }: { children: React.ReactNode }) => (
   <span
     style={{
-      background: 'rgba(255, 255, 255, 0.06)',
-      border: '1px solid rgba(196, 181, 253, 0.18)',
+      background: 'rgba(148, 163, 225, 0.09)',
+      border: '1px solid rgba(196, 181, 253, 0.2)',
       padding: KBD_BADGE_PADDING,
-      borderRadius: 8,
+      borderRadius: 999,
       fontSize: 11,
       lineHeight: 'var(--line-height-1)',
       letterSpacing: 0,
@@ -70,12 +70,8 @@ export function StaticNavSection() {
     dispatch('newChat');
   };
 
-  const handleOpenSearch = () => {
-    dispatch('openCommandPalette');
-  };
-
   return (
-    <Flex direction="column" gap="1">
+    <Flex direction="column" gap="2">
       {/* New Chat */}
       <SidebarItem
         icon={
@@ -90,13 +86,6 @@ export function StaticNavSection() {
         fontWeight={700}
         rightSlot={<KbdBadge>{modKey} +N</KbdBadge>}
         forceHighlight
-      />
-      {/* Search Chats — opens command palette (⌘+K) */}
-      <SidebarItem
-        icon={<MaterialIcon name="search" size={ICON_SIZE_DEFAULT} />}
-        label={t('nav.searchChats')}
-        onClick={handleOpenSearch}
-        rightSlot={<KbdBadge>{modKey} +K</KbdBadge>}
       />
 
       {/* Navigation items — hidden on mobile */}
@@ -115,5 +104,24 @@ export function StaticNavSection() {
           />
         ))}
     </Flex>
+  );
+}
+
+export function SidebarSearchButton() {
+  const dispatch = useCommandStore((s) => s.dispatch);
+  const { t } = useTranslation();
+  const modKey = useMemo(() => getModifierSymbol(), []);
+
+  const handleOpenSearch = () => {
+    dispatch('openCommandPalette');
+  };
+
+  return (
+    <SidebarItem
+      icon={<MaterialIcon name="search" size={ICON_SIZE_DEFAULT} />}
+      label={t('nav.searchChats')}
+      onClick={handleOpenSearch}
+      rightSlot={<KbdBadge>{modKey} +K</KbdBadge>}
+    />
   );
 }

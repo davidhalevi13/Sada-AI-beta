@@ -24,7 +24,7 @@ interface ShareableRowProps {
   noRolesInfo?: { title: string; description: string };
   /** Whether to show a radio button for selection */
   showRadio?: boolean;
-  /** Whether to show "Invite to Pipeshub" link */
+  /** Whether to show the Sada AI invite link */
   showInvite?: boolean;
   /** Whether this is the current user */
   isCurrentUser?: boolean;

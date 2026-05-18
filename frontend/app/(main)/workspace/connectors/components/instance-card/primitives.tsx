@@ -104,7 +104,7 @@ export function SyncButton({
         setState('idle');
         addToast({
           variant: 'info',
-          title: 'Open the Pipeshub desktop app on the machine that owns this folder to resync.',
+          title: 'Open the Sada AI desktop app on the machine that owns this folder to resync.',
         });
         return;
       }
@@ -175,7 +175,7 @@ export function FullSyncButton({
         setState('idle');
         addToast({
           variant: 'info',
-          title: 'Open the Pipeshub desktop app on the machine that owns this folder to resync.',
+          title: 'Open the Sada AI desktop app on the machine that owns this folder to resync.',
         });
         return;
       }

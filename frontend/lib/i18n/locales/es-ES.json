@@ -128,7 +128,7 @@
     "nav": {
       "prev": "Anterior",
       "next": "Siguiente",
-      "enterPipeshub": "Entrar a Sada AI",
+      "enterSadaAI": "Entrar a Sada AI",
       "finishing": "Finalizando…",
       "saveLlmFirst": "Guarda el paso de modelo de IA primero para continuar"
     },
@@ -289,9 +289,9 @@
   },
   "electron": {
     "serverUrlSetup": {
-      "title": "Conectar al servidor PipesHub",
-      "subtitleFirstRun": "Introduce la URL de tu servidor PipesHub para comenzar.",
-      "subtitleExisting": "Confirma o actualiza la URL de tu servidor PipesHub.",
+      "title": "Conectar al servidor Sada AI",
+      "subtitleFirstRun": "Introduce la URL de tu servidor Sada AI para comenzar.",
+      "subtitleExisting": "Confirma o actualiza la URL de tu servidor Sada AI.",
       "label": "URL del servidor",
       "submit": "Conectar",
       "errors": {
@@ -400,7 +400,7 @@
   },
   "chat": {
     "greeting": "¿Qué quieres explorar hoy?",
-    "heyUser": "Hola, {{name}} 👋",
+    "heyUser": "Hola, {{name}}",
     "heyUserDefaultName": "amigo",
     "askAnything": "Pregunta lo que quieras...",
     "quick": "Rápido",
@@ -1657,7 +1657,7 @@
       },
       "personal": {
         "desktopRequiredTitle": "Se requiere la aplicación de escritorio",
-        "desktopRequiredDescription": "El conector del sistema de archivos local solo está disponible en la aplicación de escritorio de PipesHub. Utilice la aplicación de escritorio para configurar este conector."
+        "desktopRequiredDescription": "El conector del sistema de archivos local solo está disponible en la aplicación de escritorio de Sada AI. Utilice la aplicación de escritorio para configurar este conector."
       },
       "syncStatus": {
         "paused": "Sync Paused",

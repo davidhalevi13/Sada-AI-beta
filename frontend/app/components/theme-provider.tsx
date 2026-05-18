@@ -4,7 +4,7 @@ import { Theme } from '@radix-ui/themes';
 import { Tooltip } from 'radix-ui';
 import { useEffect, useState, useCallback, createContext, useContext } from 'react';
 
-const THEME_STORAGE_KEY = 'pipeshub-theme-preference';
+const THEME_STORAGE_KEY = 'sada-ai-theme-preference';
 
 type Appearance = 'light' | 'dark';
 

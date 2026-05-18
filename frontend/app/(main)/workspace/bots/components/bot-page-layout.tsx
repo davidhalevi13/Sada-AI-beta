@@ -67,10 +67,6 @@ export function BotPageLayout({
         <Flex align="center" gap="2" style={{ flexShrink: 0 }}>
           <CreateBotButton onClick={onCreateBot} />
           <WorkspaceHeaderIconButton icon="refresh" onClick={onRefresh} />
-          <WorkspaceHeaderIconButton
-            icon="open_in_new"
-            onClick={() => window.open('https://docs.pipeshub.com/integrations', '_blank')}
-          />
         </Flex>
       </Flex>
 
@@ -143,37 +139,6 @@ function CreateBotButton({ onClick }: { onClick: () => void }) {
       <span style={{ fontSize: 14, fontWeight: 500, color: 'white' }}>
         {t('workspace.bots.createBot')}
       </span>
-    </button>
-  );
-}
-
-function IconButton({ icon, onClick }: { icon: string; onClick: () => void }) {
-  const [isHovered, setIsHovered] = useState(false);
-
-  return (
-    <button
-      type="button"
-      onClick={onClick}
-      onMouseEnter={() => setIsHovered(true)}
-      onMouseLeave={() => setIsHovered(false)}
-      style={{
-        appearance: 'none',
-        margin: 0,
-        padding: 0,
-        border: '1px solid var(--gray-a4)',
-        outline: 'none',
-        display: 'flex',
-        alignItems: 'center',
-        justifyContent: 'center',
-        width: 'var(--space-8)',
-        height: 'var(--space-8)',
-        borderRadius: 'var(--radius-2)',
-        backgroundColor: isHovered ? 'var(--gray-a3)' : 'transparent',
-        cursor: 'pointer',
-        transition: 'background-color 150ms ease',
-      }}
-    >
-      <MaterialIcon name={icon} size={16} color="var(--gray-11)" />
     </button>
   );
 }

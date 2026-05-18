@@ -3,10 +3,8 @@
 import { useTranslation } from 'react-i18next';
 import React, { useState, useEffect, useCallback, useMemo } from 'react';
 import { useRouter } from 'next/navigation';
-import { Box, Flex, Text, Heading, Button, IconButton } from '@radix-ui/themes';
-import { MaterialIcon } from '@/app/components/ui/MaterialIcon';
+import { Box, Flex, Text, Heading } from '@radix-ui/themes';
 import { LottieLoader } from '@/app/components/ui/lottie-loader';
-import { SettingsSaveBar } from '../components/settings-save-bar';
 import { ConfirmationDialog } from '../components/confirmation-dialog';
 import { useUserStore, selectIsAdmin, selectIsProfileInitialized } from '@/lib/store/user-store';
 import { ServiceGate } from '@/app/components/ui/service-gate';
@@ -335,20 +333,6 @@ export default function WebSearchPage() {
             </Text>
           </Box>
 
-          <Button
-            variant="outline"
-            color="gray"
-            size="2"
-            onClick={() =>
-              window.open('https://docs.pipeshub.com/workspace/web-search', '_blank')
-            }
-            style={{ cursor: 'pointer', flexShrink: 0, gap: 6 }}
-          >
-            <span className="material-icons-outlined" style={{ fontSize: 15 }}>
-              open_in_new
-            </span>
-            {t('workspace.bots.documentation')}
-          </Button>
         </Flex>
 
         {/* ── Providers section ── */}

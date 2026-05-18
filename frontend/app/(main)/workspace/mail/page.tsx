@@ -8,7 +8,6 @@ import {
   Flex,
   Text,
   Heading,
-  Button,
   Badge,
   IconButton,
 } from '@radix-ui/themes';
@@ -111,18 +110,6 @@ export default function MailPage() {
             </Text>
           </Box>
 
-          <Button
-            variant="outline"
-            color="gray"
-            size="2"
-            onClick={() => window.open('https://docs.pipeshub.com/smtp', '_blank')}
-            style={{ cursor: 'pointer', flexShrink: 0, gap: 6 }}
-          >
-            <span className="material-icons-outlined" style={{ fontSize: 15 }}>
-              open_in_new
-            </span>
-            {t('workspace.bots.documentation')}
-          </Button>
         </Flex>
 
         {/* ── Server Configuration Section ── */}

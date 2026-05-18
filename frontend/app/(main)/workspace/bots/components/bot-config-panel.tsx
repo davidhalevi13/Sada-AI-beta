@@ -73,19 +73,6 @@ export function BotConfigPanel() {
     <MaterialIcon name="smart_toy" size={20} color="var(--slate-12)" />
   );
 
-  const documentationAction = (
-    <Button
-      variant="outline"
-      color="gray"
-      size="1"
-      style={{ cursor: 'pointer', gap: 4 }}
-      onClick={() => window.open('https://docs.pipeshub.com/integrations', '_blank')}
-    >
-      <MaterialIcon name="open_in_new" size={14} color="var(--slate-11)" />
-      {t('workspace.bots.documentation')}
-    </Button>
-  );
-
   return (
     <>
       <WorkspaceRightPanel
@@ -93,7 +80,6 @@ export function BotConfigPanel() {
         onOpenChange={(open) => { if (!open) closePanel(); }}
         title={t('workspace.bots.configPanelTitle')}
         icon={headerIcon}
-        headerActions={documentationAction}
         hideFooter
       >
         {isPanelTypeSelector ? (

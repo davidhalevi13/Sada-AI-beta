@@ -56,7 +56,7 @@ export function DocumentationSection({
 // DocumentationLinkRow
 // ========================================
 
-const PIPESHUB_ICON_PATH = '/logo/sada-ai-logo-3D.png';
+const SADA_AI_ICON_PATH = '/logo/sada-ai-logo-3D.png';
 
 function DocumentationLinkRow({
   link,
@@ -69,7 +69,7 @@ function DocumentationLinkRow({
 }) {
   const [isHovered, setIsHovered] = useState(false);
 
-  const isPipeshub = link.type?.toLowerCase() === 'pipeshub';
+  const isSadaDocumentation = link.type?.toLowerCase() === 'pipeshub';
 
   const handleClick = useCallback(() => {
     window.open(link.url, '_blank', 'noopener,noreferrer');
@@ -92,9 +92,9 @@ function DocumentationLinkRow({
       }}
     >
       <Flex align="center" gap="2">
-        {isPipeshub ? (
+        {isSadaDocumentation ? (
           <ThemeableAssetIcon
-            src={PIPESHUB_ICON_PATH}
+            src={SADA_AI_ICON_PATH}
             size={16}
             color="var(--gray-11)"
             variant="flat"

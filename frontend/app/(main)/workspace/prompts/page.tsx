@@ -276,17 +276,6 @@ export default function PromptsPage() {
               Configure separate system prompts for internal search and web search modes
             </Text>
           </Box>
-          <Button
-            variant="outline"
-            color="gray"
-            size="2"
-            onClick={() =>
-              window.open('https://docs.pipeshub.com/workspace/prompts', '_blank')
-            }
-          >
-            <MaterialIcon name="open_in_new" size={14} />
-            {t('workspace.bots.documentation')}
-          </Button>
         </Flex>
 
         {/* ── Internal Search Prompt Section ── */}

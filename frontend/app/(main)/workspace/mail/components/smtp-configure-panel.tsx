@@ -3,7 +3,7 @@
 import React, { useState, useCallback, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import type { TFunction } from 'i18next';
-import { Flex, Box, Text, TextField, Button } from '@radix-ui/themes';
+import { Flex, Box, Text, TextField } from '@radix-ui/themes';
 import { MaterialIcon } from '@/app/components/ui/MaterialIcon';
 import { WorkspaceRightPanel } from '../../components/workspace-right-panel';
 import { isValidEmail } from '@/lib/utils/validators';
@@ -147,27 +147,12 @@ export function SmtpConfigurePanel({
     }
   };
 
-  // ── Doc button ──────────────────────────────────────────
-  const docButton = (
-    <Button
-      variant="outline"
-      color="gray"
-      size="1"
-      onClick={() => window.open('https://docs.pipeshub.com/smtp', '_blank')}
-      style={{ cursor: 'pointer', gap: 'var(--space-1)' }}
-    >
-      <span className="material-icons-outlined" style={{ fontSize: 14 }}>open_in_new</span>
-      <Text size="1">{t('workspace.bots.documentation')}</Text>
-    </Button>
-  );
-
   return (
     <WorkspaceRightPanel
       open={open}
       onOpenChange={(o) => { if (!o) onClose(); }}
       title={t('workspace.mail.panelTitle')}
       icon="mail"
-      headerActions={docButton}
       primaryLabel={t('action.save')}
       secondaryLabel={t('action.cancel')}
       primaryDisabled={false}

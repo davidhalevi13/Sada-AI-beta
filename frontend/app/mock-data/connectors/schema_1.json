@@ -12,7 +12,7 @@
                 "type": "setup"
             },
             {
-                "title": "Pipeshub Documentation",
+                "title": "Sada AI Documentation",
                 "url": "https://docs.pipeshub.com/connectors/microsoft-365/one-drive",
                 "type": "pipeshub"
             }

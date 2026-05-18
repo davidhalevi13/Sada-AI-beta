@@ -49,46 +49,6 @@ const FOOTER_ONLY_OFFSET = { mobile: 48, desktop: 48 };
 // Extra breathing room above the chat input for the search results list.
 const SEARCH_RESULTS_EXTRA_OFFSET = { mobile: 0, desktop: 70 };
 
-const footerLinkStyle: React.CSSProperties = {
-  display: 'inline-flex',
-  alignItems: 'center',
-  gap: 'var(--space-1)',
-  opacity: 0.7,
-  textDecoration: 'none',
-  color: 'inherit',
-};
-
-function ChatFooterLinks() {
-  return (
-    <Flex
-      align="center"
-      justify="center"
-      gap="3"
-      style={{ marginTop: 'var(--space-1)', paddingBottom: 0 }}
-    >
-      <a
-        href="https://docs.pipeshub.com/introduction"
-        target="_blank"
-        rel="noopener noreferrer"
-        style={footerLinkStyle}
-        onMouseEnter={(e) => { e.currentTarget.style.opacity = '1'; }}
-        onMouseLeave={(e) => { e.currentTarget.style.opacity = '0.7'; }}
-      >
-        <img
-          src="/icons/common/reader.svg"
-          width={14}
-          height={14}
-          alt=""
-          style={{ flexShrink: 0 }}
-        />
-        <span style={{ fontSize: 12, color: 'var(--olive-9)', whiteSpace: 'nowrap' }}>
-          Docs
-        </span>
-      </a>
-    </Flex>
-  );
-}
-
 /**
  * Inner content component that uses assistant-ui hooks.
  * Must be inside AssistantRuntimeProvider.
@@ -1100,7 +1060,6 @@ function ChatContent() {
         }}
       >
         {!isInputCentered && showChatInput && <ChatInputWrapper />}
-        <ChatFooterLinks />
       </Box>
 
       {/* File Preview - Sidebar Mode */}

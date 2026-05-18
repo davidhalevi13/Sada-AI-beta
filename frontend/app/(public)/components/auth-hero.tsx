@@ -130,7 +130,7 @@ export default function AuthHero({ splitLayout }: AuthHeroProps) {
             gap: '14px',
           }}
         >
-          {/* Pipeshub logo mark */}
+          {/* Sada AI logo mark */}
           <Image
             src="/logo/sada-ai-logo-3D.png"
             alt=""
@@ -210,7 +210,7 @@ export default function AuthHero({ splitLayout }: AuthHeroProps) {
         ))}
       </Flex>
 
-      {/* ── Pipeshub wordmark — bottom right ─────────────────────── */}
+      {/* ── Sada AI wordmark — bottom right ─────────────────────── */}
       <Box
         style={{
           position: 'absolute',

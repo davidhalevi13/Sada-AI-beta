@@ -129,7 +129,7 @@
     "nav": {
       "prev": "Zurück",
       "next": "Weiter",
-      "enterPipeshub": "Sada AI betreten",
+      "enterSadaAI": "Sada AI betreten",
       "finishing": "Abschließen…",
       "saveLlmFirst": "Speichern Sie zuerst den KI-Modell-Schritt, um fortzufahren"
     },
@@ -290,9 +290,9 @@
   },
   "electron": {
     "serverUrlSetup": {
-      "title": "Mit PipesHub-Server verbinden",
-      "subtitleFirstRun": "Geben Sie die URL Ihres PipesHub-Servers ein, um zu beginnen.",
-      "subtitleExisting": "Bestätigen oder aktualisieren Sie Ihre PipesHub-Server-URL.",
+      "title": "Mit dem Sada AI-Server verbinden",
+      "subtitleFirstRun": "Geben Sie die URL Ihres Sada AI-Servers ein, um zu beginnen.",
+      "subtitleExisting": "Bestätigen oder aktualisieren Sie Ihre Sada AI-Server-URL.",
       "label": "Server-URL",
       "submit": "Verbinden",
       "errors": {
@@ -401,7 +401,7 @@
   },
   "chat": {
     "greeting": "Was möchten Sie heute erkunden?",
-    "heyUser": "Hey, {{name}} 👋",
+    "heyUser": "Hey, {{name}}",
     "heyUserDefaultName": "du",
     "askAnything": "Fragen Sie etwas...",
     "quick": "Schnell",
@@ -1660,7 +1660,7 @@
       },
       "personal": {
         "desktopRequiredTitle": "Desktop-App erforderlich",
-        "desktopRequiredDescription": "Der lokale Dateisystem-Konnektor ist nur in der PipesHub-Desktop-App verfügbar. Bitte verwenden Sie die Desktop-App, um diesen Konnektor einzurichten."
+        "desktopRequiredDescription": "Der lokale Dateisystem-Konnektor ist nur in der Sada AI-Desktop-App verfügbar. Bitte verwenden Sie die Desktop-App, um diesen Konnektor einzurichten."
       },
       "syncStatus": {
         "paused": "Synchronisierung pausiert",

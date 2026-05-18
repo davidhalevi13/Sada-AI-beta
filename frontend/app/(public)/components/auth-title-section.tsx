@@ -8,7 +8,7 @@ import { LottieLoader } from '@/app/components/ui/lottie-loader';
 // ─── Props ────────────────────────────────────────────────────────────────────
 
 export interface AuthTitleSectionProps {
-  /** Main heading. Defaults to "Welcome to Pipeshub". */
+  /** Main heading. Defaults to the configured Sada AI welcome text. */
   title?: string;
   /** Subtitle below the heading. Defaults to the tagline. */
   subtitle?: string;

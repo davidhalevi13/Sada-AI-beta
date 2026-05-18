@@ -150,10 +150,10 @@ if (typeof window !== 'undefined') {
 }
 
 /** Dispatched after logout; AuthHydrator listens and runs client-side navigation. */
-export const LOGIN_NAVIGATION_EVENT = 'pipeshub:request-login-navigation';
+export const LOGIN_NAVIGATION_EVENT = 'sada-ai:request-login-navigation';
 
 /** Electron: after explicit workspace logout, show server URL screen then sign-in (see AuthHydrator). */
-export const ELECTRON_SERVER_URL_NAVIGATION_EVENT = 'pipeshub:electron-goto-server-url-flow';
+export const ELECTRON_SERVER_URL_NAVIGATION_EVENT = 'sada-ai:electron-goto-server-url-flow';
 
 /**
  * Clears all auth state and redirects the user to the login page.
