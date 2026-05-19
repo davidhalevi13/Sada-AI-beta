@@ -302,9 +302,10 @@ export function Header({
         // Leave room on the left for the fixed mobile hamburger button so the
         // breadcrumb does not sit underneath it.
         padding: isMobile ? `0 var(--space-2) 0 ${MOBILE_HAMBURGER_GUTTER_PX}px` : '0 var(--space-3)',
-        borderBottom: '1px solid var(--olive-3)',
-        backdropFilter: 'blur(8px)',
-        backgroundColor: 'var(--effects-translucent)',
+        borderBottom: '1px solid var(--sada-border)',
+        backdropFilter: 'blur(16px)',
+        background: 'rgba(8, 11, 24, 0.72)',
+        boxShadow: '0 12px 30px rgba(0, 0, 0, 0.16)',
         flexShrink: 0,
       }}
     >
@@ -324,7 +325,7 @@ export function Header({
       >
         {isSearchActive ? (
           <Flex align="center" gap="2">
-            <Text size="2" weight="medium" style={{ color: 'var(--slate-12)' }}>
+            <Text size="2" weight="medium" style={{ color: 'var(--sada-text)' }}>
               Results
             </Text>
           </Flex>
@@ -339,21 +340,21 @@ export function Header({
         <Flex align="center" gap={isMobile ? '1' : '5'}>
           {isMobile ? (
             <IconButton variant="ghost" size="2" color="gray" onClick={onFind} style={{ cursor: 'pointer' }} aria-label={t('action.find')}>
-              <MaterialIcon name="search" size={18} color="var(--slate-11)" />
+              <MaterialIcon name="search" size={18} color="var(--sada-purple-soft)" />
             </IconButton>
           ) : (
             <Button variant="ghost" size="1" color="gray" onClick={onFind} style={{ cursor: 'pointer', fontSize: '14px' }}>
-              <MaterialIcon name="search" size={16} color="var(--slate-11)" />
+              <MaterialIcon name="search" size={16} color="var(--sada-purple-soft)" />
               {t('action.find')}
             </Button>
           )}
           {isMobile ? (
             <IconButton variant="ghost" size="2" color="gray" onClick={onRefresh} style={{ cursor: 'pointer' }} aria-label={t('action.refresh')}>
-              <MaterialIcon name="refresh" size={18} color="var(--slate-11)" />
+              <MaterialIcon name="refresh" size={18} color="var(--sada-purple-soft)" />
             </IconButton>
           ) : (
             <Button variant="ghost" size="1" color="gray" onClick={onRefresh} style={{ cursor: 'pointer', fontSize: '14px' }}>
-              <MaterialIcon name="refresh" size={16} color="var(--slate-11)" />
+              <MaterialIcon name="refresh" size={16} color="var(--sada-purple-soft)" />
               {t('action.refresh')}
             </Button>
           )}

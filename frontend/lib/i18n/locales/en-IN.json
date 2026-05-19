@@ -129,7 +129,7 @@
     "nav": {
       "prev": "Prev",
       "next": "Next",
-      "enterPipeshub": "Enter Sada AI",
+      "enterSadaAI": "Enter Sada AI",
       "finishing": "Finishing…",
       "saveLlmFirst": "Save the AI Model step first to continue"
     },
@@ -290,9 +290,9 @@
   },
   "electron": {
     "serverUrlSetup": {
-      "title": "Connect to PipesHub Server",
-      "subtitleFirstRun": "Enter the URL of your PipesHub server to get started.",
-      "subtitleExisting": "Confirm or update your PipesHub server URL.",
+      "title": "Connect to Sada AI Server",
+      "subtitleFirstRun": "Enter the URL of your Sada AI server to get started.",
+      "subtitleExisting": "Confirm or update your Sada AI server URL.",
       "label": "Server URL",
       "submit": "Connect",
       "errors": {
@@ -401,7 +401,7 @@
   },
   "chat": {
     "greeting": "What do you want to explore today?",
-    "heyUser": "Hey, {{name}} 👋",
+    "heyUser": "Hey, {{name}}",
     "heyUserDefaultName": "there",
     "askAnything": "Ask anything...",
     "quick": "Quick",
@@ -435,7 +435,6 @@
     "uploadYourFile": "Upload your File",
     "supportsFileTypes": "Supports: {{types}}.",
     "loadingConversation": "Loading conversation...",
-    "recents": "Recents",
     "sharedChats": "Shared Chats",
     "noSharedChats": "No shared chats",
     "yourChats": "Your Chats",
@@ -504,24 +503,11 @@
     "askAnythingInContext": "Ask anything in \"{{title}}\"",
     "expandTable": "Expand table",
     "fullTableView": "Full table view",
-    "expandDiagram": "Expand diagram",
-    "fullDiagramView": "Full diagram view",
-    "renderingDiagram": "Rendering diagram…",
-    "zoomIn": "Zoom in",
-    "zoomOut": "Zoom out",
-    "resetZoom": "Reset zoom",
-    "copyDiagramSource": "Copy source",
-    "copyDiagramImage": "Copy Image",
-    "diagramRenderFailed": "Could not render diagram",
-    "showDiagramSource": "Show source",
-    "hideDiagramSource": "Hide source",
     "toasts": {
       "stopStreamTitle": "Coming Soon",
       "stopStreamDescription": "Stop Generation is not supported",
       "editComingSoonTitle": "Coming Soon",
-      "editComingSoonDescription": "We're building out support for edit",
-      "deprecatedTools": "This agent has tools that are no longer available. Open the Agent Builder to remove them.",
-      "openAgentBuilder": "Open Agent Builder"
+      "editComingSoonDescription": "We're building out support for edit"
     },
     "queryModes": {
       "chat": {
@@ -1659,7 +1645,7 @@
       },
       "personal": {
         "desktopRequiredTitle": "Desktop app required",
-        "desktopRequiredDescription": "Local filesystem connector is only available in the PipesHub desktop app. Please use the desktop app to set up this connector."
+        "desktopRequiredDescription": "Local filesystem connector is only available in the Sada AI desktop app. Please use the desktop app to set up this connector."
       },
       "syncStatus": {
         "paused": "Sync Paused",
@@ -1991,7 +1977,6 @@
   "agentBuilder": {
     "goBack": "Go back",
     "agentName": "Name",
-    "createdBy": "Created by",
     "agentNamePlaceholder": "e.g. Support bot",
     "serviceAccountBadge": "Service agent",
     "serviceAccountBadgeTooltip": "This service agent uses dedicated toolset credentials and org-wide knowledge access for everyone who uses it.",
@@ -2065,6 +2050,7 @@
     "agentConfigSubtitle": "Define the agent's behaviour and initial greeting message for users.",
     "useAsDefault": "Use as default",
     "editSection": "Edit section",
+    "showLess": "Show less",
     "showAll": "Show all ({{count}} lines)",
     "lineCount": "{{count}} lines",
     "instructionsLabel": "Instructions",
@@ -2268,11 +2254,7 @@
     "appKnowledgeAccessDescription": "Access {{name}} knowledge and context",
     "toolInlineSuffix": "{{name}} tool",
     "paletteToolGroupLabel": "{{app}} tools",
-    "nodeTemplateChatResponseDesc": "Sends the reply to the user",
-    "deprecatedToolsBanner": "{{count}} tool(s) on this agent are deprecated remove them : {{tools}}",
-    "removeDeprecatedTools": "Remove Deprecated Tools",
-    "showMore": "Show more",
-    "showLess": "Show less"
+    "nodeTemplateChatResponseDesc": "Sends the reply to the user"
   },
   "recordView": {
     "sections": {

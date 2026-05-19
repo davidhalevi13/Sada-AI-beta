@@ -64,20 +64,24 @@ export function CollapsibleSection({
           boxSizing: 'border-box',
           flexShrink: 0,
           // Visual
-          borderRadius: 'var(--radius-1)',
-          backgroundColor: highlighted ? 'var(--olive-3)' : 'transparent',
-          border: highlighted ? '1px solid var(--olive-4)' : '1px solid transparent',
+          borderRadius: 'var(--sada-radius-md)',
+          background: highlighted
+            ? 'linear-gradient(135deg, rgba(139, 92, 246, 0.16), rgba(47, 123, 255, 0.08))'
+            : 'transparent',
+          border: highlighted ? '1px solid var(--sada-border)' : '1px solid transparent',
+          boxShadow: highlighted ? '0 10px 22px rgba(0, 0, 0, 0.16)' : 'none',
           cursor: 'pointer',
+          transition: 'background 150ms ease, border-color 150ms ease, box-shadow 150ms ease',
         }}
       >
-        <MaterialIcon name={icon} size={ICON_SIZE_DEFAULT} color="var(--slate-11)" />
+        <MaterialIcon name={icon} size={ICON_SIZE_DEFAULT} color="var(--sada-purple-soft)" />
         <span
           style={{
             flex: 1,
             fontSize: 14,
             fontWeight: 400,
             lineHeight: '20px',
-            color: 'var(--slate-11)',
+            color: hasActiveChild ? 'var(--sada-text)' : 'var(--sada-text-muted)',
             textAlign: 'left',
           }}
         >
@@ -86,7 +90,7 @@ export function CollapsibleSection({
         <MaterialIcon
           name="expand_more"
           size={ICON_SIZE_DEFAULT}
-          color="var(--slate-11)"
+          color="var(--sada-purple-soft)"
           style={{
             transition: 'transform 150ms ease',
             transform: isExpanded ? 'rotate(0deg)' : 'rotate(-90deg)',

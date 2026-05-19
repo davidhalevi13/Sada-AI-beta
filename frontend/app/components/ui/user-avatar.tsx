@@ -53,7 +53,7 @@ export function getInitials({ fullName, firstName, lastName, email }: UserAvatar
   if (firstName || lastName) {
     return [(firstName ?? '')[0], (lastName ?? '')[0]].filter(Boolean).join('').toUpperCase();
   }
-  // 3. Email local-part (e.g. "abhishek@pipeshub.com" → "AB")
+  // 3. Email local-part (e.g. "abhishek@sada.ai" → "AB")
   if (email) {
     const local = email.split('@')[0];
     const parts = local.trim().split(/[\s._-]+/);

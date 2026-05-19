@@ -27,7 +27,7 @@ export const useLanguageStore = create<LanguageState>()(
       },
     }),
     {
-      name: 'pipeshub-lang-state',
+      name: 'sada-ai-lang-state',
       storage: createJSONStorage(() => localStorage),
     }
   )

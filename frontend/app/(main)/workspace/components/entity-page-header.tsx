@@ -46,14 +46,16 @@ export function EntityPageHeader({
       style={{
         paddingTop: '64px',
         paddingBottom: 'var(--space-4)',
+        gap: 'var(--space-4)',
+        flexWrap: 'wrap',
       }}
     >
       {/* Left: Title + Subtitle */}
       <Flex direction="column" gap="2">
-        <Heading size="5" weight="medium" style={{ color: 'var(--slate-12)' }}>
+        <Heading size="5" weight="medium" style={{ color: 'var(--sada-text)' }}>
           {title}
         </Heading>
-        <Text size="2" style={{ color: 'var(--slate-11)' }}>
+        <Text size="2" style={{ color: 'var(--sada-text-muted)' }}>
           {subtitle}
         </Text>
       </Flex>
@@ -65,7 +67,7 @@ export function EntityPageHeader({
           placeholder={searchPlaceholder}
           value={searchValue}
           onChange={(e) => onSearchChange(e.target.value)}
-          style={{ width: '224px' }}
+          style={{ width: 'min(224px, 100%)' }}
         >
           <TextField.Slot>
             <MaterialIcon name="search" size={16} color="var(--slate-9)" />

@@ -48,16 +48,19 @@ export function SidebarBase({ header, children, footer, secondaryPanel, onDismis
     }
 
     return (
-      <Flex
-        direction="column"
-        style={{
-          position: 'fixed',
-          inset: 0,
-          zIndex: 200,
-          backgroundColor: 'var(--olive-1)',
-          fontFamily: 'Manrope, sans-serif',
-        }}
-      >
+        <Flex
+          direction="column"
+          style={{
+            position: 'fixed',
+            inset: 0,
+            zIndex: 200,
+            background: 'var(--sidebar-background, linear-gradient(180deg, rgba(10, 14, 31, 0.98), rgba(5, 7, 17, 0.98)))',
+            borderRight: 'var(--sidebar-border, 1px solid var(--sada-border))',
+            boxShadow: '28px 0 70px rgba(0, 0, 0, 0.42), inset -1px 0 0 rgba(47, 123, 255, 0.1)',
+            backdropFilter: 'blur(24px)',
+            fontFamily: 'Manrope, sans-serif',
+          }}
+        >
         {/* Mobile header: logo area + × close button */}
         {header && (
           <Box
@@ -84,10 +87,15 @@ export function SidebarBase({ header, children, footer, secondaryPanel, onDismis
                   color="gray"
                   size="2"
                   onClick={onMobileClose}
-                  style={{ margin: 0 }}
-                  aria-label="Close sidebar"
-                >
-                  <MaterialIcon name="close" size={20} color="var(--gray-11)" />
+                  style={{
+                    margin: 0,
+                    borderRadius: 12,
+                    background: 'rgba(148, 163, 225, 0.08)',
+                    border: '1px solid rgba(196, 181, 253, 0.14)',
+                  }}
+                aria-label="Close sidebar"
+              >
+                  <MaterialIcon name="close" size={20} color="var(--sada-text-muted)" />
                 </IconButton>
               </Box>
             )}
@@ -100,7 +108,7 @@ export function SidebarBase({ header, children, footer, secondaryPanel, onDismis
           style={{
             flex: 1,
             overflowY: 'auto',
-            padding: CONTENT_PADDING,
+            padding: `var(--sidebar-content-padding, ${CONTENT_PADDING})`,
           }}
         >
           {children}
@@ -185,8 +193,10 @@ export function SidebarBase({ header, children, footer, secondaryPanel, onDismis
       style={{
         width: `${sidebarWidth}px`,
         height: '100%',
-        backgroundColor: 'var(--olive-1)',
-        borderRight: '1px solid var(--olive-3)',
+        background: 'var(--sidebar-background, linear-gradient(180deg, rgba(13, 18, 38, 0.94), rgba(5, 7, 17, 0.98)))',
+        borderRight: 'var(--sidebar-border, 1px solid var(--sada-border))',
+        boxShadow: '22px 0 58px rgba(0, 0, 0, 0.28), inset -1px 0 0 rgba(47, 123, 255, 0.1)',
+        backdropFilter: 'blur(24px)',
         flexShrink: 0,
         fontFamily: 'Manrope, sans-serif',
         position: 'relative',
@@ -210,7 +220,7 @@ export function SidebarBase({ header, children, footer, secondaryPanel, onDismis
         style={{
           flex: 1,
           overflowY: 'auto',
-          padding: CONTENT_PADDING,
+          padding: `var(--sidebar-content-padding, ${CONTENT_PADDING})`,
         }}
       >
         {children}
@@ -253,7 +263,8 @@ export function SidebarBase({ header, children, footer, secondaryPanel, onDismis
             borderRadius: 1,
             transition: 'opacity 0.15s',
             opacity: dragHandleHovered ? 1 : 0,
-            backgroundColor: 'var(--olive-8)',
+            background: 'linear-gradient(180deg, var(--sada-purple), var(--sada-blue))',
+            boxShadow: '0 0 18px rgba(139, 92, 246, 0.45)',
           }}
         />
       </Box>

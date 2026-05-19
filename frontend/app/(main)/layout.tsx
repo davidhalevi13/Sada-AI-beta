@@ -76,7 +76,7 @@ export default function RootLayout({
           rel="stylesheet"
         />
       </head>
-      <body style={{ backgroundColor: 'var(--olive-1, #f8f8f5)' }}>
+      <body style={{ background: 'var(--sada-bg, #070a17)', color: 'var(--sada-text, #f8fbff)' }}>
         <I18nextProvider i18n={i18n}>
           <ThemeProvider>
             <AuthHydrator />
@@ -175,12 +175,12 @@ function AppLayout({
       {/* Hydrates user profile (name, email, isAdmin, avatar) once auth is ready */}
       <UserProfileInitializer />
       <Flex
-        style={{
-          height: '100vh',
-          width: '100%',
-          overflow: 'hidden',
-          backgroundColor: 'var(--slate-2)',
-        }}
+              style={{
+                height: '100vh',
+                width: '100%',
+                overflow: 'hidden',
+                background: 'var(--sada-page-gradient)',
+              }}
       >
         {/* Sidebar slot — on desktop renders inline; on mobile the sidebar
             component itself renders as a fixed overlay (controlled via
@@ -223,7 +223,7 @@ function AppLayout({
                 style={{ margin: 0 }}
                 aria-label="Open sidebar"
               >
-                <MaterialIcon name="menu" size={22} color="var(--gray-11)" />
+                <MaterialIcon name="menu" size={22} color="var(--sada-text)" />
               </IconButton>
             </Box>
           )}

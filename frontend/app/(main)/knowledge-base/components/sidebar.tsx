@@ -27,7 +27,7 @@ import type {
 import { isKbCollectionsHubApp } from '../utils/all-records-transformer';
 
 // Sidebar width constant
-const SIDEBAR_WIDTH = 233;
+const SIDEBAR_WIDTH = 248;
 
 // ========================================
 // Shared Components
@@ -155,7 +155,7 @@ function FolderTreeItem({
             top: 0,
             bottom: 0,
             width: '1px',
-            backgroundColor: 'var(--slate-6)',
+            background: 'linear-gradient(180deg, rgba(124, 58, 237, 0.32), rgba(37, 99, 235, 0.14))',
             pointerEvents: 'none',
           }}
         />
@@ -188,7 +188,14 @@ function FolderTreeItem({
             paddingLeft: `${TREE_BASE_PADDING + indent}px`,
             paddingRight: showMeatballMenu ? '32px' : '8px',
             cursor: 'pointer',
-            backgroundColor: isSelected ? 'var(--olive-3)' : 'transparent',
+            borderRadius: 12,
+            background: isSelected
+              ? 'linear-gradient(135deg, rgba(124, 58, 237, 0.26), rgba(37, 99, 235, 0.14))'
+              : isHovered
+                ? 'rgba(124, 58, 237, 0.1)'
+                : 'transparent',
+            border: isSelected ? '1px solid var(--sada-border-strong)' : '1px solid transparent',
+            boxShadow: isSelected ? 'var(--sada-shadow-glow)' : 'none',
           }}
         >
           {/* Chevron area - only render if hasChildren */}
@@ -234,7 +241,7 @@ function FolderTreeItem({
             <FolderIcon
               variant="default"
               size={16}
-              color={'var(--emerald-11)' }
+              color={isSelected ? 'var(--accent-9)' : 'var(--accent-11)'}
               style={{ marginRight: '4px' }}
             />
           )}
@@ -399,8 +406,9 @@ function SectionHeader({ title, icon, connectorType, isExpanded, onToggle }: Sec
       style={{
         padding: '4px 8px',
         cursor: 'pointer',
-        borderRadius: 'var(--radius-2)',
-        backgroundColor: isHovered ? 'var(--slate-3)' : 'transparent',
+        borderRadius: 12,
+        background: isHovered ? 'rgba(124, 58, 237, 0.12)' : 'transparent',
+        border: '1px solid transparent',
       }}
       onClick={onToggle}
       onMouseEnter={() => setIsHovered(true)}
@@ -453,7 +461,7 @@ function CollectionItem({ collection, isSelected, onSelect, depth = 1 }: Collect
             top: 0,
             bottom: 0,
             width: '1px',
-            backgroundColor: 'var(--slate-6)',
+            background: 'linear-gradient(180deg, rgba(124, 58, 237, 0.32), rgba(37, 99, 235, 0.14))',
             pointerEvents: 'none',
           }}
         />
@@ -478,7 +486,14 @@ function CollectionItem({ collection, isSelected, onSelect, depth = 1 }: Collect
           width: '100%',
           justifyContent: 'flex-start',
           paddingLeft: `${TREE_BASE_PADDING + indent}px`,
-          backgroundColor: isHovered && !isSelected ? 'var(--slate-3)' : 'transparent',
+          borderRadius: 12,
+          background: isSelected
+            ? 'linear-gradient(135deg, rgba(124, 58, 237, 0.26), rgba(37, 99, 235, 0.14))'
+            : isHovered
+              ? 'rgba(124, 58, 237, 0.1)'
+              : 'transparent',
+          border: isSelected ? '1px solid var(--sada-border-strong)' : '1px solid transparent',
+          boxShadow: isSelected ? 'var(--sada-shadow-glow)' : 'none',
           cursor: 'pointer',
         }}
       >
@@ -557,7 +572,7 @@ function ConnectorItemComponent({
             top: 0,
             bottom: 0,
             width: '1px',
-            backgroundColor: 'var(--slate-6)',
+            background: 'linear-gradient(180deg, rgba(124, 58, 237, 0.32), rgba(37, 99, 235, 0.14))',
             pointerEvents: 'none',
           }}
         />
@@ -582,7 +597,14 @@ function ConnectorItemComponent({
           width: '100%',
           justifyContent: 'flex-start',
           paddingLeft: `${TREE_BASE_PADDING + indent}px`,
-          backgroundColor: isHovered && !isSelected ? 'var(--slate-3)' : 'transparent',
+          borderRadius: 12,
+          background: isSelected
+            ? 'linear-gradient(135deg, rgba(124, 58, 237, 0.26), rgba(37, 99, 235, 0.14))'
+            : isHovered
+              ? 'rgba(124, 58, 237, 0.1)'
+              : 'transparent',
+          border: isSelected ? '1px solid var(--sada-border-strong)' : '1px solid transparent',
+          boxShadow: isSelected ? 'var(--sada-shadow-glow)' : 'none',
           cursor: 'pointer',
         }}
       >
@@ -626,7 +648,8 @@ function MoreConnectorItem({ connector, onNavigate }: MoreConnectorItemProps) {
         width: '100%',
         justifyContent: 'flex-start',
         paddingLeft: '12px',
-        backgroundColor: isHovered ? 'var(--slate-3)' : 'transparent',
+        borderRadius: 12,
+        background: isHovered ? 'rgba(124, 58, 237, 0.12)' : 'transparent',
         cursor: 'pointer',
       }}
     >
@@ -1005,8 +1028,11 @@ export function Sidebar({
         style={{
           width: `${SIDEBAR_WIDTH}px`,
           height: '100%',
-          backgroundColor: 'var(--slate-1)',
-          borderRight: '1px solid var(--slate-6)',
+          background:
+            'linear-gradient(180deg, rgba(14, 18, 38, 0.94), rgba(7, 10, 24, 0.98)), radial-gradient(circle at 0% 0%, rgba(124, 58, 237, 0.2), transparent 18rem)',
+          borderRight: '1px solid var(--sada-border)',
+          boxShadow: '18px 0 48px rgba(0, 0, 0, 0.18)',
+          backdropFilter: 'blur(18px)',
           flexShrink: 0,
         }}
       >
@@ -1024,7 +1050,8 @@ export function Sidebar({
             style={{
               padding: '8px',
               cursor: 'pointer',
-              borderRadius: 'var(--radius-2)',
+              borderRadius: 12,
+              transition: 'background 160ms ease, box-shadow 160ms ease',
             }}
             onClick={onBack}
           >
@@ -1164,9 +1191,12 @@ export function Sidebar({
       style={{
         width: `${SIDEBAR_WIDTH}px`,
         height: '100%',
-        backgroundColor: 'var(--slate-1)',
-        borderRight: '1px solid var(--slate-6)',
-        flexShrink: 0,
+          background:
+            'linear-gradient(180deg, rgba(14, 18, 38, 0.94), rgba(7, 10, 24, 0.98)), radial-gradient(circle at 0% 0%, rgba(124, 58, 237, 0.2), transparent 18rem)',
+          borderRight: '1px solid var(--sada-border)',
+          boxShadow: '18px 0 48px rgba(0, 0, 0, 0.18)',
+          backdropFilter: 'blur(18px)',
+          flexShrink: 0,
       }}
     >
       {/* Header */}
@@ -1183,7 +1213,7 @@ export function Sidebar({
           style={{
             padding: '8px',
             cursor: 'pointer',
-            borderRadius: 'var(--radius-2)',
+            borderRadius: 12,
           }}
           onClick={onBack}
         >
@@ -1222,7 +1252,11 @@ export function Sidebar({
             width: '100%',
             justifyContent: 'flex-start',
             marginBottom: '8px',
-            ...{ border: '1px solid var(--slate-3)' },
+            background: isAllSelected
+              ? 'var(--sada-accent-gradient)'
+              : 'rgba(255, 255, 255, 0.045)',
+            boxShadow: isAllSelected ? 'var(--sada-shadow-glow)' : 'none',
+            ...{ border: '1px solid var(--sada-border)' },
           }}
         >
           <Text

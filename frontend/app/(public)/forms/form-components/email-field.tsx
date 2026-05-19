@@ -49,7 +49,7 @@ const EmailField = React.forwardRef<HTMLInputElement, EmailFieldProps>(function 
         as="label"
         htmlFor={id}
         style={{
-          color: 'var(--gray-12)',
+          color: 'var(--sada-text)',
           fontSize: '14px',
           fontWeight: 500,
           lineHeight: '20px',
@@ -77,6 +77,7 @@ const EmailField = React.forwardRef<HTMLInputElement, EmailFieldProps>(function 
           outline: error ? '1px solid var(--red-8)' : undefined,
           opacity: readOnly ? 0.6 : undefined,
           cursor: readOnly ? 'default' : undefined,
+          borderRadius: 14,
         }}
       />
       {error && (

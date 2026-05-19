@@ -4,7 +4,7 @@ import React from 'react';
 import { Text } from '@radix-ui/themes';
 import { ConnectorIcon } from '@/app/components/ui/ConnectorIcon';
 import type { CitationData } from './types';
-import { getCitationCopyHref } from './utils';
+import { getCitationCopyHref, getDisplayConnector } from './utils';
 
 const titleTextStyle: React.CSSProperties = {
   color: 'var(--accent-11)',
@@ -50,7 +50,7 @@ export function CitationSourceLinkRow({
 
   const label = (
     <>
-      <ConnectorIcon type={connector} size={14} />
+      <ConnectorIcon type={getDisplayConnector(connector)} size={14} />
       <Text as="span" size="1" weight="medium" style={titleTextStyle}>
         {truncatedName}
       </Text>

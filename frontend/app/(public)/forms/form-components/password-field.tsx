@@ -67,7 +67,7 @@ const PasswordField = React.forwardRef<HTMLInputElement, PasswordFieldProps>(fun
         as="label"
         htmlFor={id}
         style={{
-          color: 'var(--gray-12)',
+          color: 'var(--sada-text)',
           fontSize: '14px',
           fontWeight: 500,
           lineHeight: '20px',
@@ -96,6 +96,7 @@ const PasswordField = React.forwardRef<HTMLInputElement, PasswordFieldProps>(fun
           outline: error ? '1px solid var(--red-8)' : undefined,
           opacity: disabled ? 0.5 : undefined,
           cursor: disabled ? 'not-allowed' : undefined,
+          borderRadius: 14,
         }}
       >
         <TextField.Slot side="right">
@@ -109,7 +110,7 @@ const PasswordField = React.forwardRef<HTMLInputElement, PasswordFieldProps>(fun
           >
             <span
               className="material-icons-outlined"
-              style={{ fontSize: '16px', color: 'var(--gray-10)' }}
+              style={{ fontSize: '16px', color: 'var(--sada-text-muted)' }}
             >
               {visible ? 'visibility_off' : 'visibility'}
             </span>

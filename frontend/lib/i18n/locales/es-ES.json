@@ -128,7 +128,7 @@
     "nav": {
       "prev": "Anterior",
       "next": "Siguiente",
-      "enterPipeshub": "Entrar a Sada AI",
+      "enterSadaAI": "Entrar a Sada AI",
       "finishing": "Finalizando…",
       "saveLlmFirst": "Guarda el paso de modelo de IA primero para continuar"
     },
@@ -289,9 +289,9 @@
   },
   "electron": {
     "serverUrlSetup": {
-      "title": "Conectar al servidor PipesHub",
-      "subtitleFirstRun": "Introduce la URL de tu servidor PipesHub para comenzar.",
-      "subtitleExisting": "Confirma o actualiza la URL de tu servidor PipesHub.",
+      "title": "Conectar al servidor Sada AI",
+      "subtitleFirstRun": "Introduce la URL de tu servidor Sada AI para comenzar.",
+      "subtitleExisting": "Confirma o actualiza la URL de tu servidor Sada AI.",
       "label": "URL del servidor",
       "submit": "Conectar",
       "errors": {
@@ -400,7 +400,7 @@
   },
   "chat": {
     "greeting": "¿Qué quieres explorar hoy?",
-    "heyUser": "Hola, {{name}} 👋",
+    "heyUser": "Hola, {{name}}",
     "heyUserDefaultName": "amigo",
     "askAnything": "Pregunta lo que quieras...",
     "quick": "Rápido",
@@ -434,7 +434,6 @@
     "uploadYourFile": "Sube tu archivo",
     "supportsFileTypes": "Admite: {{types}}.",
     "loadingConversation": "Cargando conversación...",
-    "recents": "Recientes",
     "sharedChats": "Chats compartidos",
     "noSharedChats": "No hay chats compartidos",
     "yourChats": "Tus chats",
@@ -503,24 +502,11 @@
     "askAnythingInContext": "Pregunta lo que quieras en \"{{title}}\"",
     "expandTable": "Expandir tabla",
     "fullTableView": "Vista completa de la tabla",
-    "expandDiagram": "Expandir diagrama",
-    "fullDiagramView": "Vista completa del diagrama",
-    "renderingDiagram": "Renderizando diagrama…",
-    "zoomIn": "Acercar",
-    "zoomOut": "Alejar",
-    "resetZoom": "Restablecer zoom",
-    "copyDiagramSource": "Copiar código",
-    "copyDiagramImage": "Copiar imagen",
-    "diagramRenderFailed": "No se pudo renderizar el diagrama",
-    "showDiagramSource": "Mostrar código",
-    "hideDiagramSource": "Ocultar código",
     "toasts": {
       "stopStreamTitle": "Próximamente",
       "stopStreamDescription": "La detención de la generación no es compatible",
       "editComingSoonTitle": "Próximamente",
-      "editComingSoonDescription": "Estamos desarrollando soporte para editar",
-      "deprecatedTools": "Este agente tiene herramientas que ya no están disponibles. Abre el Agent Builder para eliminarlas.",
-      "openAgentBuilder": "Abrir Agent Builder"
+      "editComingSoonDescription": "Estamos desarrollando soporte para editar"
     },
     "queryModes": {
       "chat": {
@@ -1671,7 +1657,7 @@
       },
       "personal": {
         "desktopRequiredTitle": "Se requiere la aplicación de escritorio",
-        "desktopRequiredDescription": "El conector del sistema de archivos local solo está disponible en la aplicación de escritorio de PipesHub. Utilice la aplicación de escritorio para configurar este conector."
+        "desktopRequiredDescription": "El conector del sistema de archivos local solo está disponible en la aplicación de escritorio de Sada AI. Utilice la aplicación de escritorio para configurar este conector."
       },
       "syncStatus": {
         "paused": "Sync Paused",
@@ -2003,7 +1989,6 @@
   "agentBuilder": {
     "goBack": "Volver",
     "agentName": "Nombre del agente",
-    "createdBy": "Creado por",
     "agentNamePlaceholder": "p. ej. Bot de soporte, Asistente de investigación",
     "serviceAccountBadge": "Agente de servicio",
     "serviceAccountBadgeTooltip": "Este agente de servicio usa credenciales de conjunto de herramientas dedicadas y acceso al conocimiento en toda la organización para quien lo use.",
@@ -2077,6 +2062,7 @@
     "agentConfigSubtitle": "Define el comportamiento del agente y el mensaje de bienvenida inicial para los usuarios.",
     "useAsDefault": "Usar como predeterminado",
     "editSection": "Editar sección",
+    "showLess": "Mostrar menos",
     "showAll": "Mostrar todo ({{count}} líneas)",
     "lineCount": "{{count}} líneas",
     "instructionsLabel": "Instrucciones",
@@ -2280,11 +2266,7 @@
     "appKnowledgeAccessDescription": "Acceder al conocimiento y contexto de {{name}}",
     "toolInlineSuffix": "Herramienta {{name}}",
     "paletteToolGroupLabel": "Herramientas de {{app}}",
-    "nodeTemplateChatResponseDesc": "Envía la respuesta al usuario",
-    "deprecatedToolsBanner": "{{count}} herramienta(s) de este agente están obsoletas, elimínalas: {{tools}}",
-    "removeDeprecatedTools": "Eliminar herramientas obsoletas",
-    "showMore": "Mostrar más",
-    "showLess": "Mostrar menos"
+    "nodeTemplateChatResponseDesc": "Envía la respuesta al usuario"
   },
   "recordView": {
     "sections": {

@@ -31,8 +31,10 @@ export function SecondaryPanel({ header, children }: SecondaryPanelProps) {
       style={{
         width: isMobile ? '100%' : `${SIDEBAR_WIDTH}px`,
         height: '100%',
-        backgroundColor: 'var(--olive-1)',
-        ...(isMobile ? {} : { borderRight: '1px solid var(--olive-3)' }),
+        background: 'linear-gradient(180deg, rgba(13, 18, 38, 0.98), rgba(5, 7, 17, 0.98))',
+        ...(isMobile ? {} : { borderRight: '1px solid var(--sada-border)' }),
+        boxShadow: '18px 0 54px rgba(0, 0, 0, 0.28)',
+        backdropFilter: 'blur(22px)',
         flexShrink: 0,
         fontFamily: 'Manrope, sans-serif',
       }}
@@ -42,7 +44,8 @@ export function SecondaryPanel({ header, children }: SecondaryPanelProps) {
         style={{
           height: `${HEADER_HEIGHT}px`,
           flexShrink: 0,
-          backgroundColor: 'var(--olive-1)',
+          background: 'rgba(8, 11, 24, 0.74)',
+          borderBottom: '1px solid var(--sada-border)',
         }}
       >
         {header}
@@ -55,7 +58,7 @@ export function SecondaryPanel({ header, children }: SecondaryPanelProps) {
           flex: 1,
           overflowY: 'auto',
           padding: CONTENT_PADDING,
-          backgroundColor: 'var(--olive-1)',
+          background: 'transparent',
         }}
       >
         {children}

@@ -2,10 +2,9 @@
 
 import React, { useCallback, useMemo } from 'react';
 import type { TFunction } from 'i18next';
-import { Box, Button, Flex, Grid, Heading, IconButton, SegmentedControl, Text, TextField } from '@radix-ui/themes';
+import { Box, Flex, Grid, Heading, IconButton, SegmentedControl, Text, TextField } from '@radix-ui/themes';
 import { useTranslation } from 'react-i18next';
 import { MaterialIcon } from '@/app/components/ui/MaterialIcon';
-import { EXTERNAL_LINKS } from '@/lib/constants/external-links';
 import type { AIModelProvider, ConfiguredModel } from '../types';
 import type { CapabilitySection } from '../types';
 import { CAPABILITY_SECTION_ORDER, LLM_SECTION_MODEL_TYPES } from '../types';
@@ -205,18 +204,6 @@ export function ProviderGrid({
           </Flex>
 
           <Flex align="center" gap="3" wrap="wrap" justify="end">
-            <Button
-              variant="outline"
-              color="gray"
-              size="2"
-              style={{ cursor: 'pointer', gap: 6 }}
-              onClick={() =>
-                window.open(`${EXTERNAL_LINKS.documentation}ai-models/overview`, '_blank', 'noopener,noreferrer')
-              }
-            >
-              <MaterialIcon name="open_in_new" size={16} color="var(--gray-11)" />
-              {t('workspace.aiModels.documentation')}
-            </Button>
             {refreshButton}
           </Flex>
         </Flex>

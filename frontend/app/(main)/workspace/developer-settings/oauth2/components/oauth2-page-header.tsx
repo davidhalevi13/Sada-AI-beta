@@ -1,7 +1,7 @@
 'use client';
 
 import React from 'react';
-import { Flex, Heading, Text, Button, TextField, IconButton } from '@radix-ui/themes';
+import { Flex, Heading, Text, Button, TextField } from '@radix-ui/themes';
 import { MaterialIcon } from '@/app/components/ui/MaterialIcon';
 import type { Breakpoint } from '@/lib/hooks/use-breakpoint';
 
@@ -13,7 +13,6 @@ export interface Oauth2PageHeaderProps {
   onSearchChange: (value: string) => void;
   newApplicationLabel: string;
   onNewApplication: () => void;
-  docsOpenLabel: string;
   /** Current Radix Themes breakpoint tier (from `useBreakpoint`). */
   breakpoint: Breakpoint;
 }
@@ -42,7 +41,6 @@ export function Oauth2PageHeader({
   onSearchChange,
   newApplicationLabel,
   onNewApplication,
-  docsOpenLabel,
   breakpoint,
 }: Oauth2PageHeaderProps) {
   const compact = isBelowMd(breakpoint);
@@ -67,16 +65,6 @@ export function Oauth2PageHeader({
         <MaterialIcon name="add" size={16} color="currentColor" />
         {newApplicationLabel}
       </Button>
-      <IconButton
-        type="button"
-        variant="outline"
-        color="gray"
-        size="2"
-        aria-label={docsOpenLabel}
-        onClick={() => window.open('https://docs.pipeshub.com/developer/oauth2', '_blank')}
-      >
-        <MaterialIcon name="open_in_new" size={16} color="var(--gray-11)" />
-      </IconButton>
     </Flex>
   );
 

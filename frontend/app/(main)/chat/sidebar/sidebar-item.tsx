@@ -33,8 +33,8 @@ interface SidebarItemProps {
  * All clickable sidebar elements (nav links, chat items, action buttons)
  * share this component for consistent sizing, spacing, and hover treatment.
  *
- * Hover / active: olive-3 background + olive-4 border
- * Default: transparent background, transparent border
+ * Hover / active styling is driven by CSS variables so the chat sidebar can
+ * theme this shared row without changing behavior for other consumers.
  */
 export function SidebarItem({
   icon,
@@ -64,19 +64,36 @@ export function SidebarItem({
   const sharedStyle: React.CSSProperties = {
     display: 'flex',
     alignItems: 'center',
-    gap: 'var(--space-2)',
+    gap: 10,
     width: '100%',
     height: CHAT_ITEM_HEIGHT,
-    padding: '0 var(--space-3)',
+    padding: '5px 8px',
     boxSizing: 'border-box',
     flexShrink: 0,
-    borderRadius: 'var(--radius-1)',
-    backgroundColor: highlighted ? 'var(--olive-3)' : 'transparent',
-    border: highlighted ? '1px solid var(--olive-4)' : '1px solid transparent',
+    borderRadius: 'var(--chat-sidebar-item-radius, var(--radius-1))',
+    background: isActive
+      ? 'var(--chat-sidebar-item-bg-active, var(--olive-3))'
+      : highlighted
+        ? 'var(--chat-sidebar-item-bg-hover, var(--olive-3))'
+        : 'transparent',
+    border: isActive
+      ? '1px solid var(--chat-sidebar-item-border-active, var(--olive-4))'
+      : highlighted
+        ? '1px solid var(--chat-sidebar-item-border-hover, var(--olive-4))'
+        : '1px solid transparent',
+    boxShadow: isActive
+      ? 'var(--chat-sidebar-item-shadow-active, none)'
+      : highlighted
+        ? 'var(--chat-sidebar-item-shadow-hover, none)'
+        : 'none',
     cursor: (onClick || href) ? 'pointer' : 'default',
     userSelect: 'none',
     textDecoration: 'none',
-    color: 'inherit',
+    color: isActive ? 'var(--sada-text)' : 'inherit',
+    position: 'relative',
+    overflow: 'hidden',
+    transform: highlighted ? 'translateX(1px)' : 'translateX(0)',
+    transition: 'background 150ms ease, border-color 150ms ease, box-shadow 150ms ease, color 150ms ease, transform 150ms ease',
   };
 
   const labelContent = typeof label === 'string' ? (
@@ -86,11 +103,12 @@ export function SidebarItem({
         fontSize: 14,
         fontWeight,
         lineHeight: 'var(--line-height-2)',
-        color: textColor,
+        color: isActive ? 'var(--sada-text)' : textColor,
         overflow: 'hidden',
         textOverflow: 'ellipsis',
         whiteSpace: 'nowrap',
         textAlign: 'left',
+        letterSpacing: 0,
       }}
     >
       {label}
@@ -102,18 +120,46 @@ export function SidebarItem({
         fontSize: 14,
         fontWeight,
         lineHeight: 'var(--line-height-2)',
-        color: textColor,
+        color: isActive ? 'var(--sada-text)' : textColor,
         overflow: 'hidden',
         textAlign: 'left',
+        letterSpacing: 0,
       }}
     >
       {label}
     </div>
   );
 
+  const iconContent = icon ? (
+    <span
+      style={{
+        width: 28,
+        minWidth: 28,
+        height: 28,
+        display: 'inline-flex',
+        alignItems: 'center',
+        justifyContent: 'center',
+        color: isActive ? 'var(--sada-text)' : textColor,
+        borderRadius: 12,
+        background: isActive
+          ? 'linear-gradient(135deg, rgba(139, 92, 246, 0.42), rgba(47, 123, 255, 0.24))'
+          : highlighted
+            ? 'rgba(148, 163, 225, 0.12)'
+            : 'rgba(148, 163, 225, 0.06)',
+        border: isActive
+          ? '1px solid rgba(196, 181, 253, 0.32)'
+          : '1px solid rgba(196, 181, 253, 0.1)',
+        boxShadow: isActive ? '0 8px 18px rgba(139, 92, 246, 0.18)' : 'none',
+        transition: 'background 150ms ease, border-color 150ms ease, box-shadow 150ms ease',
+      }}
+    >
+      {icon}
+    </span>
+  ) : null;
+
   const content = (
     <>
-      {icon}
+      {iconContent}
       {labelContent}
       {rightSlot}
     </>
@@ -140,17 +186,17 @@ export function SidebarItem({
             style={{
               display: 'flex',
               alignItems: 'center',
-              gap: 'var(--space-2)',
+              gap: 10,
               flex: 1,
               minWidth: 0,
-              paddingLeft: 'var(--space-3)',
+              paddingLeft: 8,
               height: '100%',
               textDecoration: 'none',
               color: 'inherit',
               cursor: 'pointer',
             }}
           >
-            {icon}
+            {iconContent}
             {labelContent}
           </Link>
           <span
@@ -158,7 +204,7 @@ export function SidebarItem({
               flexShrink: 0, 
               display: 'inline-flex', 
               alignItems: 'center',
-              paddingRight: 'var(--space-3)',
+              paddingRight: 8,
               height: '100%'
             }}
             onClick={(e) => {

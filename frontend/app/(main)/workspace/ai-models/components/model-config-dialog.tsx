@@ -2,14 +2,13 @@
 
 import type { TFunction } from 'i18next';
 import React, { useCallback, useEffect, useMemo, useState } from 'react';
-import { Box, Button, Callout, Flex, Switch, Text } from '@radix-ui/themes';
+import { Box, Callout, Flex, Switch, Text } from '@radix-ui/themes';
 import { useTranslation } from 'react-i18next';
 import { MaterialIcon } from '@/app/components/ui/MaterialIcon';
 import { ThemeableAssetIcon } from '@/app/components/ui/themeable-asset-icon';
 import { WorkspaceRightPanel } from '@/app/(main)/workspace/components/workspace-right-panel';
 import { SchemaFormField } from '@/app/(main)/workspace/connectors/components/schema-form-field';
 import type { SchemaField } from '@/app/(main)/workspace/connectors/types';
-import { EXTERNAL_LINKS } from '@/lib/constants/external-links';
 import { aiModelsCapabilityLabel } from '../capability-i18n';
 import type { AIModelProvider, AIModelProviderField, ConfiguredModel } from '../types';
 import { CAPABILITY_TO_MODEL_TYPE } from '../types';
@@ -315,25 +314,6 @@ export function ModelConfigDialog({
 
   const primaryBlocked = saving || !provider || !capability || !formValid;
 
-  const headerActions = useMemo(
-    () => (
-      <Button
-        type="button"
-        variant="ghost"
-        color="gray"
-        size="2"
-        aria-label={t('workspace.aiModels.configDocsOpenLabel')}
-        style={{ cursor: 'pointer', gap: 6 }}
-        onClick={() =>
-          window.open(`${EXTERNAL_LINKS.documentation}ai-models/overview`, '_blank', 'noopener,noreferrer')
-        }
-      >
-        <MaterialIcon name="open_in_new" size={16} color="var(--gray-11)" />
-      </Button>
-    ),
-    [t]
-  );
-
   return (
     <WorkspaceRightPanel
       open={open}
@@ -342,7 +322,6 @@ export function ModelConfigDialog({
       }}
       title={headerTitle}
       icon={headerIcon}
-      headerActions={headerActions}
       primaryLabel={mode === 'add' ? t('workspace.aiModels.configAddModel') : t('workspace.aiModels.configUpdateModel')}
       secondaryLabel={t('workspace.aiModels.cancel')}
       primaryLoading={saving}

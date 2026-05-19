@@ -193,16 +193,7 @@ export function OnboardingTour() {
               marginBottom: '14px',
             }}
           >
-            You&apos;re all set now. If you want to know more check out{' '}
-            <a
-              href="https://docs.pipeshub.com/"
-              target="_blank"
-              rel="noopener noreferrer"
-              style={{ color: 'var(--accent-9)', textDecoration: 'none' }}
-            >
-              documentation
-            </a>
-            .
+            You&apos;re all set now.
           </Text>
         ) : (
           <Text

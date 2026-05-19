@@ -55,10 +55,24 @@ export function WorkspaceSidebarItem({
     paddingRight: 'var(--space-3)',
     boxSizing: 'border-box',
     flexShrink: 0,
-    borderRadius: 'var(--radius-1)',
-    backgroundColor: highlighted ? 'var(--olive-3)' : 'transparent',
-    border: highlighted ? '1px solid var(--olive-4)' : '1px solid transparent',
+    borderRadius: 'var(--sada-radius-md)',
+    background: isActive
+      ? 'linear-gradient(135deg, rgba(139, 92, 246, 0.24), rgba(47, 123, 255, 0.13))'
+      : highlighted
+        ? 'rgba(139, 92, 246, 0.11)'
+        : 'transparent',
+    border: isActive
+      ? '1px solid var(--sada-border-strong)'
+      : highlighted
+        ? '1px solid var(--sada-border)'
+        : '1px solid transparent',
+    boxShadow: isActive
+      ? 'inset 3px 0 0 var(--sada-blue), 0 12px 24px rgba(0, 0, 0, 0.2)'
+      : highlighted
+        ? '0 8px 18px rgba(0, 0, 0, 0.14)'
+        : 'none',
     cursor: (onClick || href) ? 'pointer' : 'default',
+    transition: 'background 150ms ease, border-color 150ms ease, box-shadow 150ms ease, transform 150ms ease',
   };
 
   const hoverHandlers = {
@@ -75,7 +89,7 @@ export function WorkspaceSidebarItem({
           fontSize: 14,
           fontWeight: 400,
           lineHeight: '20px',
-          color: 'var(--slate-11)',
+          color: isActive ? 'var(--sada-text)' : 'var(--sada-text-muted)',
           overflow: 'hidden',
           textOverflow: 'ellipsis',
           whiteSpace: 'nowrap',

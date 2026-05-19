@@ -47,7 +47,7 @@ export type ConnectorType =
   | 'notion'
   | 'confluence'
   | 'bookstack'
-  /** PipesHub Collections / KB — backend `Connectors.KNOWLEDGE_BASE` = `"KB"` */
+  /** Sada AI Collections / KB — backend `Connectors.KNOWLEDGE_BASE` = `"KB"` */
   | 'kb'
   | 'knowledge-base'
   | 'google-docs'

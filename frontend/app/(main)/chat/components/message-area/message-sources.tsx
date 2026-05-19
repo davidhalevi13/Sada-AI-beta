@@ -3,6 +3,7 @@
 import React from 'react';
 import { Flex, Card, Text } from '@radix-ui/themes';
 import type { ChatSource } from '../../types';
+import { isGitHubUrl, stripGitHubUrlsFromText } from '@/chat/utils/github-filter';
 
 interface MessageSourcesProps {
   sources: ChatSource[];
@@ -16,7 +17,6 @@ const getSourceIcon = (type: string): string => {
     notion: '📝',
     sheets: '📊',
     confluence: '📄',
-    github: '💻',
     drive: '📁',
   };
   return icons[type] || '📄';
@@ -45,11 +45,11 @@ export function MessageSources({ sources }: MessageSourcesProps) {
               <Flex gap="2" align="center">
                 <Text size="1">{getSourceIcon(source.type)}</Text>
                 <Text size="2" weight="medium" style={{ color: 'var(--slate-12)' }}>
-                  {source.title}
+                  {stripGitHubUrlsFromText(source.title)}
                 </Text>
                 {source.category && (
                   <Text size="1" style={{ color: 'var(--slate-10)' }}>
-                    • {source.category}
+                    • {stripGitHubUrlsFromText(source.category)}
                   </Text>
                 )}
               </Flex>
@@ -62,7 +62,7 @@ export function MessageSources({ sources }: MessageSourcesProps) {
                     lineHeight: '1.4',
                   }}
                 >
-                  {source.summary}
+                  {stripGitHubUrlsFromText(source.summary)}
                 </Text>
               )}
 
@@ -79,13 +79,13 @@ export function MessageSources({ sources }: MessageSourcesProps) {
                         borderRadius: 'var(--radius-1)',
                       }}
                     >
-                      {topic}
+                      {stripGitHubUrlsFromText(topic)}
                     </Text>
                   ))}
                 </Flex>
               )}
 
-              {source.url && (
+              {source.url && !isGitHubUrl(source.url) && (
                 <a
                   href={source.url}
                   target="_blank"

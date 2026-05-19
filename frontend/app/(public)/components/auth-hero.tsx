@@ -51,7 +51,8 @@ export default function AuthHero({ splitLayout }: AuthHeroProps) {
         flex: '0 0 57%',
         height: '100vh',
         overflow: 'hidden',
-        backgroundColor: '#0a0a0c',
+        background:
+          'linear-gradient(180deg, #050711 0%, #0a0e1f 54%, #050711 100%)',
       }}
     >
       {/* ── Background image ─────────────────────────────────────── */}
@@ -75,7 +76,8 @@ export default function AuthHero({ splitLayout }: AuthHeroProps) {
         style={{
           position: 'absolute',
           inset: 0,
-          backgroundColor: 'rgba(0, 0, 0, 0.2)',
+          background:
+            'linear-gradient(145deg, rgba(139, 92, 246, 0.2), transparent 36%), linear-gradient(215deg, rgba(47, 123, 255, 0.18), transparent 42%), rgba(0, 0, 0, 0.26)',
           pointerEvents: 'none',
         }}
       />
@@ -112,10 +114,10 @@ export default function AuthHero({ splitLayout }: AuthHeroProps) {
           backgroundColor: 'rgba(31, 31, 31, 0.8)',
           backdropFilter: 'blur(5px)',
           WebkitBackdropFilter: 'blur(5px)',
-          border: '1px solid var(--accent-9)',
+          border: '1px solid rgba(196, 181, 253, 0.52)',
           borderRadius: '9999px',
           boxShadow:
-            '0px 25px 33px -8px rgba(0,0,0,0.9), 0px 8px 16px -4px rgba(0,0,0,0.04), 0px 1px 1px 0px rgba(0,0,0,0.02), 0px 0px 0px 1px rgba(255,255,255,0.14)',
+            '0px 25px 33px -8px rgba(0,0,0,0.9), 0 0 34px rgba(139, 92, 246, 0.22), 0px 0px 0px 1px rgba(255,255,255,0.14)',
           overflow: 'hidden',
           zIndex: 2,
         }}
@@ -128,7 +130,7 @@ export default function AuthHero({ splitLayout }: AuthHeroProps) {
             gap: '14px',
           }}
         >
-          {/* Pipeshub logo mark */}
+          {/* Sada AI logo mark */}
           <Image
             src="/logo/sada-ai-logo-3D.png"
             alt=""
@@ -197,7 +199,7 @@ export default function AuthHero({ splitLayout }: AuthHeroProps) {
               backgroundColor: 'rgba(31, 31, 31, 0.8)',
               backdropFilter: 'blur(4px)',
               WebkitBackdropFilter: 'blur(4px)',
-              border: '0.82px solid #F72585',
+              border: '0.82px solid rgba(196, 181, 253, 0.52)',
               boxShadow:
                 '0px 20px 26px -7px rgba(0,0,0,0.9), 0px 7px 13px -3px rgba(0,0,0,0.04), 0px 1px 1px 0px rgba(0,0,0,0.02), 0px 0px 0px 1px rgba(255,255,255,0.14)',
               flexShrink: 0,
@@ -208,7 +210,7 @@ export default function AuthHero({ splitLayout }: AuthHeroProps) {
         ))}
       </Flex>
 
-      {/* ── Pipeshub wordmark — bottom right ─────────────────────── */}
+      {/* ── Sada AI wordmark — bottom right ─────────────────────── */}
       <Box
         style={{
           position: 'absolute',

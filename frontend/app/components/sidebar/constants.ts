@@ -15,32 +15,32 @@
 // ============================================
 
 /** Fixed sidebar width in pixels - applies to all navigation sidebars */
-export const SIDEBAR_WIDTH = 233;
+export const SIDEBAR_WIDTH = 248;
 
 /** Minimum sidebar width when resizing (same as default) */
-export const SIDEBAR_MIN_WIDTH = 233;
+export const SIDEBAR_MIN_WIDTH = 248;
 
 /** Maximum sidebar width when resizing */
 export const SIDEBAR_MAX_WIDTH = 450;
 
 /** Height of the optional sidebar header area (e.g., logo + avatar in Chat) */
-export const HEADER_HEIGHT = 56;
+export const HEADER_HEIGHT = 62;
 
 /** Height of the optional sidebar footer area (e.g., org selector in Chat) */
-export const FOOTER_HEIGHT = 60;
+export const FOOTER_HEIGHT = 68;
 
 /** Height of a single sidebar element/item row (nav items, time-group labels) */
-export const ELEMENT_HEIGHT = 32;
+export const ELEMENT_HEIGHT = 36;
 
 /**
  * Height for chat conversation items in the sidebar.
  * Distinct from ELEMENT_HEIGHT (32px) because chat items need
  * extra vertical space for readability.
  */
-export const CHAT_ITEM_HEIGHT = 36;
+export const CHAT_ITEM_HEIGHT = 40;
 
 /** Height of large header elements (logo, avatar) in header/footer slots */
-export const HEADER_ELEMENT_SIZE = 24;
+export const HEADER_ELEMENT_SIZE = 28;
 
 /**
  * Horizontal space (px) the fixed mobile hamburger button occupies on the left
@@ -56,7 +56,7 @@ export const MOBILE_HAMBURGER_GUTTER_PX = 44;
 // ============================================
 
 /** Padding for the scrollable content area */
-export const CONTENT_PADDING = 'var(--space-4) var(--space-2)';
+export const CONTENT_PADDING = 'var(--space-4) var(--space-3)';
 
 /** Padding for section headers (collapsible sections) */
 export const SECTION_HEADER_PADDING = 'var(--space-1) var(--space-2)';
@@ -123,10 +123,10 @@ export const ICON_SIZE_LARGE = 24;
 // ============================================
 
 /** Border style for active/focused elements */
-export const ELEMENT_BORDER = '1px solid var(--slate-3)';
+export const ELEMENT_BORDER = '1px solid var(--sada-border)';
 
 /** Background color for hover states */
-export const HOVER_BACKGROUND = 'var(--slate-3)';
+export const HOVER_BACKGROUND = 'rgba(139, 92, 246, 0.12)';
 
 // ============================================
 // COLLECTION LIMITS

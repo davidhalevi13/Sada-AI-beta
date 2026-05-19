@@ -53,12 +53,12 @@ export function ModeSwitcher({
     <Flex
       align="center"
       style={{
-        background: 'var(--olive-1)',
-        border: '1px solid var(--olive-3)',
-        borderRadius: 'var(--radius-1)',
+        background: 'rgba(8, 11, 24, 0.66)',
+        border: '1px solid var(--sada-border)',
+        borderRadius: '999px',
         padding: 'var(--space-1)',
         gap: 0,
-        // width: '152px',
+        boxShadow: 'inset 0 1px 0 rgba(255, 255, 255, 0.05)',
         flexShrink: 0,
       }}
     >
@@ -72,7 +72,7 @@ export function ModeSwitcher({
             style={{
               width: 'var(--space-6)',
               height: 'var(--space-6)',
-              borderRadius: 'var(--radius-1)',
+              borderRadius: '999px',
               cursor: 'pointer',
               flexShrink: 0,
             }}
@@ -91,7 +91,7 @@ export function ModeSwitcher({
             onClick={onRightClick}
             style={{
               height: 'var(--space-6)',
-              borderRadius: 'var(--radius-2)',
+              borderRadius: '999px',
               backgroundColor: 'var(--mode-search-bg)',
               cursor: 'pointer',
               paddingLeft: 'var(--space-3)',
@@ -125,7 +125,7 @@ export function ModeSwitcher({
             style={{
               flex: 1,
               height: 'var(--space-6)',
-              borderRadius: 'var(--radius-2)',
+              borderRadius: '999px',
               background: modeColors.bg,
               cursor: 'pointer',
               paddingLeft: 'var(--space-3)',
@@ -183,7 +183,7 @@ export function ModeSwitcher({
             style={{
               width: 'var(--space-6)',
               height: 'var(--space-6)',
-              borderRadius: 'var(--radius-1)',
+              borderRadius: '999px',
               cursor: 'pointer',
               flexShrink: 0,
             }}

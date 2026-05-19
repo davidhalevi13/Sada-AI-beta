@@ -5,13 +5,13 @@ import ReactMarkdown from 'react-markdown';
 import remarkGfm from 'remark-gfm';
 import { Box, Text, Heading } from '@radix-ui/themes';
 import { InlineCitationBadge, InlineCitationGroup } from './response-tabs/citations';
+import { isGitHubUrl, stripGitHubUrlsFromText } from '@/chat/utils/github-filter';
 import type {
   CitationMaps,
   CitationCallbacks,
   CitationData,
 } from './response-tabs/citations';
 import { TableFullscreenWrapper } from './table-fullscreen-wrapper';
-import { MermaidDiagram } from './mermaid-diagram';
 import { parseCsvContent, parseCsvCellContent } from './csv-utils';
 
 interface AnswerContentProps {
@@ -183,6 +183,8 @@ export function AnswerContent({
   citationMaps,
   citationCallbacks,
 }: AnswerContentProps) {
+  const displayContent = useMemo(() => stripGitHubUrlsFromText(content), [content]);
+
   // Keep refs to the latest citationMaps/citationCallbacks so the `components`
   // object below can be fully stable (empty useMemo deps). Without this,
   // `components` recreates on every streaming chunk that brings new citation
@@ -220,7 +222,7 @@ export function AnswerContent({
       </Heading>
     ),
     p: ({ children }: { children?: React.ReactNode }) => (
-      <Text size="2" as="p" style={{ marginBottom: 'var(--space-3)', lineHeight: 1.6, color: 'var(--slate-12)' }}>
+      <Text size="3" as="p" style={{ marginBottom: 'var(--space-3)', lineHeight: 1.68, color: 'var(--slate-12)' }}>
         {processChildren(children, citationMapsRef.current, citationCallbacksRef.current)}
       </Text>
     ),
@@ -247,7 +249,7 @@ export function AnswerContent({
       </ol>
     ),
     li: ({ children }: { children?: React.ReactNode }) => (
-      <li style={{ marginBottom: 'var(--space-4)', lineHeight: 'var(--line-height-2)', color: 'var(--gray-12)', fontSize: '14px' }}>
+      <li style={{ marginBottom: 'var(--space-4)', lineHeight: 1.65, color: 'var(--gray-12)', fontSize: '15px' }}>
         {processChildren(children, citationMapsRef.current, citationCallbacksRef.current)}
       </li>
     ),
@@ -264,10 +266,12 @@ export function AnswerContent({
     code: ({ children }: { children?: React.ReactNode }) => (
       <code
         style={{
-          backgroundColor: 'var(--slate-7)',
+          background: 'rgba(139, 92, 246, 0.16)',
+          border: '1px solid rgba(172, 149, 255, 0.18)',
+          color: 'var(--sada-purple-soft)',
           fontWeight: 400,
           padding: '2px var(--space-1)', /* was: 2px 6px, delta: -2px side */
-          borderRadius: 'var(--radius-1)',
+          borderRadius: '8px',
           fontFamily: 'monospace',
           fontSize: 'var(--font-size-2)',
         }}
@@ -276,25 +280,16 @@ export function AnswerContent({
       </code>
     ),
     pre: ({ children }: { children?: React.ReactNode }) => {
-      // Detect fenced code blocks by inspecting the inner <code> element
+      // Detect ```csv fenced blocks and render as a proper table
       if (React.isValidElement(children)) {
         const codeEl = children as React.ReactElement<{
           className?: string;
           children?: React.ReactNode;
         }>;
-        const lang = typeof codeEl.props?.className === 'string' ? codeEl.props.className : '';
-
-        // ```mermaid — render as an interactive SVG diagram
-        if (lang.includes('language-mermaid')) {
-          const chartText =
-            typeof codeEl.props?.children === 'string' ? codeEl.props.children.trim() : '';
-          if (chartText) {
-            return <MermaidDiagram chart={chartText} />;
-          }
-        }
-
-        // ```csv — render as a proper table
-        if (lang.includes('language-csv')) {
+        if (
+          typeof codeEl.props?.className === 'string' &&
+          codeEl.props.className.includes('language-csv')
+        ) {
           const csvText =
             typeof codeEl.props?.children === 'string' ? codeEl.props.children : '';
           if (csvText.trim()) {
@@ -392,15 +387,16 @@ export function AnswerContent({
       }
       return (
         <pre
-          className="no-scrollbar"
           style={{
-            backgroundColor: 'var(--slate-3)',
+            background:
+              'linear-gradient(180deg, rgba(13, 18, 38, 0.96), rgba(8, 11, 24, 0.96))',
+            border: '1px solid var(--sada-border)',
             padding: 'var(--space-3)',
-            borderRadius: 'var(--radius-2)',
-            overflowX: 'auto',
-            overflowY: 'auto',
+            borderRadius: 'var(--sada-radius-md)',
+            overflow: 'auto',
             marginBottom: 'var(--space-3)',
             maxHeight: '400px',
+            boxShadow: 'inset 0 1px 0 rgba(255, 255, 255, 0.04)',
           }}
         >
           {children}
@@ -423,20 +419,28 @@ export function AnswerContent({
         {children}
       </blockquote>
     ),
-    a: ({ href, children }: { href?: string; children?: React.ReactNode }) => (
-      <a
-        href={href}
-        target="_blank"
-        rel="noopener noreferrer"
-        style={{
-          color: 'var(--accent-11)',
-          textDecoration: 'underline',
-          fontSize: 'var(--font-size-2)',
-        }}
-      >
-        {processChildren(children, citationMapsRef.current, citationCallbacksRef.current)}
-      </a>
-    ),
+    a: ({ href, children }: { href?: string; children?: React.ReactNode }) => {
+      const label = processChildren(children, citationMapsRef.current, citationCallbacksRef.current);
+
+      if (isGitHubUrl(href)) {
+        return <>{label}</>;
+      }
+
+      return (
+        <a
+          href={href}
+          target="_blank"
+          rel="noopener noreferrer"
+          style={{
+            color: 'var(--accent-11)',
+            textDecoration: 'underline',
+            fontSize: 'var(--font-size-3)',
+          }}
+        >
+          {label}
+        </a>
+      );
+    },
     table: ({ children }: { children?: React.ReactNode }) => (
       <TableFullscreenWrapper>
         <Box
@@ -529,7 +533,7 @@ export function AnswerContent({
 
   return (
     <Box>
-      <ReactMarkdown remarkPlugins={[remarkGfm]} components={components}>{content}</ReactMarkdown>
+      <ReactMarkdown remarkPlugins={[remarkGfm]} components={components}>{displayContent}</ReactMarkdown>
     </Box>
   );
 }

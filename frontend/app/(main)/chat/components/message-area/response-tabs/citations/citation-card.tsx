@@ -6,7 +6,8 @@ import { ChatStarIcon } from '@/app/components/ui/chat-star-icon';
 import { ConnectorIcon } from '@/app/components/ui/ConnectorIcon';
 import { isLocalFsConnectorType } from '@/app/(main)/workspace/connectors/utils/local-fs-helpers';
 import { openRecordSource } from '@/chat/utils/open-record-source';
-import { getConnectorConfig, formatSyncLabel } from './utils';
+import { getConnectorConfig, getDisplayConnector, formatSyncLabel } from './utils';
+import { stripGitHubUrlsFromText } from '@/chat/utils/github-filter';
 import { FileIcon } from '@/app/components/ui/file-icon';
 import { useIsMobile } from '@/lib/hooks/use-is-mobile';
 import type { ResponseTab } from '@/chat/types';
@@ -51,7 +52,8 @@ export function ReferenceCard({
   const isCitationsTab = currentTab === 'citation';
   const isMobile = useIsMobile();
 
-  const config = getConnectorConfig(citation.connector);
+  const displayConnector = getDisplayConnector(citation.connector);
+  const config = getConnectorConfig(displayConnector);
 
   // Determine if this is a collection (UPLOAD) or external connector source
   const isCollectionSource = citation.origin === 'UPLOAD';
@@ -110,7 +112,7 @@ export function ReferenceCard({
         <Flex align="center" justify="between">
           {/* Left: connector icon + label */}
           <Flex align="center" gap="2">
-            <ConnectorIcon type={citation.connector} size={18} />
+            <ConnectorIcon type={displayConnector} size={18} />
             <Text
               size="2"
               style={{
@@ -204,7 +206,7 @@ export function ReferenceCard({
                   overflow: 'hidden',
                 }}
               >
-                {citation.content}
+                  {stripGitHubUrlsFromText(citation.content)}
               </Text>
             </Box>
           )}

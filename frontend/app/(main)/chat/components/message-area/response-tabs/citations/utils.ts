@@ -18,15 +18,21 @@ import {
   resolveConnectorType,
 } from '@/app/components/ui/ConnectorIcon';
 import { i18n } from '@/lib/i18n';
+import { hasGitHubReference, isGitHubUrl, stripGitHubUrlsFromText } from '@/chat/utils/github-filter';
+
+export function getDisplayConnector(connector: string): string {
+  return hasGitHubReference(connector) ? 'generic' : connector;
+}
 
 /** Resolve connector key → display config. */
 export function getConnectorConfig(connector: string): ConnectorConfig {
-  const resolved = resolveConnectorType(connector);
-  const iconConfig = getConnectorIconConfig(connector);
+  const displayConnector = getDisplayConnector(connector);
+  const resolved = resolveConnectorType(displayConnector);
+  const iconConfig = getConnectorIconConfig(displayConnector);
   const isCollections =
     resolved === 'kb' || resolved === 'knowledge-base';
   const isLocalFs = resolved === 'local-fs' || resolved === 'localfs';
-  let label = connector || i18n.t('filter.source');
+  let label = displayConnector === 'generic' ? i18n.t('filter.source') : displayConnector || i18n.t('filter.source');
   if (isCollections) label = i18n.t('nav.collections');
   if (isLocalFs) label = i18n.t('connectorTypes.localFs');
   return {
@@ -57,19 +63,21 @@ export function buildCitationMapsFromApi(
 
     const normalized: CitationData = {
       citationId,
-      content: data.content,
+      content: stripGitHubUrlsFromText(data.content),
       chunkIndex: data.chunkIndex,
       recordId: metadata.recordId,
       recordName: metadata.recordName || 'Untitled Document',
-      connector: metadata.connector || '',
+      connector: getDisplayConnector(metadata.connector || ''),
       recordType: metadata.recordType || '',
-      webUrl: metadata.webUrl,
+      webUrl: isGitHubUrl(metadata.webUrl) ? undefined : metadata.webUrl,
       mimeType: metadata.mimeType || '',
       extension: metadata.extension || '',
       pageNum: metadata.pageNum,
       blockNum: metadata.blockNum,
       previewRenderable: metadata.previewRenderable ?? false,
-      hideWeburl: (metadata as Record<string, unknown>).hideWeburl as boolean ?? false,
+      hideWeburl:
+        ((metadata as Record<string, unknown>).hideWeburl as boolean ?? false) ||
+        isGitHubUrl(metadata.webUrl),
       citationType: data.citationType || '',
       origin: (metadata as Record<string, unknown>).origin as CitationOrigin | undefined,
       boundingBox: (metadata as Record<string, unknown>).bounding_box as Array<{ x: number; y: number }> | undefined,
@@ -107,19 +115,19 @@ export function buildCitationMapsFromStreaming(
 
     const normalized: CitationData = {
       citationId: tempId,
-      content: raw.content,
+      content: stripGitHubUrlsFromText(raw.content),
       chunkIndex: raw.chunkIndex,
       recordId: metadata.recordId,
       recordName: metadata.recordName || 'Untitled Document',
-      connector: metadata.connector || '',
+      connector: getDisplayConnector(metadata.connector || ''),
       recordType: metadata.recordType || '',
-      webUrl: metadata.webUrl,
+      webUrl: isGitHubUrl(metadata.webUrl) ? undefined : metadata.webUrl,
       mimeType: metadata.mimeType || '',
       extension: metadata.extension || '',
       pageNum: metadata.pageNum,
       blockNum: metadata.blockNum,
       previewRenderable: metadata.previewRenderable ?? false,
-      hideWeburl: metadata.hideWeburl ?? false,
+      hideWeburl: (metadata.hideWeburl ?? false) || isGitHubUrl(metadata.webUrl),
       citationType: raw.citationType || '',
       origin: metadata.origin,
       boundingBox: metadata.bounding_box,
@@ -159,6 +167,7 @@ export function emptyCitationMaps(): CitationMaps {
 export function getCitationCopyHref(citation: CitationData): string | undefined {
   if (citation.hideWeburl) return undefined;
   const raw = citation.webUrl?.trim();
+  if (isGitHubUrl(raw)) return undefined;
   return raw ? raw : undefined;
 }
 

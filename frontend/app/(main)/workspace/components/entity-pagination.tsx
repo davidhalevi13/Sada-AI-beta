@@ -46,8 +46,9 @@ export function EntityPagination({
       align="center"
       style={{
         padding: 'var(--space-3) var(--space-4)',
-        borderTop: '1px solid var(--slate-4)',
-        backgroundColor: 'var(--slate-1)',
+        borderTop: '1px solid var(--sada-border)',
+        background: 'linear-gradient(180deg, rgba(14, 18, 38, 0.86), rgba(7, 10, 24, 0.92))',
+        backdropFilter: 'blur(14px)',
         flexShrink: 0,
         width: '100%',
       }}
@@ -78,8 +79,9 @@ export function EntityPagination({
         <Box
           style={{
             padding: 'var(--space-1) var(--space-3)',
-            backgroundColor: 'var(--slate-3)',
-            borderRadius: 'var(--radius-2)',
+            background: 'linear-gradient(135deg, rgba(124, 58, 237, 0.2), rgba(37, 99, 235, 0.12))',
+            border: '1px solid var(--sada-border)',
+            borderRadius: 12,
             minWidth: 'var(--space-8)',
             textAlign: 'center',
           }}
@@ -105,7 +107,7 @@ export function EntityPagination({
         </Flex>
 
         {/* Separator */}
-        <Box style={{ width: '1px', height: '20px', backgroundColor: 'var(--slate-6)' }} />
+        <Box style={{ width: '1px', height: '20px', backgroundColor: 'var(--sada-border)' }} />
 
         {/* Limit selector */}
         {onLimitChange && (
@@ -117,8 +119,9 @@ export function EntityPagination({
                 style={{
                   cursor: 'pointer',
                   padding: 'var(--space-1) var(--space-2)',
-                  backgroundColor: 'var(--slate-3)',
-                  borderRadius: 'var(--radius-2)',
+                  background: 'rgba(255, 255, 255, 0.06)',
+                  border: '1px solid var(--sada-border)',
+                  borderRadius: 12,
                 }}
               >
                 <Text size="2" style={{ color: 'var(--slate-12)' }}>

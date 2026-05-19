@@ -2,7 +2,6 @@
 
 import React, { useRef, useCallback, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { Text, Button } from '@radix-ui/themes';
 import { WorkspaceRightPanel } from '../../components/workspace-right-panel';
 import type { ConfigurableMethod } from '../types';
 import ProviderConfigForm from './forms/provider-config-form';
@@ -20,13 +19,6 @@ interface ConfigurePanelProps {
 }
 
 // ── Per-method display info ────────────────────────────────
-
-const METHOD_DOC_URLS: Record<ConfigurableMethod, string> = {
-  google: 'https://docs.pipeshub.com/auth/google',
-  microsoft: 'https://docs.pipeshub.com/auth/microsoft-azureAd',
-  samlSso: 'https://docs.pipeshub.com/auth/saml',
-  oauth: 'https://docs.pipeshub.com/auth',
-};
 
 const METHOD_ICONS: Record<ConfigurableMethod, string> = {
   google: 'google',
@@ -68,26 +60,12 @@ export function ConfigurePanel({ open, method, onClose, onSaveSuccess }: Configu
 
   const panelTitleKey = `workspace.authentication.panels.${method}` as const;
 
-  const docButton = (
-    <Button
-      variant="outline"
-      color="gray"
-      size="1"
-      onClick={() => window.open(METHOD_DOC_URLS[method], '_blank')}
-      style={{ cursor: 'pointer', gap: 'var(--space-1)' }}
-    >
-      <span className="material-icons-outlined" style={{ fontSize: 14 }}>open_in_new</span>
-      <Text size="1">{t('workspaceMenu.documentation')}</Text>
-    </Button>
-  );
-
   return (
     <WorkspaceRightPanel
       open={open}
       onOpenChange={(o) => { if (!o) onClose(); }}
       title={t(panelTitleKey)}
       icon={METHOD_ICONS[method]}
-      headerActions={docButton}
       primaryLabel={t('action.save')}
       secondaryLabel={t('action.cancel')}
       primaryDisabled={!isFormValid}

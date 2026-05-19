@@ -105,10 +105,12 @@ export interface Conversation {
   isOwner?: boolean;
 }
 
+export type ChatSuggestionIcon = 'slack' | 'jira' | 'notion' | 'sheets' | 'confluence';
+
 export interface ChatSuggestion {
   id: string;
   text: string;
-  icons: Array<'slack' | 'jira' | 'notion' | 'sheets' | 'confluence' | 'github'>;
+  icons: ChatSuggestionIcon[];
 }
 
 /**

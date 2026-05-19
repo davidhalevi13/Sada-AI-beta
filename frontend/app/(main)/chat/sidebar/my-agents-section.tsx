@@ -45,6 +45,8 @@ export const MyAgentsSection = React.memo(function MyAgentsSection() {
   const [hasMore, setHasMore] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
   const [loadError, setLoadError] = useState(false);
+  const [isCollapsed, setIsCollapsed] = useState(true);
+  const contentId = React.useId();
 
   const load = useCallback(async () => {
     setIsLoading(true);
@@ -94,17 +96,22 @@ export const MyAgentsSection = React.memo(function MyAgentsSection() {
         title={t('chat.myAgents')}
         onAdd={goCreateAgent}
         addAriaLabel={t('chat.newAgent')}
+        isCollapsed={isCollapsed}
+        onToggleCollapse={() => setIsCollapsed((prev) => !prev)}
+        collapseAriaLabel={t('chat.myAgents')}
+        controlsId={contentId}
       />
 
-      {loadError ? (
+      {isCollapsed ? null : loadError ? (
         <Text
+          id={contentId}
           size="1"
           style={{ padding: 'var(--space-2) var(--space-3)', color: '#ef4444' }}
         >
           {t('chat.failedToLoadAgents')}
         </Text>
       ) : (
-        <Flex direction="column" gap="1">
+        <Flex id={contentId} direction="column" gap="1">
           {isLoading ? (
             <Flex direction="column" gap="1">
               {Array.from({ length: AGENTS_SKELETON_COUNT }, (_, i) => (

@@ -2,7 +2,7 @@
 
 import React from 'react';
 import { Flex, Box, Text, Avatar } from '@radix-ui/themes';
-import { PipesHubIcon } from '@/app/components/ui';
+import { SadaAIIcon } from '@/app/components/ui';
 
 interface OnboardingHeaderProps {
   // User info (right side)
@@ -73,9 +73,9 @@ export function OnboardingHeader({
         )}
       </Box>
 
-      {/* Center — PipesHub Logo */}
+      {/* Center — Sada AI Logo */}
       <Flex align="center" justify="center">
-        <PipesHubIcon size={32} color="var(--accent-8)" />
+        <SadaAIIcon size={32} color="var(--accent-8)" />
       </Flex>
 
       {/* Right — User Avatar + Name */}

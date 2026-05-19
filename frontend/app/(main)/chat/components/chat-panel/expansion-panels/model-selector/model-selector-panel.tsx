@@ -8,6 +8,7 @@ import Image from 'next/image';
 import { MaterialIcon } from '@/app/components/ui/MaterialIcon';
 import { useChatStore, ctxKeyFromAgent, ASSISTANT_CTX } from '@/chat/store';
 import { fetchModelsForContext } from '@/chat/utils/fetch-models-for-context';
+import { logNonBlockingError } from '@/chat/utils/log-non-blocking-error';
 import {
   PROVIDER_FRIENDLY_NAMES,
   MODEL_DESCRIPTIONS,
@@ -80,7 +81,7 @@ export function ModelSelectorPanel({
       })
       .catch((err) => {
         if (cancelled) return;
-        console.error('Failed to fetch models:', err);
+        logNonBlockingError('Failed to fetch models:', err);
         setError(
           ctxKey === ASSISTANT_CTX
             ? t('chat.failedToLoadModels')

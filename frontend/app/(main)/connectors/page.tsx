@@ -12,14 +12,27 @@ export default function ConnectorsPage() {
       style={{
         height: '100%',
         width: '100%',
-        backgroundColor: 'var(--slate-2)',
+        background: 'var(--sada-page-gradient)',
+        color: 'var(--sada-text)',
       }}
     >
-      <MaterialIcon name="hub" size={64} color="var(--slate-9)" />
-      <Heading size="6" style={{ marginTop: '16px', color: 'var(--slate-12)' }}>
+      <Flex
+        align="center"
+        justify="center"
+        style={{
+          width: 76,
+          height: 76,
+          borderRadius: 24,
+          background: 'var(--sada-accent-gradient)',
+          boxShadow: 'var(--sada-shadow-glow)',
+        }}
+      >
+        <MaterialIcon name="hub" size={38} color="white" />
+      </Flex>
+      <Heading size="6" style={{ marginTop: '18px', color: 'var(--sada-text)' }}>
         Connectors
       </Heading>
-      <Text size="2" style={{ marginTop: '8px', color: 'var(--slate-11)' }}>
+      <Text size="2" style={{ marginTop: '8px', color: 'var(--sada-text-muted)' }}>
         Coming soon
       </Text>
     </Flex>

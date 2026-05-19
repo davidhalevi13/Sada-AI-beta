@@ -16,7 +16,7 @@ export const useSidebarWidthStore = create<SidebarWidthState>()(
       setSidebarWidth: (width) => set({ sidebarWidth: width }),
     }),
     {
-      name: 'pipeshub-sidebar-width',
+      name: 'sada-ai-sidebar-width',
       storage: createJSONStorage(() => localStorage),
     }
   )

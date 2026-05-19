@@ -2,7 +2,7 @@
     "success": true,
     "connectors": [
         {
-            "name": "Pipeshub docs",
+            "name": "Sada AI docs",
             "type": "Web",
             "appGroup": "Web",
             "supportedAuthTypes": [
@@ -188,7 +188,7 @@
                         "type": "setup"
                     },
                     {
-                        "title": "Pipeshub Documentation",
+                        "title": "Sada AI Documentation",
                         "url": "https://docs.pipeshub.com/connectors/microsoft-365/sharepoint",
                         "type": "pipeshub"
                     }
@@ -585,7 +585,7 @@
                         "type": "setup"
                     },
                     {
-                        "title": "Pipeshub Documentation",
+                        "title": "Sada AI Documentation",
                         "url": "https://docs.pipeshub.com/connectors/microsoft-365/one-drive",
                         "type": "pipeshub"
                     }
@@ -944,7 +944,7 @@
                         "type": "setup"
                     },
                     {
-                        "title": "Pipeshub Documentation",
+                        "title": "Sada AI Documentation",
                         "url": "https://docs.pipeshub.com/connectors/microsoft-365/outlook",
                         "type": "pipeshub"
                     }

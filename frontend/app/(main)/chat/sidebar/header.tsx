@@ -1,13 +1,13 @@
 'use client';
 
-import { Flex, IconButton } from '@radix-ui/themes';
+import { Box, Flex, IconButton, Text } from '@radix-ui/themes';
 import Link from 'next/link';
 import { HEADER_ELEMENT_SIZE } from '@/app/components/sidebar';
 import { UserAvatar } from '@/app/components/ui/user-avatar';
 import { useUserStore } from '@/lib/store/user-store';
 import { useIsMobile } from '@/lib/hooks/use-is-mobile';
 import { toast } from '@/lib/store/toast-store';
-import { PipesHubIcon } from '@/app/components/ui';
+import { SadaAIIcon } from '@/app/components/ui';
 
 /**
  * Sidebar header — logo and user avatar.
@@ -33,8 +33,46 @@ export function ChatSidebarHeader() {
   );
 
   return (
-    <Flex align="center" justify="between" gap="2" style={{ height: '100%', padding: 'var(--space-4)' }}>
-      <PipesHubIcon size={HEADER_ELEMENT_SIZE} color="var(--accent-11)" />
+    <Flex
+      align="center"
+      justify="between"
+      gap="2"
+      style={{
+        height: '100%',
+        padding: '10px 12px',
+      }}
+    >
+      <Flex align="center" gap="3" style={{ minWidth: 0 }}>
+        <Box
+          style={{
+            width: 38,
+            height: 38,
+            display: 'inline-flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            borderRadius: 0,
+            background: 'transparent',
+            border: 'none',
+            boxShadow: 'none',
+          }}
+        >
+          <SadaAIIcon size={HEADER_ELEMENT_SIZE} />
+        </Box>
+        <Text
+          size="2"
+          weight="bold"
+          style={{
+            color: 'var(--sada-text)',
+            letterSpacing: 0,
+            fontSize: 16,
+            overflow: 'hidden',
+            textOverflow: 'ellipsis',
+            whiteSpace: 'nowrap',
+          }}
+        >
+          Sada AI
+        </Text>
+      </Flex>
       {isMobile ? (
         // Use a real <button> via Radix IconButton so keyboard (Enter/Space)
         // and assistive tech can activate the toast — `<Box role="button">`
@@ -48,12 +86,21 @@ export function ChatSidebarHeader() {
               description: 'Profile page on mobile is coming soon.',
             });
           }}
-          style={{ margin: 0, padding: 0, lineHeight: 0, cursor: 'pointer' }}
+          style={{ margin: 0, padding: 0, lineHeight: 0, cursor: 'pointer', borderRadius: 12 }}
         >
           {avatar}
         </IconButton>
       ) : (
-        <Link href="/workspace/profile/" aria-label="Open profile" style={{ textDecoration: 'none', lineHeight: 0 }}>
+        <Link
+          href="/workspace/profile/"
+          aria-label="Open profile"
+          style={{
+            textDecoration: 'none',
+            lineHeight: 0,
+            borderRadius: 14,
+            boxShadow: '0 8px 20px rgba(0, 0, 0, 0.22)',
+          }}
+        >
           {avatar}
         </Link>
       )}

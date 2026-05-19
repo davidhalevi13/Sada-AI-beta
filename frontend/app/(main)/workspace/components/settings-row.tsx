@@ -11,17 +11,17 @@ export interface SettingsRowProps {
 
 export function SettingsRow({ label, description, children }: SettingsRowProps) {
   return (
-    <Flex align="center" justify="between" style={{ width: '100%' }}>
+    <Flex align="center" justify="between" gap="4" style={{ width: '100%', flexWrap: 'wrap' }}>
       {/* Left: label + description */}
       <Box style={{ flex: 1 }}>
-        <Text size="2" weight="medium" style={{ color: 'var(--slate-12)', display: 'block' }}>
+        <Text size="2" weight="medium" style={{ color: 'var(--sada-text)', display: 'block' }}>
           {label}
         </Text>
         {description && (
           <Text
             size="1"
             style={{
-              color: 'var(--slate-11)',
+              color: 'var(--sada-text-muted)',
               display: 'block',
               marginTop: 2,
               lineHeight: '16px',
@@ -33,7 +33,7 @@ export function SettingsRow({ label, description, children }: SettingsRowProps) 
         )}
       </Box>
       {/* Right: input — proportional width matching Figma */}
-      <Box style={{ flex: '0 0 38%', minWidth: 200 }}>{children}</Box>
+      <Box style={{ flex: '0 0 min(38%, 420px)', minWidth: 220 }}>{children}</Box>
     </Flex>
   );
 }

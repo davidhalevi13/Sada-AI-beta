@@ -5,7 +5,7 @@ import { MaterialIcon } from '@/app/components/ui/MaterialIcon';
 import { useChatStore } from '../store';
 import { Conversation } from '../types';
 import { Flex, Box, Text, Button, IconButton } from '@radix-ui/themes';
-import { PipesHubIcon } from '@/app/components/ui';
+import { SadaAIIcon } from '@/app/components/ui';
 
 //TODO: Refactor to separate files
 
@@ -190,7 +190,7 @@ export function ChatSidebar() {
     >
       {/* Header */}
       <Flex align="center" justify="between" style={{ padding: '0 var(--space-3)', height: 'var(--space-7)' }}>
-        <PipesHubIcon size={24} color="var(--accent-8)" />
+        <SadaAIIcon size={24} color="var(--accent-8)" />
         <Box
           style={{
             width: 'var(--space-5)',

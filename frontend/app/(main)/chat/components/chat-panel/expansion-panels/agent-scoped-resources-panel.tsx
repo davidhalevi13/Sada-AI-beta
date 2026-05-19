@@ -19,6 +19,7 @@ import { MaterialIcon } from '@/app/components/ui/MaterialIcon';
 import { ConnectorIcon, resolveConnectorType } from '@/app/components/ui/ConnectorIcon';
 import { useChatStore } from '@/chat/store';
 import { CollectionRow } from './connectors-collections/collection-row';
+import { hasGitHubReference } from '@/chat/utils/github-filter';
 
 type ExpansionViewMode = 'inline' | 'overlay';
 
@@ -384,9 +385,12 @@ export function AgentScopedResourcesPanel({
   }, [setScope, setTools]);
 
   const filteredConnectors = useMemo(() => {
-    if (!search.trim()) return connectors;
+    const visibleConnectors = connectors.filter(
+      (c) => !hasGitHubReference(c.label) && !hasGitHubReference(c.id) && !hasGitHubReference(c.connectorKind)
+    );
+    if (!search.trim()) return visibleConnectors;
     const q = search.toLowerCase();
-    return connectors.filter((c) => c.label.toLowerCase().includes(q) || c.id.toLowerCase().includes(q));
+    return visibleConnectors.filter((c) => c.label.toLowerCase().includes(q) || c.id.toLowerCase().includes(q));
   }, [connectors, search]);
 
   const filteredCollections = useMemo(() => {
@@ -397,6 +401,11 @@ export function AgentScopedResourcesPanel({
 
   const filteredToolGroups = useMemo(() => {
     return toolGroups
+      .filter((g) => (
+        !hasGitHubReference(g.label) &&
+        !hasGitHubReference(g.toolsetSlug) &&
+        !g.fullNames.some((fn) => hasGitHubReference(fn))
+      ))
       .map((g) => ({
         ...g,
         fullNames: g.fullNames.filter((fn) => {

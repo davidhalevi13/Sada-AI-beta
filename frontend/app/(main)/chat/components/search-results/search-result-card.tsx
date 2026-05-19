@@ -5,8 +5,9 @@ import { Flex, Box, Text, Badge } from '@radix-ui/themes';
 import { ConnectorIcon } from '@/app/components/ui/ConnectorIcon';
 import { isLocalFsConnectorType } from '@/app/(main)/workspace/connectors/utils/local-fs-helpers';
 import { openRecordSource } from '@/chat/utils/open-record-source';
-import { getConnectorConfig } from '../message-area/response-tabs/citations/utils';
+import { getConnectorConfig, getDisplayConnector } from '../message-area/response-tabs/citations/utils';
 import type { SearchResultItem } from '@/chat/types';
+import { isGitHubUrl, stripGitHubUrlsFromText } from '@/chat/utils/github-filter';
 
 interface SearchResultCardProps {
   result: SearchResultItem;
@@ -20,7 +21,8 @@ export function SearchResultCard({
   onChat,
 }: SearchResultCardProps) {
   const { metadata, content, score } = result;
-  const config = getConnectorConfig(metadata.connector);
+  const displayConnector = getDisplayConnector(metadata.connector);
+  const config = getConnectorConfig(displayConnector);
 
   const isCollectionSource = metadata.origin === 'UPLOAD';
   const isLocalFsSource = isLocalFsConnectorType(metadata.connector ?? '');
@@ -33,15 +35,15 @@ export function SearchResultCard({
   const hasLocationBadges = pageNums.length > 0 || blockNums.length > 0;
   const canOpenSource =
     isLocalFsSource ||
-    (!metadata.hideWeburl && !!metadata.webUrl);
+    (!metadata.hideWeburl && !!metadata.webUrl && !isGitHubUrl(metadata.webUrl));
 
   const handleOpenSource = async () => {
     await openRecordSource({
       recordId: metadata.recordId,
       connector: metadata.connector,
       origin: metadata.origin,
-      webUrl: metadata.webUrl,
-      hideWeburl: metadata.hideWeburl,
+      webUrl: isGitHubUrl(metadata.webUrl) ? undefined : metadata.webUrl,
+      hideWeburl: metadata.hideWeburl || isGitHubUrl(metadata.webUrl),
     });
     onOpenSource(result);
   };
@@ -62,7 +64,7 @@ export function SearchResultCard({
         <Flex align="center" justify="between">
           {/* Left: connector icon + record name */}
           <Flex align="center" gap="2" style={{ flex: 1, minWidth: 0 }}>
-            <ConnectorIcon type={metadata.connector} size={16} />
+            <ConnectorIcon type={displayConnector} size={16} />
             <Text
               size="2"
               style={{
@@ -187,7 +189,7 @@ export function SearchResultCard({
               overflow: 'hidden',
             }}
           >
-            {content}
+            {stripGitHubUrlsFromText(content)}
           </Text>
         </Box>
       )}

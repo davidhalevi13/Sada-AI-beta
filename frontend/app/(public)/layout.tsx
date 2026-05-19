@@ -39,7 +39,7 @@ export default function PublicLayout({
           rel="stylesheet"
         />
       </head>
-      <body style={{ backgroundColor: 'var(--olive-1, #f8f8f5)' }}>
+      <body style={{ background: 'var(--sada-bg, #070a17)', color: 'var(--sada-text, #f8fbff)' }}>
         <I18nextProvider i18n={i18n}>
           <ThemeProvider>
             <AuthHydrator />
@@ -51,4 +51,3 @@ export default function PublicLayout({
     </html>
   );
 }
-

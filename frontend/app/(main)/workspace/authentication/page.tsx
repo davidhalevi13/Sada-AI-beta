@@ -251,23 +251,6 @@ export default function AuthenticationPage() {
             </Text>
           </Box>
 
-          <Button
-            variant="outline"
-            color="gray"
-            size="2"
-            onClick={() =>
-              window.open(
-                'https://docs.pipeshub.com/auth',
-                '_blank',
-              )
-            }
-            style={{ cursor: 'pointer', flexShrink: 0, gap: 6 }}
-          >
-            <span className="material-icons-outlined" style={{ fontSize: 15 }}>
-              open_in_new
-            </span>
-            {t('workspaceMenu.documentation')}
-          </Button>
         </Flex>
 
         {/* ── Authentication Methods section ── */}

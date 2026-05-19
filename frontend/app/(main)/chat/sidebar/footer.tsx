@@ -55,12 +55,14 @@ export function ChatSidebarFooter() {
         onClick={() => setIsMenuOpen((prev) => !prev)}
         style={{
           width: '100%',
-          height: 40,
+          height: 46,
           padding: 'var(--space-2)',
-          background: 'var(--olive-2)',
-          border: '1px solid var(--olive-3)',
-          borderRadius: 'var(--radius-1)',
+          background: 'linear-gradient(135deg, rgba(139, 92, 246, 0.18), rgba(47, 123, 255, 0.1))',
+          border: '1px solid var(--sada-border)',
+          borderRadius: 16,
           cursor: 'pointer',
+          boxShadow: '0 14px 30px rgba(0, 0, 0, 0.24)',
+          transition: 'border-color 150ms ease, box-shadow 150ms ease',
         }}
       >
         {/* Org avatar — logo if available, else initial */}
@@ -78,7 +80,7 @@ export function ChatSidebarFooter() {
           style={{
             flex: 1,
             textAlign: 'left',
-            color: 'var(--emerald-12)',
+            color: 'var(--sada-text)',
             overflow: 'hidden',
             textOverflow: 'ellipsis',
             whiteSpace: 'nowrap',
@@ -90,7 +92,7 @@ export function ChatSidebarFooter() {
         <MaterialIcon
           name={isMenuOpen ? 'keyboard_arrow_down' : 'keyboard_arrow_up'}
           size={ICON_SIZE_DEFAULT}
-          color="var(--slate-11)"
+          color="var(--sada-purple-soft)"
           style={{ userSelect: 'none' }}
         />
       </Flex>

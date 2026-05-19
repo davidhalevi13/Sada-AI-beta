@@ -2,7 +2,7 @@
 
 import React, { useEffect, useRef } from 'react';
 import { useSearchParams } from 'next/navigation';
-import { Flex } from '@radix-ui/themes';
+import { Box, Flex } from '@radix-ui/themes';
 import { SidebarBase } from '@/app/components/sidebar';
 import { useChatStore } from '@/chat/store';
 import { debugLog } from '@/chat/debug-logger';
@@ -10,7 +10,7 @@ import { useMobileSidebarStore } from '@/lib/store/mobile-sidebar-store';
 import { useIsMobile } from '@/lib/hooks/use-is-mobile';
 import { ChatSidebarHeader } from './header';
 import { ChatSidebarFooter } from './footer';
-import { StaticNavSection } from './static-nav-section';
+import { SidebarSearchButton, StaticNavSection } from './static-nav-section';
 import { MyAgentsSection } from './my-agents-section';
 import { ChatSections } from './chat-sections';
 import { MoreChatsSidebar } from './more-chats-sidebar';
@@ -64,10 +64,23 @@ function ChatSidebarInner() {
       mobileOpen={isMobileOpen}
       onMobileClose={closeMobileSidebar}
     >
-      <Flex direction="column" gap="3">
+      <Flex direction="column" gap="2" style={{ height: '100%', minHeight: 0 }}>
         <StaticNavSection />
         <MyAgentsSection />
         <ChatSections onOpenMoreChats={toggleMoreChatsPanel} />
+        <Box
+          style={{
+            flexShrink: 0,
+            marginTop: 'auto',
+            padding: '12px 2px 8px',
+            borderTop: '1px solid rgba(196, 181, 253, 0.1)',
+            background:
+              'linear-gradient(180deg, rgba(139, 92, 246, 0.04), rgba(47, 123, 255, 0.02))',
+            borderRadius: 18,
+          }}
+        >
+          <SidebarSearchButton />
+        </Box>
       </Flex>
     </SidebarBase>
   );

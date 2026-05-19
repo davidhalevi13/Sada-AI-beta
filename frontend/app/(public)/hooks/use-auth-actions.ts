@@ -175,7 +175,7 @@ export function useAuthActions({
           }
           // Store email for returning-user auto-login
           if (typeof window !== 'undefined') {
-            localStorage.setItem('pipeshub_last_email', email);
+            localStorage.setItem('sada-ai:last-email', email);
           }
           router.push(postAuthRedirectTo);
         } else {
@@ -287,7 +287,7 @@ export function useAuthActions({
           setTokens(response.accessToken, response.refreshToken);
           if (response.user) setUser(response.user);
           if (typeof window !== 'undefined') {
-            localStorage.setItem('pipeshub_last_email', email);
+            localStorage.setItem('sada-ai:last-email', email);
           }
           router.push(postAuthRedirectTo);
         } else {
@@ -346,7 +346,7 @@ export function useAuthActions({
           setTokens(response.accessToken, response.refreshToken);
           if (response.user) setUser(response.user);
           if (typeof window !== 'undefined') {
-            localStorage.setItem('pipeshub_last_email', email);
+            localStorage.setItem('sada-ai:last-email', email);
           }
           router.push(postAuthRedirectTo);
         } else if (
@@ -439,7 +439,7 @@ export function useAuthActions({
             setUser(response.user);
           }
           if (typeof window !== 'undefined') {
-            localStorage.setItem('pipeshub_last_email', email.trim());
+            localStorage.setItem('sada-ai:last-email', email.trim());
           }
           router.push(postAuthRedirectTo);
           return;
@@ -524,7 +524,7 @@ export function useAuthActions({
           setTokens(response.accessToken, response.refreshToken);
           if (response.user) setUser(response.user);
           if (typeof window !== 'undefined') {
-            localStorage.setItem('pipeshub_last_email', email);
+            localStorage.setItem('sada-ai:last-email', email);
           }
           router.push(postAuthRedirectTo);
         } else {

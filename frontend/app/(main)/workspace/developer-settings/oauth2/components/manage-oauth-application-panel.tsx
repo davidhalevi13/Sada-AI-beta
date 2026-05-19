@@ -798,21 +798,6 @@ export function ManageOAuthApplicationPanel({
     }
   }, [allScopesSelected, allScopeNames]);
 
-  const documentationAction = (
-    <Button
-      variant="outline"
-      color="gray"
-      size="1"
-      style={{ cursor: 'pointer', gap: 4 }}
-      onClick={() =>
-        window.open('https://docs.pipeshub.com/developer/oauth2', '_blank')
-      }
-    >
-      <MaterialIcon name="open_in_new" size={14} color="var(--slate-11)" />
-      {t('workspace.oauth2.create.documentation')}
-    </Button>
-  );
-
   const oauthClientIdDisplay = detail?.clientId ?? '';
 
   return (
@@ -822,7 +807,6 @@ export function ManageOAuthApplicationPanel({
         onOpenChange={onOpenChange}
         title={t('workspace.oauth2.manageApplication.panelTitle')}
         icon={<MaterialIcon name="vpn_key" size={20} color="var(--slate-12)" />}
-        headerActions={documentationAction}
         hideFooter={activeTab === 'advanced'}
         primaryLabel={t('workspace.oauth2.manageApplication.saveChanges')}
         secondaryLabel={t('workspace.oauth2.create.cancel')}

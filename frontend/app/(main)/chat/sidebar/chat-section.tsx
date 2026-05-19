@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useId, useState } from 'react';
 import { Flex, Text } from '@radix-ui/themes';
 import { useTranslation } from 'react-i18next';
 import { MaterialIcon } from '@/app/components/ui/MaterialIcon';
@@ -14,8 +14,7 @@ import type { PendingConversation } from '@/chat/store';
 import type { TimeGroupKey } from './time-group';
 
 interface ChatSectionBaseProps {
-  /** Section label shown in the header. Omit to suppress the header entirely. */
-  title?: string;
+  title: string;
   isLoading: boolean;
   hasError: boolean;
   currentConversationId: string | null;
@@ -35,10 +34,6 @@ interface ChatSectionBaseProps {
   emptyStateText?: string;
   /** Agent sidebar: agent-scoped row actions (delete only) */
   agentId?: string;
-  /** When true, a chevron toggle is shown and the section body can be collapsed */
-  isCollapsible?: boolean;
-  /** Initial collapsed state (defaults to false) */
-  defaultCollapsed?: boolean;
 }
 
 /**
@@ -81,43 +76,43 @@ export function ChatSection({
   pendingConversations = [],
   emptyStateText,
   agentId,
-  isCollapsible = false,
-  defaultCollapsed = false,
 }: ChatSectionProps) {
   const { t } = useTranslation();
-  const [isCollapsed, setIsCollapsed] = useState(defaultCollapsed);
-
+  const [isCollapsed, setIsCollapsed] = useState(true);
+  const contentId = useId();
   const isTimeGrouped = !!timeGroups;
   const showGenerating = pendingConversations.length > 0;
   const isEmpty = isTimeGrouped
     ? timeGroups.length === 0 && !showGenerating
     : !conversations || conversations.length === 0;
+  const sectionStyle = isScrollable && !isCollapsed ? { flex: 1, minHeight: 0 } : undefined;
 
   return (
     <Flex
       direction="column"
-      style={isScrollable && !isCollapsed ? { flex: 1, minHeight: 0 } : undefined}
+      style={sectionStyle}
     >
-      {(title || onAdd || isCollapsible) && (
-        <ChatSectionHeader
-          title={title ?? ''}
-          onAdd={onAdd}
-          addAriaLabel={onAdd ? t('chat.newChat') : undefined}
-          onTitleClick={!isCollapsible && hasMore ? onMore : undefined}
-          isCollapsed={isCollapsible ? isCollapsed : undefined}
-          onToggleCollapse={isCollapsible ? () => setIsCollapsed((c) => !c) : undefined}
-        />
-      )}
+      <ChatSectionHeader
+        title={title}
+        onAdd={onAdd}
+        addAriaLabel={onAdd ? t('chat.newChat') : undefined}
+        onTitleClick={hasMore ? onMore : undefined}
+        isCollapsed={isCollapsed}
+        onToggleCollapse={() => setIsCollapsed((prev) => !prev)}
+        collapseAriaLabel={title}
+        controlsId={contentId}
+      />
 
-      {!isCollapsed && hasError ? (
-        <Flex direction="column" gap="2" style={{ padding: 'var(--space-2) var(--space-3)' }}>
+      {isCollapsed ? null : hasError ? (
+        <Flex id={contentId} direction="column" gap="2" style={{ padding: 'var(--space-2) var(--space-3)' }}>
           <Text size="1" style={{ color: '#ef4444' }}>
             {t('chat.failedToLoad')}
           </Text>
           <StartChatButton onClick={onNewChat} />
         </Flex>
-      ) : !isCollapsed ? (
+      ) : (
         <Flex
+          id={contentId}
           direction="column"
           className={isScrollable ? 'no-scrollbar' : undefined}
           style={{
@@ -189,7 +184,7 @@ export function ChatSection({
             <MoreButton onClick={onMore} />
           )}
         </Flex>
-      ) : null}
+      )}
     </Flex>
   );
 }

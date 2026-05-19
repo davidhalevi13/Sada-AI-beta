@@ -42,6 +42,7 @@ export function EntityEmptyState({
         flex: 1,
         minHeight: '400px',
         padding: 'var(--space-6)',
+        color: 'var(--sada-text)',
       }}
     >
       <Flex
@@ -50,18 +51,20 @@ export function EntityEmptyState({
         style={{
           width: '64px',
           height: '64px',
-          borderRadius: 'var(--radius-full)',
-          backgroundColor: 'var(--slate-3)',
+          borderRadius: '22px',
+          background: 'var(--sada-gradient-soft)',
+          border: '1px solid var(--sada-border)',
+          boxShadow: '0 16px 36px rgba(0, 0, 0, 0.22)',
         }}
       >
-        <MaterialIcon name={icon} size={28} color="var(--slate-9)" />
+        <MaterialIcon name={icon} size={28} color="var(--sada-purple-soft)" />
       </Flex>
 
       <Flex direction="column" align="center" gap="2" style={{ maxWidth: '420px', textAlign: 'center' }}>
-        <Heading size="3" weight="medium" style={{ color: 'var(--slate-12)' }}>
+        <Heading size="3" weight="medium" style={{ color: 'var(--sada-text)' }}>
           {title}
         </Heading>
-        <Text size="2" style={{ color: 'var(--slate-11)' }}>
+        <Text size="2" style={{ color: 'var(--sada-text-muted)' }}>
           {description}
         </Text>
       </Flex>

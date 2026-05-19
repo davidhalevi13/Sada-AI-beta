@@ -1,6 +1,7 @@
 'use client';
 
 import { useMemo } from 'react';
+import { usePathname, useSearchParams } from 'next/navigation';
 import { Flex } from '@radix-ui/themes';
 import { ChatStarIcon } from '@/app/components/ui/chat-star-icon';
 import { MaterialIcon } from '@/app/components/ui/MaterialIcon';
@@ -37,15 +38,15 @@ const MAIN_NAV_ITEMS: NavItem[] = [
 const KbdBadge = ({ children }: { children: React.ReactNode }) => (
   <span
     style={{
-      background: 'var(--slate-1)',
-      border: '1px solid var(--slate-3)',
+      background: 'rgba(148, 163, 225, 0.09)',
+      border: '1px solid rgba(196, 181, 253, 0.2)',
       padding: KBD_BADGE_PADDING,
-      borderRadius: 'var(--radius-2)',
-      fontSize: 12,
+      borderRadius: 999,
+      fontSize: 11,
       lineHeight: 'var(--line-height-1)',
-      letterSpacing: '0.04px',
-      color: 'var(--slate-12)',
-      fontWeight: 400,
+      letterSpacing: 0,
+      color: 'var(--slate-11)',
+      fontWeight: 600,
     }}
   >
     {children}
@@ -61,18 +62,16 @@ export function StaticNavSection() {
   const modKey = useMemo(() => getModifierSymbol(), []);
   const isMobile = useIsMobile();
   const closeMobileSidebar = useMobileSidebarStore((s) => s.close);
+  const pathname = usePathname();
+  const searchParams = useSearchParams();
 
   const handleNewChat = () => {
     if (isMobile) closeMobileSidebar();
     dispatch('newChat');
   };
 
-  const handleOpenSearch = () => {
-    dispatch('openCommandPalette');
-  };
-
   return (
-    <Flex direction="column" gap="1">
+    <Flex direction="column" gap="2">
       {/* New Chat */}
       <SidebarItem
         icon={
@@ -83,16 +82,11 @@ export function StaticNavSection() {
         }
         label={t('chat.newChat')}
         onClick={handleNewChat}
-        textColor="var(--accent-a11)"
-        fontWeight={500}
+        textColor="var(--slate-12)"
+        fontWeight={700}
+        rightSlot={<KbdBadge>{modKey} +N</KbdBadge>}
+        forceHighlight
       />
-      {/* Search Chats — opens command palette (⌘+K) */}
-        <SidebarItem
-          icon={<MaterialIcon name={'search'} size={ICON_SIZE_DEFAULT} />}
-          label={t('nav.searchChats')}
-          onClick={handleOpenSearch}
-          rightSlot={<KbdBadge>{modKey} +K</KbdBadge>}
-        />
 
       {/* Navigation items — hidden on mobile */}
       {!isMobile &&
@@ -102,8 +96,32 @@ export function StaticNavSection() {
             icon={<MaterialIcon name={item.icon} size={ICON_SIZE_DEFAULT} />}
             label={t(item.labelKey)}
             href={item.route}
+            isActive={
+              item.route.includes('all-records')
+                ? pathname.startsWith('/knowledge-base') && searchParams?.get('view') === 'all-records'
+                : pathname.startsWith('/knowledge-base') && searchParams?.get('view') !== 'all-records'
+            }
           />
         ))}
     </Flex>
+  );
+}
+
+export function SidebarSearchButton() {
+  const dispatch = useCommandStore((s) => s.dispatch);
+  const { t } = useTranslation();
+  const modKey = useMemo(() => getModifierSymbol(), []);
+
+  const handleOpenSearch = () => {
+    dispatch('openCommandPalette');
+  };
+
+  return (
+    <SidebarItem
+      icon={<MaterialIcon name="search" size={ICON_SIZE_DEFAULT} />}
+      label={t('nav.searchChats')}
+      onClick={handleOpenSearch}
+      rightSlot={<KbdBadge>{modKey} +K</KbdBadge>}
+    />
   );
 }

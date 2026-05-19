@@ -6,6 +6,7 @@ import { MaterialIcon } from '@/app/components/ui/MaterialIcon';
 import { ICON_SIZES } from '@/lib/constants/icon-sizes';
 import { apiClient } from '@/lib/api';
 import { isTrustedApiUrl, isSignedUrl } from '../../utils/parse-download-markers';
+import { isGitHubUrl } from '@/chat/utils/github-filter';
 
 interface DownloadTask {
   fileName: string;
@@ -17,6 +18,8 @@ interface DownloadTasksProps {
 }
 
 export function DownloadTasks({ tasks }: DownloadTasksProps) {
+  const visibleTasks = tasks.filter((task) => !isGitHubUrl(task.url));
+
   const handleDownload = useCallback(async (task: DownloadTask) => {
     try {
       // Signed URLs carry their own auth. Untrusted origins (anything not
@@ -53,7 +56,7 @@ export function DownloadTasks({ tasks }: DownloadTasksProps) {
     }
   }, []);
 
-  if (tasks.length === 0) return null;
+  if (visibleTasks.length === 0) return null;
 
   return (
     <Flex direction="column" gap="2" style={{ marginTop: 'var(--space-3)' }}>
@@ -61,7 +64,7 @@ export function DownloadTasks({ tasks }: DownloadTasksProps) {
         You can download the complete query results:
       </Text>
       <Flex gap="2" wrap="wrap">
-        {tasks.map((task, idx) => (
+        {visibleTasks.map((task, idx) => (
           <Button
             key={`${task.fileName}-${idx}`}
             variant="outline"

@@ -2202,7 +2202,7 @@ function KnowledgeBasePageContent() {
   }, [allRecordsTableData?.breadcrumbs]);
 
   return (
-    <Flex style={{ height: '100%', width: '100%' }}>
+    <Flex style={{ height: '100%', width: '100%', background: 'var(--sada-page-gradient)', color: 'var(--sada-text)' }}>
       {/* Main Content */}
       <Flex
         direction="column"
@@ -2211,6 +2211,7 @@ function KnowledgeBasePageContent() {
           height: '100%',
           overflow: 'hidden',
           position: 'relative',
+          background: 'rgba(5, 7, 17, 0.32)',
         }}
       >
         {/* KB Header - mode-aware; hidden in collections mode when no node is selected */}
