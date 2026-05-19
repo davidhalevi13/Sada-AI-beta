@@ -1,0 +1,3 @@
+.agentBuilderPage {
+  --agent-neon-border: var(--sada-border, var(--gray-a6));
+}
