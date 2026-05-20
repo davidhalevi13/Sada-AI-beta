@@ -70,6 +70,10 @@ export function StaticNavSection() {
     dispatch('newChat');
   };
 
+  const handleNavClick = () => {
+    if (isMobile) closeMobileSidebar();
+  };
+
   return (
     <Flex direction="column" gap="2">
       {/* New Chat */}
@@ -88,7 +92,16 @@ export function StaticNavSection() {
         forceHighlight
       />
 
-      {/* Navigation items — hidden on mobile */}
+      <SidebarSearchButton />
+
+      <SidebarItem
+        icon={<MaterialIcon name="chat_bubble" size={ICON_SIZE_DEFAULT} />}
+        label={t('chat.backToChatHome', { defaultValue: 'All chats' })}
+        href="/chat/"
+        isActive={pathname.startsWith('/chat') && !searchParams?.get('agentId')}
+        onClick={handleNavClick}
+      />
+
       {!isMobile &&
         MAIN_NAV_ITEMS.map((item) => (
           <SidebarItem
@@ -111,8 +124,11 @@ export function SidebarSearchButton() {
   const dispatch = useCommandStore((s) => s.dispatch);
   const { t } = useTranslation();
   const modKey = useMemo(() => getModifierSymbol(), []);
+  const isMobile = useIsMobile();
+  const closeMobileSidebar = useMobileSidebarStore((s) => s.close);
 
   const handleOpenSearch = () => {
+    if (isMobile) closeMobileSidebar();
     dispatch('openCommandPalette');
   };
 

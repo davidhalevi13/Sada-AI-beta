@@ -2,7 +2,7 @@
 
 import React, { useEffect, useCallback, useMemo } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
-import { Box, Flex } from '@radix-ui/themes';
+import { Flex } from '@radix-ui/themes';
 import { useTranslation } from 'react-i18next';
 import { MaterialIcon } from '@/app/components/ui/MaterialIcon';
 import { ChatStarIcon } from '@/app/components/ui/chat-star-icon';
@@ -151,6 +151,7 @@ export const AgentScopedChatSidebar = React.memo(function AgentScopedChatSidebar
       header={<ChatSidebarHeader />}
       footer={<ChatSidebarFooter />}
       secondaryPanel={secondaryPanel}
+      reserveSecondaryPanelSpace={false}
       onDismissSecondaryPanel={
         isAgentsSidebarOpen
           ? closeAgentsSidebar
@@ -180,6 +181,7 @@ export const AgentScopedChatSidebar = React.memo(function AgentScopedChatSidebar
           fontWeight={700}
           forceHighlight
         />
+        <SidebarSearchButton />
 
         <Flex direction="column" gap="2" style={{ flex: 1, minHeight: 0, overflow: 'hidden' }}>
           <ChatSection
@@ -199,19 +201,6 @@ export const AgentScopedChatSidebar = React.memo(function AgentScopedChatSidebar
             agentId={agentId}
           />
         </Flex>
-        <Box
-          style={{
-            flexShrink: 0,
-            marginTop: 'auto',
-            padding: '12px 2px 8px',
-            borderTop: '1px solid rgba(196, 181, 253, 0.1)',
-            background:
-              'linear-gradient(180deg, rgba(139, 92, 246, 0.04), rgba(47, 123, 255, 0.02))',
-            borderRadius: 18,
-          }}
-        >
-          <SidebarSearchButton />
-        </Box>
       </Flex>
     </SidebarBase>
   );

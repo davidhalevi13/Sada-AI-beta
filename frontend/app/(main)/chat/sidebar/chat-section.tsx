@@ -78,7 +78,7 @@ export function ChatSection({
   agentId,
 }: ChatSectionProps) {
   const { t } = useTranslation();
-  const [isCollapsed, setIsCollapsed] = useState(true);
+  const [isCollapsed, setIsCollapsed] = useState(false);
   const contentId = useId();
   const isTimeGrouped = !!timeGroups;
   const showGenerating = pendingConversations.length > 0;

@@ -74,6 +74,8 @@ export type ConnectorType =
   | 'mariadb'
   | 'snowflake'
   | 'airtable'
+  | 'fmp'
+  | 'financial-modeling-prep'
   // Media & Other
   | 'youtube'
   | 'rss'
@@ -159,6 +161,8 @@ export const CONNECTOR_ICONS: Record<ConnectorType, { svg: string | null; fallba
   'mariadb': { svg: svg('mariadb'), fallback: 'storage' },
   'snowflake': { svg: svg('snowflake'), fallback: 'ac_unit' },
   'airtable': { svg: svg('airtable'), fallback: 'grid_view' },
+  'fmp': { svg: null, fallback: 'show_chart' },
+  'financial-modeling-prep': { svg: null, fallback: 'show_chart' },
   // Media & Other
   'youtube': { svg: svg('yt'), fallback: 'smart_display' },
   'rss': { svg: svg('rss'), fallback: 'rss_feed' },
@@ -212,6 +216,7 @@ const FUZZY_MATCH_RULES: Array<[string, ConnectorType]> = [
   // Databases
   ['snowflake', 'snowflake'], ['postgresql', 'postgresql'], ['postgres', 'postgresql'],
   ['mariadb', 'mariadb'], ['airtable', 'airtable'],
+  ['financial-modeling-prep', 'financial-modeling-prep'], ['fmp', 'fmp'],
   // Document & Knowledge
   ['notion', 'notion'], ['bookstack', 'bookstack'],
   // Media & Other

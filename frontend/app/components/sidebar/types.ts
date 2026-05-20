@@ -19,6 +19,11 @@ export interface SidebarBaseProps {
    */
   secondaryPanel?: ReactNode;
   /**
+   * When false, the secondary panel overlays the main content instead of
+   * reserving layout width. Defaults to true for existing sidebars.
+   */
+  reserveSecondaryPanelSpace?: boolean;
+  /**
    * Called when the user clicks outside the secondary panel (on the backdrop).
    * Only relevant when `secondaryPanel` is provided.
    * This is a root-level concern — the SidebarBase renders the

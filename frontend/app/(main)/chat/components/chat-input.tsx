@@ -1142,6 +1142,38 @@ export function ChatInput({
     ? t('chat.agentResourcesTooltip', { defaultValue: 'Connectors, collections and actions' })
     : t('chat.connectorsTooltip');
 
+  const renderVoiceInputButton = () => (
+    <Tooltip content={speechTooltip} side="top">
+      <IconButton
+        variant="ghost"
+        color={isListening ? 'red' : 'gray'}
+        size="2"
+        className={styles.composerIconButton}
+        aria-label={speechTooltip}
+        aria-pressed={isListening}
+        disabled={isSpeechButtonDisabled}
+        onClick={toggleSpeech}
+        style={{
+          margin: 0,
+          cursor: isSpeechButtonDisabled ? 'not-allowed' : 'pointer',
+          background: isListening ? 'rgba(239, 68, 68, 0.12)' : undefined,
+        }}
+      >
+        <MaterialIcon
+          name={isListening ? 'mic' : 'mic_none'}
+          size={ICON_SIZES.PRIMARY}
+          color={
+            isSpeechButtonDisabled
+              ? 'var(--slate-a8)'
+              : isListening
+                ? 'var(--red-11)'
+                : activeIconColor
+          }
+        />
+      </IconButton>
+    </Tooltip>
+  );
+
   const renderMoreMenu = () => (
     <DropdownMenu.Root open={isMoreMenuOpen} onOpenChange={setIsMoreMenuOpen} modal={false}>
       <Tooltip content={t('chat.options', { defaultValue: 'More options' })} side="top">
@@ -1257,16 +1289,6 @@ export function ChatInput({
           active={isModelPanelOpen}
           onSelect={handleOpenModelPanel}
         />
-
-        <ComposerMenuItem
-          icon={isListening ? 'mic' : 'mic_none'}
-          label={t('chat.micTooltip')}
-          detail={speechTooltip}
-          active={isListening}
-          disabled={isSpeechButtonDisabled}
-          iconColor={isListening ? 'var(--red-11)' : activeIconColor}
-          onSelect={toggleSpeech}
-        />
       </DropdownMenu.Content>
     </DropdownMenu.Root>
   );
@@ -1313,7 +1335,7 @@ export function ChatInput({
           padding: 'var(--space-2)',
         }}
       >
-        {/* Single row: input + More + Send */}
+        {/* Single row: input + More + Voice + Send */}
         <Flex align="center" justify="between" gap="3">
           {/* Input field */}
           <input
@@ -1340,6 +1362,7 @@ export function ChatInput({
           />
 
           {renderMoreMenu()}
+          {renderVoiceInputButton()}
 
           {/* Send / Stop — same contract as full composer */}
           {isStreaming ? (
@@ -1900,9 +1923,10 @@ export function ChatInput({
         />
       ) : null}
 
-      {/* Visible controls: More + Send only. All secondary actions live in More. */}
+      {/* Visible controls: More + Voice + Send. Other secondary actions live in More. */}
       <Flex align="center" justify="end" gap="2">
           {renderMoreMenu()}
+          {renderVoiceInputButton()}
 
           {isStreaming ? (
             <IconButton

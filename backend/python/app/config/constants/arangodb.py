@@ -68,6 +68,7 @@ class Connectors(Enum):
     LINEAR = "LINEAR"
     ZAMMAD = "ZAMMAD"
     ZOOM = "ZOOM"
+    FMP = "FMP"
 
     GITLAB = "GITLAB"
     SNOWFLAKE = "SNOWFLAKE"
@@ -105,6 +106,7 @@ class AppGroups(Enum):
     LINEAR = "Linear"
     ZAMMAD = "Zammad"
     ZOOM = "Zoom"
+    FMP = "Financial Modeling Prep"
     LOCAL_STORAGE = "Local Storage"
     RSS = "RSS"
     GITLAB = "GitLab"

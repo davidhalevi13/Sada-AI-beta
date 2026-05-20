@@ -45,7 +45,7 @@ export const MyAgentsSection = React.memo(function MyAgentsSection() {
   const [hasMore, setHasMore] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
   const [loadError, setLoadError] = useState(false);
-  const [isCollapsed, setIsCollapsed] = useState(true);
+  const [isCollapsed, setIsCollapsed] = useState(false);
   const contentId = React.useId();
 
   const load = useCallback(async () => {

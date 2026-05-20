@@ -37,6 +37,7 @@ from app.connectors.sources.dropbox.connector import DropboxConnector
 from app.connectors.sources.dropbox_individual.connector import (
     DropboxIndividualConnector,
 )
+from app.connectors.sources.fmp.connector import FMPConnector
 from app.connectors.sources.local_fs.connector import LocalFsConnector
 from app.connectors.sources.github.connector import GithubConnector
 from app.connectors.sources.google.drive.individual.connector import (
@@ -113,6 +114,7 @@ class ConnectorFactory:
         "notion": NotionConnector,
         "zammad": ZammadConnector,
         "zoom": ZoomConnector,
+        "fmp": FMPConnector,
         "salesforce": SalesforceConnector,
         "gitlab": GitLabConnector,
         "mariadb": MariaDBConnector,

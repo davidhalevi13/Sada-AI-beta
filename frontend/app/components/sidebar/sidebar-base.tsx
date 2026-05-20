@@ -24,7 +24,17 @@ import type { SidebarBaseProps } from './types';
  * secondary panel render side-by-side in a horizontal flex container.
  * This is used for "More Chats", "More items", etc.
  */
-export function SidebarBase({ header, children, footer, secondaryPanel, onDismissSecondaryPanel, isMobile, mobileOpen, onMobileClose }: SidebarBaseProps) {
+export function SidebarBase({
+  header,
+  children,
+  footer,
+  secondaryPanel,
+  reserveSecondaryPanelSpace = true,
+  onDismissSecondaryPanel,
+  isMobile,
+  mobileOpen,
+  onMobileClose,
+}: SidebarBaseProps) {
   // ── Mobile full-screen drawer ─────────────────────────────────
   // On mobile, render nothing when closed; a fixed full-width panel when open.
   if (isMobile) {
@@ -156,7 +166,9 @@ export function SidebarBase({ header, children, footer, secondaryPanel, onDismis
       const clamped = Math.min(SIDEBAR_MAX_WIDTH, Math.max(SIDEBAR_MIN_WIDTH, ev.clientX));
       widthRef.current = clamped;
       const hasSecondary = !!secondaryRef.current;
-      const clusterW = hasSecondary ? clamped + SIDEBAR_WIDTH : clamped;
+      const clusterW = hasSecondary && reserveSecondaryPanelSpace
+        ? clamped + SIDEBAR_WIDTH
+        : clamped;
 
       if (primaryRef.current) {
         primaryRef.current.style.width = `${clamped}px`;
@@ -184,7 +196,7 @@ export function SidebarBase({ header, children, footer, secondaryPanel, onDismis
 
     document.addEventListener('mousemove', onMouseMove);
     document.addEventListener('mouseup', onMouseUp);
-  }, [setSidebarWidth]);
+  }, [reserveSecondaryPanelSpace, setSidebarWidth]);
 
   const primarySidebar = (
     <Flex
@@ -271,9 +283,11 @@ export function SidebarBase({ header, children, footer, secondaryPanel, onDismis
     </Flex>
   );
 
-  // Reserve horizontal space for primary + secondary so the panel is not
-  // clipped by the app shell's overflow:hidden (secondary is position:absolute).
-  const sidebarClusterWidth = secondaryPanel ? sidebarWidth + SIDEBAR_WIDTH : sidebarWidth;
+  // Reserve horizontal space for primary + secondary when requested. Chat uses
+  // an overlay panel so opening More Chats/Agents does not shift the main pane.
+  const sidebarClusterWidth = secondaryPanel && reserveSecondaryPanelSpace
+    ? sidebarWidth + SIDEBAR_WIDTH
+    : sidebarWidth;
 
   return (
     <Box
@@ -283,7 +297,9 @@ export function SidebarBase({ header, children, footer, secondaryPanel, onDismis
         flexShrink: 0,
         width: `${sidebarClusterWidth}px`,
         minWidth: `${sidebarClusterWidth}px`,
+        height: '100%',
         alignSelf: 'stretch',
+        overflow: 'visible',
       }}
     >
       <style>{`.sidebar-drag-handle { opacity: 0; } *:hover > .sidebar-drag-handle { opacity: 1; }`}</style>
